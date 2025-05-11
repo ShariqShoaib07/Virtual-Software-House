@@ -795,6 +795,7 @@ class Project {
   final double acceptedPrice;
   final DateTime startDate;
   final DateTime endDate;
+  ProjectStatus status;
 
   Project({
     required this.title,
@@ -805,5 +806,6 @@ class Project {
     this.acceptedPrice = 0.0,
     required this.startDate,
     required this.endDate,
+    required this.status,
   });
 }
