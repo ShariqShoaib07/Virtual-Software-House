@@ -501,6 +501,6 @@ class Project {
     required this.acceptedPrice,
     required this.startDate,
     required this.endDate,
-    this.srsFile,
+    this.srsFile, required String jobType,
   });
 }
