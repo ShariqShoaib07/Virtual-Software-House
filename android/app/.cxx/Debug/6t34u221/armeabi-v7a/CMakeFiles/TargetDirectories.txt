@@ -1,0 +1,2 @@
+C:/Users/xtrea/StudioProjects/virtual_software_house/android/app/.cxx/Debug/6t34u221/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/xtrea/StudioProjects/virtual_software_house/android/app/.cxx/Debug/6t34u221/armeabi-v7a/CMakeFiles/rebuild_cache.dir
