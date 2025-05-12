@@ -5,8 +5,10 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+
 class ProjectsPage extends StatefulWidget {
-  const ProjectsPage({super.key});
+  const ProjectsPage({Key? key}) : super(key: key);
 
   @override
   State<ProjectsPage> createState() => _ProjectsPageState();
@@ -14,26 +16,39 @@ class ProjectsPage extends StatefulWidget {
 
 class _ProjectsPageState extends State<ProjectsPage> {
   final TextEditingController _searchController = TextEditingController();
-  List<Project> projects = [
+  List<Project> notStartedProjects = [
     Project(
       title: "E-commerce App Development",
       jobType: "In-person",
-      details: "Develop a complete e-commerce app...",
+      details: "Develop a complete e-commerce app with product listings, cart, and payment processing.",
       deliveryTime: "1 Month",
       requirements: ["Flutter", "Firebase", "Payment Gateway", "UI/UX Design"],
       acceptedPrice: 1500.00,
       startDate: DateTime.now(),
-      endDate: DateTime.now().add(Duration(days: 30)),
+      endDate: DateTime.now().add(const Duration(days: 30)),
+      status: ProjectStatus.notStarted,
     ),
     Project(
       title: "Portfolio Website",
       jobType: "Remote",
-      details: "Create a modern portfolio website...",
+      details: "Create a modern portfolio website with animations and responsive design.",
       deliveryTime: "2 Weeks",
       requirements: ["HTML/CSS", "JavaScript", "Responsive Design", "Animation"],
       acceptedPrice: 800.00,
       startDate: DateTime.now(),
-      endDate: DateTime.now().add(Duration(days: 14)),
+      endDate: DateTime.now().add(const Duration(days: 14)),
+      status: ProjectStatus.notStarted,
+    ),
+    Project(
+      title: "Mobile Game Development",
+      jobType: "Hybrid",
+      details: "Build a 2D mobile game with Unity for iOS and Android platforms.",
+      deliveryTime: "3 Months",
+      requirements: ["Unity", "C#", "Game Design", "2D Animation"],
+      acceptedPrice: 2500.00,
+      startDate: DateTime.now(),
+      endDate: DateTime.now().add(const Duration(days: 90)),
+      status: ProjectStatus.notStarted,
     ),
   ];
   List<Project> filteredProjects = [];
@@ -42,7 +57,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   void initState() {
     super.initState();
-    filteredProjects = projects;
+    filteredProjects = notStartedProjects;
     _searchController.addListener(_filterProjects);
   }
 
@@ -55,7 +70,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
   void _filterProjects() {
     final query = _searchController.text.toLowerCase();
     setState(() {
-      filteredProjects = projects.where((project) {
+      filteredProjects = notStartedProjects.where((project) {
         final matchesSearch = project.title.toLowerCase().contains(query) ||
             project.details.toLowerCase().contains(query);
         final matchesFilter = _filterJobType == "all" ||
@@ -65,12 +80,39 @@ class _ProjectsPageState extends State<ProjectsPage> {
     });
   }
 
+  void _applyForProject(int index) {
+    setState(() {
+      notStartedProjects[index].status = ProjectStatus.developerRequested;
+      filteredProjects = List<Project>.from(notStartedProjects)
+          .where((project) => project.status == ProjectStatus.notStarted)
+          .toList();
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text("Application submitted successfully!"),
+        behavior: SnackBarBehavior.floating,
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () {
+            setState(() {
+              notStartedProjects[index].status = ProjectStatus.notStarted;
+              filteredProjects = List<Project>.from(notStartedProjects)
+                  .where((project) => project.status == ProjectStatus.notStarted)
+                  .toList();
+            });
+          },
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text("Projects", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text("Available Projects"),
         centerTitle: false,
         elevation: 0,
       ),
@@ -124,23 +166,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
             ),
           ),
 
-          // Projects Grid
+          // Projects List
           Expanded(
-            child: Padding(
+            child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 0.85,
-                ),
-                itemCount: filteredProjects.length,
-                itemBuilder: (context, index) {
-                  final project = filteredProjects[index];
-                  return _buildProjectCard(project);
-                },
-              ),
+              itemCount: filteredProjects.length,
+              itemBuilder: (context, index) {
+                final project = filteredProjects[index];
+                return _buildProjectCard(project, index);
+              },
             ),
           ),
         ],
@@ -154,7 +188,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       selected: selected,
       onSelected: (isSelected) {
         setState(() {
-          _filterJobType = label.toLowerCase();
+          _filterJobType = isSelected ? label.toLowerCase() : "all";
           _filterProjects();
         });
       },
@@ -170,83 +204,116 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
   }
 
-  Widget _buildProjectCard(Project project) {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ProjectDetailsPage(project: project),
-        ),
+  Widget _buildProjectCard(Project project, int index) {
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16),
+      elevation: 1,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Project Type Badge
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: _getJobTypeColor(project.jobType).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(20),
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Project Type Badge
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: _getJobTypeColor(project.jobType).withOpacity(0.1),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Text(
+                project.jobType,
+                style: TextStyle(
+                  color: _getJobTypeColor(project.jobType),
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
                 ),
-                child: Text(
-                  project.jobType,
-                  style: TextStyle(
-                    color: _getJobTypeColor(project.jobType),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+
+            // Project Title
+            Text(
+              project.title,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+
+            // Project Details
+            Text(
+              project.details,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 14,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            const SizedBox(height: 12),
+
+            // Requirements
+            Wrap(
+              spacing: 6,
+              runSpacing: 6,
+              children: project.requirements
+                  .take(3)
+                  .map((req) => _buildRequirementChip(req))
+                  .toList(),
+            ),
+            const SizedBox(height: 16),
+
+            // Footer with Price, Delivery Time and Apply Button
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\$${project.acceptedPrice.toStringAsFixed(2)}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF38E54D),
+                      ),
+                    ),
+                    Text(
+                      "Delivery: ${project.deliveryTime}",
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF38E54D),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24, vertical: 12),
+                  ),
+                  child: const Text(
+                    "Apply",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () => _applyForProject(
+                    notStartedProjects.indexWhere((p) => p.title == project.title),
                   ),
                 ),
-              ),
-              const SizedBox(height: 12),
-
-              // Project Title
-              Text(
-                project.title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  height: 1.3,
-                ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              const SizedBox(height: 12),
-
-              // Requirements Chips
-              Wrap(
-                spacing: 6,
-                runSpacing: 6,
-                children: project.requirements
-                    .take(3)
-                    .map((req) => _buildRequirementChip(req))
-                    .toList(),
-              ),
-              const Spacer(),
-
-              // Footer with Time
-              Text(
-                project.deliveryTime,
-                style: TextStyle(
-                  color: Colors.grey[600],
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
+              ],
+            ),
+          ],
         ),
       ),
     );
@@ -281,6 +348,37 @@ class _ProjectsPageState extends State<ProjectsPage> {
         return Colors.grey;
     }
   }
+}
+
+enum ProjectStatus {
+  notStarted,
+  developerRequested,
+  inProgress,
+  completed,
+}
+
+class Project {
+  final String title;
+  final String jobType;
+  final String details;
+  final String deliveryTime;
+  final List<String> requirements;
+  final double acceptedPrice;
+  final DateTime startDate;
+  final DateTime endDate;
+  ProjectStatus status;
+
+  Project({
+    required this.title,
+    required this.jobType,
+    required this.details,
+    required this.deliveryTime,
+    required this.requirements,
+    required this.acceptedPrice,
+    required this.startDate,
+    required this.endDate,
+    this.status = ProjectStatus.notStarted,
+  });
 }
 
 class ProjectDetailsPage extends StatefulWidget {
@@ -784,28 +882,4 @@ class _SubmitProposalPageState extends State<SubmitProposalPage> {
       Navigator.pop(context);
     }
   }
-}
-
-class Project {
-  final String title;
-  final String jobType;
-  final String details;
-  final String deliveryTime;
-  final List<String> requirements;
-  final double acceptedPrice;
-  final DateTime startDate;
-  final DateTime endDate;
-  ProjectStatus status;
-
-  Project({
-    required this.title,
-    required this.jobType,
-    required this.details,
-    required this.deliveryTime,
-    required this.requirements,
-    this.acceptedPrice = 0.0,
-    required this.startDate,
-    required this.endDate,
-    required this.status,
-  });
 }

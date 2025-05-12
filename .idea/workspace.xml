@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="modified project_data.dart to include project status" />
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="For the admin's available_projects_page.dart, modify to show only not started projects">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/projects_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page.dart" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -72,12 +75,30 @@
       <option name="project" value="LOCAL" />
       <updated>1747006610658</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Update the Project class in projects_page.dart">
+      <option name="closed" value="true" />
+      <created>1747006831122</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1747006831122</updated>
+    </task>
+    <task id="LOCAL-00004" summary="For the admin's available_projects_page.dart, modify to show only not started projects">
+      <option name="closed" value="true" />
+      <created>1747006959939</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1747006959939</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit of all project files" />
     <MESSAGE value="modified project_data.dart to include project status" />
-    <option name="LAST_COMMIT_MESSAGE" value="modified project_data.dart to include project status" />
+    <MESSAGE value="Update the Project class in projects_page.dart" />
+    <MESSAGE value="For the admin's available_projects_page.dart, modify to show only not started projects" />
+    <option name="LAST_COMMIT_MESSAGE" value="For the admin's available_projects_page.dart, modify to show only not started projects" />
   </component>
 </project>
