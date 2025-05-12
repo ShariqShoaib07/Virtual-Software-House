@@ -575,7 +575,8 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SubmitProposalPage(project: widget.project),
+                      builder: (context) =>
+                          SubmitProposalPage(project: widget.project),
                     ),
                   );
                 },
