@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'project_data.dart';
 
 class AvailableProjectsPage extends StatelessWidget {
   @override

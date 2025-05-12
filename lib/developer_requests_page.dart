@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'project_data.dart';
 
-class DeveloperRequestsPage extends StatelessWidget {
+class DeveloperRequestsPage extends StatefulWidget {
+  @override
+  _DeveloperRequestsPageState createState() => _DeveloperRequestsPageState();
+}
+
+class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,7 +3,7 @@ import 'package:file_picker/file_picker.dart';
 import 'dart:io';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-import 'project_data.dart'; // ⬅️ Import this
+import 'project_data.dart';
 
 
 class ProjectsPageC extends StatefulWidget {
@@ -24,6 +24,8 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       startDate: DateTime.now(),
       endDate: DateTime.now().add(Duration(days: 30)),
       srsFile: 'sample_srs1.pdf', // Sample SRS file name
+      jobType: "Full-time",
+      status: ProjectStatus.notStarted,
     ),
     Project(
       title: "Portfolio Website",
@@ -34,6 +36,8 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       startDate: DateTime.now(),
       endDate: DateTime.now().add(Duration(days: 14)),
       srsFile: 'sample_srs2.pdf', // Sample SRS file name
+      jobType: "Part-time",
+      status: ProjectStatus.notStarted,
     ),
   ];
 
@@ -170,6 +174,8 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                         startDate: DateTime.now(),
                         endDate: DateTime.now().add(const Duration(days: 30)),
                         srsFile: srsFile?.name,
+                        jobType: "Freelance",
+                        status: ProjectStatus.notStarted, // Added the required 'status' parameter
                       );
                       ProjectData.notStartedProjects.add(newProject);
                       Navigator.pop(context, newProject);
@@ -481,26 +487,4 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
       ),
     );
   }
-}
-
-class Project {
-  final String title;
-  final String details;
-  final String deliveryTime;
-  final List<String> requirements;
-  final double acceptedPrice;
-  final DateTime startDate;
-  final DateTime endDate;
-  final String? srsFile;
-
-  Project({
-    required this.title,
-    required this.details,
-    required this.deliveryTime,
-    required this.requirements,
-    required this.acceptedPrice,
-    required this.startDate,
-    required this.endDate,
-    this.srsFile, required String jobType,
-  });
 }

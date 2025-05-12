@@ -10,6 +10,35 @@ enum ProjectStatus {
   rejected
 }
 
+class Project {
+  final String title;
+  final String details;
+  final String deliveryTime;
+  final List<String> requirements;
+  final double acceptedPrice;
+  final DateTime startDate;
+  final DateTime endDate;
+  final String? srsFile;
+  final ProjectStatus status;
+
+  Project({
+    required this.title,
+    required this.details,
+    required this.deliveryTime,
+    required this.requirements,
+    required this.acceptedPrice,
+    required this.startDate,
+    required this.endDate,
+    this.srsFile,
+    required this.status,
+    required String jobType,
+  });
+
+  set status(ProjectStatus status) {
+    // Logic for setting status can be implemented here
+  }
+}
+
 class ProjectData {
   static List<Project> allProjects = [
     Project(

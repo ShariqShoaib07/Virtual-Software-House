@@ -383,8 +383,13 @@ class Project {
 
 class ProjectDetailsPage extends StatefulWidget {
   final Project project;
+  final Function(ProjectStatus)? onStatusChanged;
 
-  const ProjectDetailsPage({super.key, required this.project});
+  const ProjectDetailsPage({
+    super.key,
+    required this.project,
+    this.onStatusChanged,
+  });
 
   @override
   State<ProjectDetailsPage> createState() => _ProjectDetailsPageState();
@@ -461,11 +466,21 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Time
-                  _buildDetailPill(
-                    Icons.access_time,
-                    widget.project.deliveryTime,
-                    Colors.blue,
+                  // Time and Status
+                  Row(
+                    children: [
+                      _buildDetailPill(
+                        Icons.access_time,
+                        widget.project.deliveryTime,
+                        Colors.blue,
+                      ),
+                      const SizedBox(width: 8),
+                      _buildDetailPill(
+                        Icons.info_outline,
+                        _getStatusText(widget.project.status),
+                        _getStatusColor(widget.project.status),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -521,60 +536,169 @@ class _ProjectDetailsPageState extends State<ProjectDetailsPage> {
             const SizedBox(height: 32),
 
             // Action Buttons
-            Row(
-              children: [
-                Expanded(
-                  child: OutlinedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: OutlinedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      side: const BorderSide(color: Colors.red),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Decline",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 16),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SubmitProposalPage(project: widget.project),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF38E54D),
-                      padding: const EdgeInsets.symmetric(vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      "Apply Now",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildActionButtons(),
             const SizedBox(height: 16),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildActionButtons() {
+    switch (widget.project.status) {
+      case ProjectStatus.notStarted:
+        return Row(
+          children: [
+            Expanded(
+              child: OutlinedButton(
+                onPressed: () => Navigator.pop(context),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  side: const BorderSide(color: Colors.red),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  "Decline",
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SubmitProposalPage(project: widget.project),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF38E54D),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  "Apply Now",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      case ProjectStatus.developerRequested:
+        return Center(
+          child: Text(
+            "Waiting for admin approval",
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 16,
+            ),
+          ),
+        );
+      case ProjectStatus.inProgress:
+        return Column(
+          children: [
+            LinearProgressIndicator(
+              value: _calculateProgress(),
+              backgroundColor: Colors.grey[200],
+              color: const Color(0xFF38E54D),
+              minHeight: 8,
+            ),
+            const SizedBox(height: 16),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    widget.project.status = ProjectStatus.completed;
+                    widget.onStatusChanged?.call(ProjectStatus.completed);
+                  });
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Project marked as completed!"),
+                      backgroundColor: Colors.green,
+                    ),
+                  );
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xFF38E54D),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text(
+                  "Mark as Completed",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
+      case ProjectStatus.completed:
+        return Center(
+          child: Column(
+            children: [
+              Icon(Icons.check_circle, color: Colors.green, size: 48),
+              const SizedBox(height: 16),
+              Text(
+                "Project Completed",
+                style: TextStyle(
+                  color: Colors.green,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        );
+    }
+  }
+
+  double _calculateProgress() {
+    final totalDuration = widget.project.endDate.difference(widget.project.startDate).inDays;
+    final daysPassed = DateTime.now().difference(widget.project.startDate).inDays;
+    return (daysPassed / totalDuration).clamp(0.0, 1.0);
+  }
+
+  String _getStatusText(ProjectStatus status) {
+    switch (status) {
+      case ProjectStatus.notStarted:
+        return "Not Started";
+      case ProjectStatus.developerRequested:
+        return "Pending Approval";
+      case ProjectStatus.inProgress:
+        return "In Progress";
+      case ProjectStatus.completed:
+        return "Completed";
+    }
+  }
+
+  Color _getStatusColor(ProjectStatus status) {
+    switch (status) {
+      case ProjectStatus.notStarted:
+        return Colors.orange;
+      case ProjectStatus.developerRequested:
+        return Colors.blue;
+      case ProjectStatus.inProgress:
+        return Colors.green;
+      case ProjectStatus.completed:
+        return Colors.purple;
+    }
   }
 
   Widget _buildDetailPill(IconData icon, String text, Color color) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'projects_page_c.dart';
-import 'project_data.dart';
+import 'projects_page_c.dart' as projectsPage;
+import 'project_data.dart' as projectData;
 
 class HomePageC extends StatefulWidget {
   const HomePageC({super.key});
@@ -14,41 +14,47 @@ class _HomePageCState extends State<HomePageC> {
   int _selectedTab = 0; // 0 = Not Started, 1 = Active, 2 = Completed
   final Color primaryColor = const Color(0xFF38E54D); // Green color
 
-  final List<Project> _notStartedProjects = [
-    Project(
-      title: "Fitness App Development",
-      details: "Develop a fitness tracking app with workout plans and progress tracking.",
-      deliveryTime: "1 month",
-      requirements: ["Flutter", "Firebase", "Health API"],
-      acceptedPrice: 1800.00,
-      startDate: DateTime.now().add(const Duration(days: 7)),
-      endDate: DateTime.now().add(const Duration(days: 37)),
-    ),
-  ];
+ final List<projectData.Project> _notStartedProjects = [
+   projectData.Project(
+     title: "Fitness App Development",
+     details: "Develop a fitness tracking app with workout plans and progress tracking.",
+     deliveryTime: "1 month",
+     requirements: ["Flutter", "Firebase", "Health API"],
+     acceptedPrice: 1800.00,
+     startDate: DateTime.now().add(const Duration(days: 7)),
+     endDate: DateTime.now().add(const Duration(days: 37)),
+     jobType: "Development",
+     status: projectData.ProjectStatus.notStarted,
+   ),
+ ];
 
-  final List<Project> _activeProjects = [
-    Project(
-      title: "E-commerce App Development",
-      details: "Developing a complete e-commerce app with payment integration.",
-      deliveryTime: "2 Weeks Left",
-      requirements: ["Flutter", "Firebase", "Payment Gateway"],
-      acceptedPrice: 1200.00,
-      startDate: DateTime.now().subtract(const Duration(days: 14)),
-      endDate: DateTime.now().add(const Duration(days: 14)),
-    ),
-  ];
+ final List<projectData.Project> _activeProjects = [
+   projectData.Project(
+     title: "E-commerce App Development",
+     details: "Developing a complete e-commerce app with payment integration.",
+     deliveryTime: "2 Weeks Left",
+     requirements: ["Flutter", "Firebase", "Payment Gateway"],
+     acceptedPrice: 1200.00,
+     startDate: DateTime.now().subtract(const Duration(days: 14)),
+     endDate: DateTime.now().add(const Duration(days: 14)),
+     jobType: "Development",
+     status: projectData.ProjectStatus.notStarted,
+   ),
+ ];
 
-  final List<Project> _completedProjects = [
-    Project(
-      title: "Restaurant Management System",
-      details: "Built a complete restaurant management solution.",
-      deliveryTime: "Completed",
-      requirements: ["Flutter", "Node.js", "MongoDB"],
-      acceptedPrice: 1500.00,
-      startDate: DateTime.now().subtract(const Duration(days: 60)),
-      endDate: DateTime.now().subtract(const Duration(days: 30)),
-    ),
-  ];
+ final List<projectData.Project> _completedProjects = [
+   projectData.Project(
+     title: "Restaurant Management System",
+     details: "Built a complete restaurant management solution.",
+     deliveryTime: "Completed",
+     requirements: ["Flutter", "Node.js", "MongoDB"],
+     acceptedPrice: 1500.00,
+     startDate: DateTime.now().subtract(const Duration(days: 60)),
+     endDate: DateTime.now().subtract(const Duration(days: 30)),
+     jobType: "Development",
+     status: projectData.ProjectStatus.notStarted,
+   ),
+ ];
 
   Widget _buildProjectTypeTabs() {
     return Row(
@@ -166,12 +172,12 @@ class _HomePageCState extends State<HomePageC> {
   }
 
   Widget _buildProjectsList() {
-    List<Project> projectsToShow;
+    List<projectData.Project> projectsToShow;
     String title;
 
     switch (_selectedTab) {
       case 0:
-        projectsToShow = [..._notStartedProjects, ...ProjectData.notStartedProjects];
+        projectsToShow = [..._notStartedProjects, ...projectData.ProjectData.notStartedProjects];
         title = "Not Started Projects";
         break;
       case 1:
@@ -215,7 +221,7 @@ class _HomePageCState extends State<HomePageC> {
     );
   }
 
-  Widget _buildProjectCard(Project project) {
+  Widget _buildProjectCard(projectData.Project project) {
     final progress = _calculateProjectProgress(project);
     final isCompleted = _selectedTab == 2;
     final isNotStarted = _selectedTab == 0;
@@ -301,7 +307,7 @@ class _HomePageCState extends State<HomePageC> {
     );
   }
 
-  double _calculateProjectProgress(Project project) {
+  double _calculateProjectProgress(projectData.Project project) {
     final totalDuration = project.endDate.difference(project.startDate).inDays;
     final daysPassed = DateTime.now().difference(project.startDate).inDays;
     return (daysPassed / totalDuration).clamp(0.0, 1.0);
@@ -526,7 +532,7 @@ class _HomePageCState extends State<HomePageC> {
     );
   }
 
-  void _showProjectDetails(BuildContext context, Project project) {
+  void _showProjectDetails(BuildContext context, projectData.Project project) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
