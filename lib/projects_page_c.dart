@@ -175,9 +175,9 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                         endDate: DateTime.now().add(const Duration(days: 30)),
                         srsFile: srsFile?.name,
                         jobType: "Freelance",
-                        status: ProjectStatus.notStarted, // Added the required 'status' parameter
+                        status: ProjectStatus.pending, // Added the required 'status' parameter
                       );
-                      ProjectData.notStartedProjects.add(newProject);
+                      ProjectData.addProject(newProject);
                       Navigator.pop(context, newProject);
                     }
                   },

@@ -19,7 +19,8 @@ class Project {
   final DateTime startDate;
   final DateTime endDate;
   final String? srsFile;
-  final ProjectStatus status;
+  ProjectStatus status;
+  String jobType;
 
   Project({
     required this.title,
@@ -31,19 +32,14 @@ class Project {
     required this.endDate,
     this.srsFile,
     required this.status,
-    required String jobType,
+    required this.jobType,
   });
-
-  set status(ProjectStatus status) {
-    // Logic for setting status can be implemented here
-  }
 }
 
 class ProjectData {
   static List<Project> allProjects = [
     Project(
       title: "Sample Project",
-      jobType: "Remote",
       details: "Sample project details",
       deliveryTime: "1 month",
       requirements: ["Flutter", "Firebase"],
@@ -51,8 +47,13 @@ class ProjectData {
       startDate: DateTime.now(),
       endDate: DateTime.now().add(Duration(days: 30)),
       status: ProjectStatus.pending,
+      jobType: "Remote",
     ),
   ];
+
+  static void addProject(Project project) {
+    allProjects.add(project);
+  }
 
   static List<Project> get pendingProjects => allProjects
       .where((project) => project.status == ProjectStatus.pending)
