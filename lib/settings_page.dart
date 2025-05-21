@@ -403,7 +403,7 @@ class SettingsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Change Password"),
+        title: const Text("Change Password", style: TextStyle(fontWeight: FontWeight.bold)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -411,23 +411,32 @@ class SettingsPage extends StatelessWidget {
               obscureText: true,
               decoration: InputDecoration(
                 labelText: "Current Password",
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
                 labelText: "New Password",
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
-            SizedBox(height: 15),
+            const SizedBox(height: 15),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
                 labelText: "Confirm New Password",
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               ),
             ),
           ],
@@ -435,22 +444,34 @@ class SettingsPage extends StatelessWidget {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text("Cancel"),
+            style: TextButton.styleFrom(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+            ),
+            child: const Text("Cancel", style: TextStyle(color: Colors.grey)),
           ),
+          const SizedBox(width: 8),
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text("Password changed successfully"),
                   backgroundColor: Colors.green,
                 ),
               );
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Color(0xFF38E54D),
+              backgroundColor: const Color(0xFF38E54D),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
+              minimumSize: const Size(100, 44),
             ),
-            child: Text("Update"),
+            child: const Text("Update", style: TextStyle(color: Colors.white)),
           ),
         ],
       ),

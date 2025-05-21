@@ -4,37 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="transfering of project from client to admin">
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/.filecache" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/.filecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/app.dill" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/app.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/kernel_snapshot_program.d" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/kernel_snapshot_program.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/kernel_snapshot_program.stamp" beforeDir="false" afterPath="$PROJECT_DIR$/.dart_tool/flutter_build/297eb7ff51891100dd53de79fac0330e/kernel_snapshot_program.stamp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.flutter-plugins-dependencies" beforeDir="false" afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="replaced showAddProjectDialog for add project beautification">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/8.10.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/8.10.2/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/8.10.2/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/8.10.2/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/8.10.2/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/8.10.2/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/8.10.2/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/8.10.2/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/android/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/arm64-v8a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/arm64-v8a/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/armeabi-v7a/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/armeabi-v7a/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/x86/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/x86/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/x86_64/configure_fingerprint.bin" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/.cxx/Debug/6t34u221/x86_64/configure_fingerprint.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/assets/debug/mergeDebugAssets/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/compressed_assets/debug/compressDebugAssets/out/assets/flutter_assets/kernel_blob.bin.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_assets/kernel_blob.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/flutter/debug/flutter_build.d" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/intermediates/incremental/packageDebug/tmp/debug/dex-renamer-state.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/apk/debug/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" beforeDir="false" afterPath="$PROJECT_DIR$/build/app/outputs/flutter-apk/app-debug.apk.sha1" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" beforeDir="false" afterPath="$PROJECT_DIR$/build/f872507f30e2ff2523f0f1d19160266e.cache.dill.track.dill" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/available_projects_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/available_projects_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/developer_requests_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_requests_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/project_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/project_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/projects_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_a.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/projects_page_c.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_c.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/settings_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -160,7 +134,23 @@
       <option name="project" value="LOCAL" />
       <updated>1747696700995</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="replaced ProjectPageCState class for add project beautification">
+      <option name="closed" value="true" />
+      <created>1747865604872</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1747865604872</updated>
+    </task>
+    <task id="LOCAL-00011" summary="replaced showAddProjectDialog for add project beautification">
+      <option name="closed" value="true" />
+      <created>1747866117873</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1747866117873</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -173,6 +163,8 @@
     <MESSAGE value="fixed all errors" />
     <MESSAGE value="Added action button in projects_page" />
     <MESSAGE value="transfering of project from client to admin" />
-    <option name="LAST_COMMIT_MESSAGE" value="transfering of project from client to admin" />
+    <MESSAGE value="replaced ProjectPageCState class for add project beautification" />
+    <MESSAGE value="replaced showAddProjectDialog for add project beautification" />
+    <option name="LAST_COMMIT_MESSAGE" value="replaced showAddProjectDialog for add project beautification" />
   </component>
 </project>

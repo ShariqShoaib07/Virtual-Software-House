@@ -5,7 +5,6 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'project_data.dart';
 
-
 class ProjectsPageC extends StatefulWidget {
   const ProjectsPageC({super.key});
 
@@ -22,10 +21,10 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       requirements: ["Flutter", "Firebase", "Payment Gateway", "UI/UX Design"],
       acceptedPrice: 1500.00,
       startDate: DateTime.now(),
-      endDate: DateTime.now().add(Duration(days: 30)),
+      endDate: DateTime.now().add(const Duration(days: 30)),
       srsFile: 'sample_srs1.pdf',
-      jobType: "Full-time",
       status: ProjectStatus.notStarted,
+      jobType: "Full-time",
     ),
     Project(
       title: "Portfolio Website",
@@ -34,10 +33,10 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       requirements: ["HTML/CSS", "JavaScript", "Responsive Design", "Animation"],
       acceptedPrice: 800.00,
       startDate: DateTime.now(),
-      endDate: DateTime.now().add(Duration(days: 14)),
+      endDate: DateTime.now().add(const Duration(days: 14)),
       srsFile: 'sample_srs2.pdf',
+      status: ProjectStatus.completed,
       jobType: "Part-time",
-      status: ProjectStatus.notStarted,
     ),
   ];
 
@@ -46,25 +45,21 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text("Projects", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text("Projects",
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
         centerTitle: false,
         elevation: 0,
+        backgroundColor: Colors.grey[50],
+        iconTheme: const IconThemeData(color: Colors.black87),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () async {
-              final newProject = await showAddProjectDialog(context);
-              if (newProject != null) {
-                setState(() {
-                  projects.add(newProject);
-                });
-              }
-            },
+            icon: const Icon(Icons.add, color: Colors.green),
+            onPressed: () => showAddProjectDialog(context),
           ),
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.all(16.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -74,9 +69,86 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
           ),
           itemCount: projects.length,
           itemBuilder: (context, index) {
-            final project = projects[index];
-            return buildProjectCard(project);
+            return _buildProjectCard(projects[index]);
           },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProjectCard(Project project) {
+    return Card(
+      elevation: 2,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: () {
+          // Handle project tap
+        },
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                project.title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  height: 1.3,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+              const SizedBox(height: 12),
+              Text(
+                "\$${project.acceptedPrice.toStringAsFixed(2)}",
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.green,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Wrap(
+                spacing: 6,
+                runSpacing: 6,
+                children: project.requirements
+                    .take(3)
+                    .map((req) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[100],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Text(
+                    req,
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontSize: 12,
+                    ),
+                  ),
+                ))
+                    .toList(),
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  const Icon(Icons.access_time, size: 16, color: Colors.grey),
+                  const SizedBox(width: 4),
+                  Text(
+                    project.deliveryTime,
+                    style: TextStyle(
+                      color: Colors.grey[600],
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
