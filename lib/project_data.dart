@@ -1,5 +1,4 @@
 // project_data.dart
-import 'projects_page_c.dart';
 
 enum ProjectStatus {
   pending,
@@ -50,6 +49,23 @@ class ProjectData {
       jobType: "Remote",
     ),
   ];
+
+  // Add this to your ProjectData class
+  static void updateProjectStatus(Project project, ProjectStatus newStatus) {
+    project.status = newStatus;
+    // Add any notification logic here if needed
+  }
+
+  static void approveClientProject(Project project) {
+    project.status = ProjectStatus.notStarted; // Now visible to developers
+    // You might want to add notification logic here
+  }
+
+  // Add this method
+  static void approveDeveloperRequest(Project project) {
+    project.status = ProjectStatus.ongoing;
+    // You might want to add notification logic here
+  }
 
   static void addProject(Project project) {
     allProjects.add(project);

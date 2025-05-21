@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'client_requests_page.dart';
 import 'developer_requests_page.dart';
-import 'available_projects_page.dart';
 import 'ongoing_projects_page.dart';
 import 'completed_projects_page.dart';
+import 'project_data.dart';
 
 class ProjectsPage extends StatelessWidget {
   final List<Map<String, dynamic>> projectSections = [
@@ -18,11 +17,6 @@ class ProjectsPage extends StatelessWidget {
       'title': 'Developer Project Requests',
       'icon': Icons.engineering,
       'page': DeveloperRequestsPage(),
-    },
-    {
-      'title': 'Available Projects',
-      'icon': Icons.work_outline,
-      'page': AvailableProjectsPage(),
     },
     {
       'title': 'Ongoing Projects',
@@ -102,6 +96,120 @@ class ProjectsPage extends StatelessWidget {
             ),
             Spacer(),
             Icon(Icons.arrow_forward_ios, color: Colors.greenAccent, size: 16),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DeveloperRequestsPage extends StatefulWidget {
+  @override
+  _DeveloperRequestsPageState createState() => _DeveloperRequestsPageState();
+}
+
+class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Color(0xFF011B10),
+      body: Center(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                'Developer Requests',
+                style: GoogleFonts.orbitron(
+                    color: Colors.greenAccent,
+                    fontSize: 18
+                ),
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: ProjectData.developerRequestedProjects.length,
+                itemBuilder: (context, index) {
+                  final project = ProjectData.developerRequestedProjects[index];
+                  return Card(
+                    color: Color(0xFF0F3D2C),
+                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            project.title,
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            project.details,
+                            style: TextStyle(color: Colors.white70),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(height: 12),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                '\$${project.acceptedPrice.toStringAsFixed(2)}',
+                                style: TextStyle(color: Colors.greenAccent),
+                              ),
+                              Text(
+                                project.deliveryTime,
+                                style: TextStyle(color: Colors.white70),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 16),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                icon: Icon(Icons.close, color: Colors.red),
+                                onPressed: () {
+                                  setState(() {
+                                    project.status = ProjectStatus.rejected;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Project rejected'),
+                                        backgroundColor: Colors.red,
+                                      ),
+                                    );
+                                  });
+                                },
+                              ),
+                              SizedBox(width: 8),
+                              IconButton(
+                                icon: Icon(Icons.check, color: Colors.green),
+                                onPressed: () {
+                                  setState(() {
+                                    project.status = ProjectStatus.ongoing;
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                        content: Text('Project approved'),
+                                        backgroundColor: Colors.green,
+                                      ),
+                                    );
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

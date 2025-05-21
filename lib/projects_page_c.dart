@@ -23,7 +23,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       acceptedPrice: 1500.00,
       startDate: DateTime.now(),
       endDate: DateTime.now().add(Duration(days: 30)),
-      srsFile: 'sample_srs1.pdf', // Sample SRS file name
+      srsFile: 'sample_srs1.pdf',
       jobType: "Full-time",
       status: ProjectStatus.notStarted,
     ),
@@ -35,7 +35,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       acceptedPrice: 800.00,
       startDate: DateTime.now(),
       endDate: DateTime.now().add(Duration(days: 14)),
-      srsFile: 'sample_srs2.pdf', // Sample SRS file name
+      srsFile: 'sample_srs2.pdf',
       jobType: "Part-time",
       status: ProjectStatus.notStarted,
     ),
@@ -53,7 +53,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () async {
-              final newProject = await _showAddProjectDialog(context);
+              final newProject = await showAddProjectDialog(context);
               if (newProject != null) {
                 setState(() {
                   projects.add(newProject);
@@ -75,14 +75,14 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
           itemCount: projects.length,
           itemBuilder: (context, index) {
             final project = projects[index];
-            return _buildProjectCard(project);
+            return buildProjectCard(project);
           },
         ),
       ),
     );
   }
 
-  Future<Project?> _showAddProjectDialog(BuildContext context) async {
+  Future<Project?> showAddProjectDialog(BuildContext context) async {
     final formKey = GlobalKey<FormState>();
     final titleController = TextEditingController();
     final detailsController = TextEditingController();
@@ -97,45 +97,55 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
         return StatefulBuilder(
           builder: (context, setState) {
             return AlertDialog(
-              title: const Text("Add New Project"),
+              title: const Text("Add New Project", style: TextStyle(fontWeight: FontWeight.bold)),
               content: Form(
                 key: formKey,
                 child: SingleChildScrollView(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      TextFormField(
+                      buildTextFieldWithCheckbox(
                         controller: titleController,
-                        decoration: const InputDecoration(labelText: "Project Title"),
+                        label: "Project Title",
                         validator: (value) => value?.isEmpty ?? true ? "Required" : null,
                       ),
-                      TextFormField(
+                      const SizedBox(height: 12),
+                      buildTextFieldWithCheckbox(
                         controller: detailsController,
-                        decoration: const InputDecoration(labelText: "Project Details"),
-                        maxLines: 3,
+                        label: "Project Details",
+                        maxLines: 1,
                         validator: (value) => value?.isEmpty ?? true ? "Required" : null,
                       ),
-                      TextFormField(
+                      const SizedBox(height: 12),
+                      buildTextFieldWithCheckbox(
                         controller: priceController,
-                        decoration: const InputDecoration(labelText: "Project Price (\$)"),
+                        label: "Project Price (\$)",
                         keyboardType: TextInputType.number,
                         validator: (value) => value?.isEmpty ?? true ? "Required" : null,
                       ),
-                      TextFormField(
+                      const SizedBox(height: 12),
+                      buildTextFieldWithCheckbox(
                         controller: deliveryTimeController,
-                        decoration: const InputDecoration(labelText: "Delivery Time"),
+                        label: "Delivery Time",
                         validator: (value) => value?.isEmpty ?? true ? "Required" : null,
                       ),
-                      TextFormField(
+                      const SizedBox(height: 12),
+                      buildTextFieldWithCheckbox(
                         controller: requirementsController,
-                        decoration: const InputDecoration(
-                            labelText: "Requirements (comma separated)",
-                            hintText: "Flutter, Firebase, UI/UX"
-                        ),
+                        label: "Requirements (comma separated)",
+                        hintText: "Flutter, Firebase, UI/UX",
                         validator: (value) => value?.isEmpty ?? true ? "Required" : null,
                       ),
                       const SizedBox(height: 16),
-                      ElevatedButton(
+                      Text(
+                        "Upload SRS Document",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[700],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      OutlinedButton(
                         onPressed: () async {
                           final result = await FilePicker.platform.pickFiles(
                             type: FileType.custom,
@@ -147,7 +157,14 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                             });
                           }
                         },
-                        child: Text(srsFile == null ? "Upload SRS Document" : "SRS Uploaded: ${srsFile!.name}"),
+                        style: OutlinedButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          side: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        child: Text(
+                          srsFile == null ? "Choose File" : srsFile!.name,
+                          style: TextStyle(color: Colors.grey[700]),
+                        ),
                       ),
                     ],
                   ),
@@ -156,6 +173,9 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
               actions: [
                 TextButton(
                   onPressed: () => Navigator.pop(context),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.grey[700],
+                  ),
                   child: const Text("Cancel"),
                 ),
                 ElevatedButton(
@@ -175,14 +195,17 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                         endDate: DateTime.now().add(const Duration(days: 30)),
                         srsFile: srsFile?.name,
                         jobType: "Freelance",
-                        status: ProjectStatus.pending, // Added the required 'status' parameter
+                        status: ProjectStatus.pending,
                       );
                       ProjectData.addProject(newProject);
                       Navigator.pop(context, newProject);
                     }
                   },
-                  child: const Text("Add Project"),
-                )
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                  ),
+                  child: const Text("Add Project", style: TextStyle(color: Colors.white)),
+                ),
               ],
             );
           },
@@ -191,7 +214,44 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
     );
   }
 
-  Widget _buildProjectCard(Project project) {
+  Widget buildTextFieldWithCheckbox({
+    required TextEditingController controller,
+    required String label,
+    String? hintText,
+    int maxLines = 1,
+    TextInputType? keyboardType,
+    String? Function(String?)? validator,
+  }) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 12, right: 8),
+          child: Icon(Icons.check_box_outline_blank, size: 24, color: Colors.grey[400]),
+        ),
+        Expanded(
+          child: TextFormField(
+            controller: controller,
+            decoration: InputDecoration(
+              labelText: label,
+              hintText: hintText,
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey[300]!),
+              ),
+            ),
+            maxLines: maxLines,
+            keyboardType: keyboardType,
+            validator: validator,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildProjectCard(Project project) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -241,7 +301,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                 runSpacing: 6,
                 children: project.requirements
                     .take(3)
-                    .map((req) => _buildRequirementChip(req))
+                    .map((req) => buildRequirementChip(req))
                     .toList(),
               ),
               const Spacer(),
@@ -259,7 +319,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
     );
   }
 
-  Widget _buildRequirementChip(String text) {
+  Widget buildRequirementChip(String text) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
