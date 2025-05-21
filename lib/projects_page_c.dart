@@ -96,121 +96,205 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
       builder: (context) {
         return StatefulBuilder(
           builder: (context, setState) {
-            return AlertDialog(
-              title: const Text("Add New Project", style: TextStyle(fontWeight: FontWeight.bold)),
-              content: Form(
-                key: formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      buildTextFieldWithCheckbox(
-                        controller: titleController,
-                        label: "Project Title",
-                        validator: (value) => value?.isEmpty ?? true ? "Required" : null,
+            return Dialog(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "Add New Project",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green,
                       ),
-                      const SizedBox(height: 12),
-                      buildTextFieldWithCheckbox(
-                        controller: detailsController,
-                        label: "Project Details",
-                        maxLines: 1,
-                        validator: (value) => value?.isEmpty ?? true ? "Required" : null,
+                    ),
+                    const SizedBox(height: 20),
+                    Form(
+                      key: formKey,
+                      child: Column(
+                        children: [
+                          _buildInputField(
+                            controller: titleController,
+                            label: "Project Title",
+                            icon: Icons.title,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildInputField(
+                            controller: detailsController,
+                            label: "Project Details",
+                            icon: Icons.description,
+                            maxLines: 2,
+                          ),
+                          const SizedBox(height: 16),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: _buildInputField(
+                                  controller: priceController,
+                                  label: "Price (\$)",
+                                  icon: Icons.attach_money,
+                                  keyboardType: TextInputType.number,
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: _buildInputField(
+                                  controller: deliveryTimeController,
+                                  label: "Delivery Time",
+                                  icon: Icons.access_time,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 16),
+                          _buildInputField(
+                            controller: requirementsController,
+                            label: "Requirements (comma separated)",
+                            icon: Icons.list,
+                            hintText: "Flutter, Firebase, UI/UX",
+                          ),
+                          const SizedBox(height: 24),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "SRS Document",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              GestureDetector(
+                                onTap: () async {
+                                  final result = await FilePicker.platform.pickFiles(
+                                    type: FileType.custom,
+                                    allowedExtensions: ['pdf', 'doc', 'docx'],
+                                  );
+                                  if (result != null) {
+                                    setState(() {
+                                      srsFile = result.files.first;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(12),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey.shade300),
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.attach_file, color: Colors.green),
+                                      const SizedBox(width: 8),
+                                      Text(
+                                        srsFile?.name ?? "Choose File",
+                                        style: TextStyle(
+                                          color: srsFile == null ? Colors.grey : Colors.black,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 24),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.grey,
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                ),
+                                child: const Text("Cancel"),
+                              ),
+                              const SizedBox(width: 12),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (formKey.currentState!.validate()) {
+                                    final newProject = Project(
+                                      title: titleController.text,
+                                      details: detailsController.text,
+                                      deliveryTime: deliveryTimeController.text,
+                                      requirements: requirementsController.text
+                                          .split(',')
+                                          .map((e) => e.trim())
+                                          .where((e) => e.isNotEmpty)
+                                          .toList(),
+                                      acceptedPrice: double.parse(priceController.text),
+                                      startDate: DateTime.now(),
+                                      endDate: DateTime.now().add(const Duration(days: 30)),
+                                      srsFile: srsFile?.name,
+                                      jobType: "Freelance",
+                                      status: ProjectStatus.pending,
+                                    );
+                                    ProjectData.addProject(newProject);
+                                    Navigator.pop(context, newProject);
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.green,
+                                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                ),
+                                child: const Text(
+                                  "Add Project",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 12),
-                      buildTextFieldWithCheckbox(
-                        controller: priceController,
-                        label: "Project Price (\$)",
-                        keyboardType: TextInputType.number,
-                        validator: (value) => value?.isEmpty ?? true ? "Required" : null,
-                      ),
-                      const SizedBox(height: 12),
-                      buildTextFieldWithCheckbox(
-                        controller: deliveryTimeController,
-                        label: "Delivery Time",
-                        validator: (value) => value?.isEmpty ?? true ? "Required" : null,
-                      ),
-                      const SizedBox(height: 12),
-                      buildTextFieldWithCheckbox(
-                        controller: requirementsController,
-                        label: "Requirements (comma separated)",
-                        hintText: "Flutter, Firebase, UI/UX",
-                        validator: (value) => value?.isEmpty ?? true ? "Required" : null,
-                      ),
-                      const SizedBox(height: 16),
-                      Text(
-                        "Upload SRS Document",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.grey[700],
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      OutlinedButton(
-                        onPressed: () async {
-                          final result = await FilePicker.platform.pickFiles(
-                            type: FileType.custom,
-                            allowedExtensions: ['pdf', 'doc', 'docx'],
-                          );
-                          if (result != null) {
-                            setState(() {
-                              srsFile = result.files.first;
-                            });
-                          }
-                        },
-                        style: OutlinedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(vertical: 12),
-                          side: BorderSide(color: Colors.grey[300]!),
-                        ),
-                        child: Text(
-                          srsFile == null ? "Choose File" : srsFile!.name,
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.grey[700],
-                  ),
-                  child: const Text("Cancel"),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    if (formKey.currentState!.validate()) {
-                      final newProject = Project(
-                        title: titleController.text,
-                        details: detailsController.text,
-                        deliveryTime: deliveryTimeController.text,
-                        requirements: requirementsController.text
-                            .split(',')
-                            .map((e) => e.trim())
-                            .where((e) => e.isNotEmpty)
-                            .toList(),
-                        acceptedPrice: double.parse(priceController.text),
-                        startDate: DateTime.now(),
-                        endDate: DateTime.now().add(const Duration(days: 30)),
-                        srsFile: srsFile?.name,
-                        jobType: "Freelance",
-                        status: ProjectStatus.pending,
-                      );
-                      ProjectData.addProject(newProject);
-                      Navigator.pop(context, newProject);
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
-                  child: const Text("Add Project", style: TextStyle(color: Colors.white)),
-                ),
-              ],
             );
           },
         );
       },
+    );
+  }
+
+  Widget _buildInputField({
+    required TextEditingController controller,
+    required String label,
+    required IconData icon,
+    String? hintText,
+    int maxLines = 1,
+    TextInputType? keyboardType,
+  }) {
+    return TextFormField(
+      controller: controller,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hintText,
+        prefixIcon: Icon(icon, color: Colors.green),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8),
+          borderSide: BorderSide(color: Colors.grey.shade300),
+        ),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+      ),
+      maxLines: maxLines,
+      keyboardType: keyboardType,
+      validator: (value) => value?.isEmpty ?? true ? "This field is required" : null,
     );
   }
 
