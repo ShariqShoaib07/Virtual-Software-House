@@ -64,8 +64,6 @@ class _HomePageState extends State<HomePage> {
         Expanded(child: _buildTabButton("Ongoing", 0)),
         const SizedBox(width: 8),
         Expanded(child: _buildTabButton("Completed", 1)),
-        const SizedBox(width: 8),
-        Expanded(child: _buildTabButton("Team", 2)),
       ],
     );
   }
@@ -179,8 +177,6 @@ class _HomePageState extends State<HomePage> {
       projectsToShow = _ongoingProjects;
     } else if (_selectedTab == 1) {
       projectsToShow = _completedProjects;
-    } else {
-      return const Center(child: Text("Team projects will be implemented soon"));
     }
 
     return Column(
