@@ -91,3 +91,22 @@ class ProjectData {
       .where((project) => project.status == ProjectStatus.completed)
       .toList();
 }
+
+class ClientProject {
+  final String title;
+  final String details;
+  final List<String> requirements;
+  final double acceptedPrice;
+  final String deliveryTime;
+  ProjectStatus status;
+
+
+  ClientProject({
+    required this.title,
+    required this.details,
+    required this.requirements,
+    required this.acceptedPrice,
+    required this.deliveryTime,
+    this.status = ProjectStatus.pending,
+  });
+}

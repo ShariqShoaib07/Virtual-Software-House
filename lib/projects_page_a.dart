@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'client_requests_page.dart';
+import 'client_requests_page.dart' as client;
 import 'developer_requests_page.dart';
 import 'ongoing_projects_page.dart';
 import 'completed_projects_page.dart';

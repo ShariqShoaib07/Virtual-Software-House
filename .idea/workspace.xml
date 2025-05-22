@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Removed the arrow that was leading to login page and add FAB in Client Project page">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="removed teams implementation from developer side">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client_requests_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client_requests_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/project_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/project_data.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/projects_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_a.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +166,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747874578309</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="removed teams implementation from developer side">
+      <option name="closed" value="true" />
+      <created>1747876796043</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1747876796043</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -181,6 +191,7 @@
     <MESSAGE value="replaced showAddProjectDialog for add project beautification" />
     <MESSAGE value="did some beautification in Clients Projects Page and Settings Page" />
     <MESSAGE value="Removed the arrow that was leading to login page and add FAB in Client Project page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed the arrow that was leading to login page and add FAB in Client Project page" />
+    <MESSAGE value="removed teams implementation from developer side" />
+    <option name="LAST_COMMIT_MESSAGE" value="removed teams implementation from developer side" />
   </component>
 </project>
