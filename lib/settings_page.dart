@@ -94,8 +94,15 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color(0xFFF8F9FA),
       appBar: AppBar(
-        title: Text("Settings"),
+        title: Text(
+          "Settings",
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Makes the text bold
+          ),
+        ),
+        centerTitle: true, // Centers the title
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),

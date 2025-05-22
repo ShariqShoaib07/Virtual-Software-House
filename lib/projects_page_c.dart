@@ -42,24 +42,37 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom; // Get system bottom padding
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text("Projects",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
-        centerTitle: false,
+        title: const Text(
+          "Projects",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.grey[50],
         iconTheme: const IconThemeData(color: Colors.black87),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add, color: Colors.green),
-            onPressed: () => showAddProjectDialog(context),
-          ),
-        ],
       ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 40),
+        child: FloatingActionButton(
+          onPressed: () => showAddProjectDialog(context),
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.add, color: Colors.white),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: EdgeInsets.only(
+          bottom: kBottomNavigationBarHeight + 20 + bottomPadding, // Extra space for FAB
+        ),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,

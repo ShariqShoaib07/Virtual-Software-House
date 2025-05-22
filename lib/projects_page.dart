@@ -112,9 +112,15 @@ class _ProjectsPageState extends State<ProjectsPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: const Text("Available Projects"),
-        centerTitle: false,
+        title: Text(
+          "Available Projects",
+          style: TextStyle(
+          fontWeight: FontWeight.bold, // Makes the text bold
+        ),
+      ),
+        centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
       ),
       body: Column(
         children: [

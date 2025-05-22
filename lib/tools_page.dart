@@ -28,6 +28,7 @@ class _ToolsPageState extends State<ToolsPage> {
         ),
         centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
       ),
       body: LayoutBuilder(
