@@ -38,15 +38,26 @@ class Project {
 class ProjectData {
   static List<Project> allProjects = [
     Project(
-      title: "Sample Project",
-      details: "Sample project details",
-      deliveryTime: "1 month",
-      requirements: ["Flutter", "Firebase"],
-      acceptedPrice: 1000.00,
+      title: "E-commerce Mobile App",
+      details: "Build a Flutter e-commerce app with product listings and cart",
+      deliveryTime: "6 weeks",
+      requirements: ["Flutter", "Firebase", "UI/UX"],
+      acceptedPrice: 2500.00,
       startDate: DateTime.now(),
-      endDate: DateTime.now().add(Duration(days: 30)),
-      status: ProjectStatus.pending,
+      endDate: DateTime.now().add(Duration(days: 42)),
+      status: ProjectStatus.developerRequested, // <- This is the key status
       jobType: "Remote",
+    ),
+    Project(
+      title: "Inventory System",
+      details: "Desktop app for inventory tracking with barcode scanning",
+      deliveryTime: "8 weeks",
+      requirements: ["Java", "MySQL"],
+      acceptedPrice: 3200.00,
+      startDate: DateTime.now(),
+      endDate: DateTime.now().add(Duration(days: 56)),
+      status: ProjectStatus.developerRequested, // <- This is the key status
+      jobType: "Hybrid",
     ),
   ];
 
@@ -90,6 +101,7 @@ class ProjectData {
   static List<Project> get completedProjects => allProjects
       .where((project) => project.status == ProjectStatus.completed)
       .toList();
+
 }
 
 class ClientProject {
@@ -108,5 +120,21 @@ class ClientProject {
     required this.acceptedPrice,
     required this.deliveryTime,
     this.status = ProjectStatus.pending,
+  });
+}
+  class DeveloperProject {
+  final String title;
+  final String details;
+  final List<String> requirements;
+  final String deliveryTime;
+  ProjectStatus status;
+
+
+  DeveloperProject({
+  required this.title,
+  required this.details,
+  required this.requirements,
+  required this.deliveryTime,
+  this.status = ProjectStatus.pending,
   });
 }
