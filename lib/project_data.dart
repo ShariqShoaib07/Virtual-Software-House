@@ -122,12 +122,14 @@ class ClientProject {
     this.status = ProjectStatus.pending,
   });
 }
-  class DeveloperProject {
+
+class DeveloperProject {
   final String title;
   final String details;
   final List<String> requirements;
   final String deliveryTime;
   ProjectStatus status;
+  String jobType;
 
 
   DeveloperProject({
@@ -135,6 +137,29 @@ class ClientProject {
   required this.details,
   required this.requirements,
   required this.deliveryTime,
+  required this.jobType,
   this.status = ProjectStatus.pending,
   });
+}
+
+class ProjectApprovalManager {
+  void approveProject(Project project) {
+    if (project.status != ProjectStatus.completed) {
+      project.status = ProjectStatus.ongoing;
+      print("Project '${project.title}' has been approved and is now ongoing.");
+    } else {
+      print("Project '${project.title}' is already completed and cannot be approved.");
+    }
+  }
+}
+
+class ProjectRejectionManager {
+  void rejectProject(Project project) {
+    if (project.status != ProjectStatus.completed) {
+      project.status = ProjectStatus.rejected;
+      print("Project '${project.title}' has been rejected.");
+    } else {
+      print("Project '${project.title}' is already completed and cannot be rejected.");
+    }
+  }
 }

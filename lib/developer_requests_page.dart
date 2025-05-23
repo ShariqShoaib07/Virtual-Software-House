@@ -8,7 +8,29 @@ class DeveloperRequestsPage extends StatefulWidget {
 }
 
 class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
-  List<Project> pendingProjects = ProjectData.developerRequestedProjects;
+  List<DeveloperProject> pendingProjects = [
+    DeveloperProject(
+      title: "E-commerce Mobile App",
+      details: "Build a Flutter e-commerce app with product listings, cart functionality, and payment integration.",
+      requirements: ["Flutter", "Firebase", "Stripe API", "UI/UX"],
+      deliveryTime: "6 weeks",
+      jobType: "Remote",
+    ),
+    DeveloperProject(
+      title: "Company Website Redesign",
+      details: "Modern redesign of our corporate website with improved navigation and mobile responsiveness.",
+      requirements: ["React", "Tailwind CSS", "Figma"],
+      deliveryTime: "4 weeks",
+      jobType: "In-person",
+    ),
+    DeveloperProject(
+      title: "Inventory Management System",
+      details: "Develop a desktop application for inventory tracking with barcode scanning capabilities.",
+      requirements: ["Java", "MySQL", "Barcode API"],
+      deliveryTime: "8 weeks",
+      jobType: "Hybrid",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +62,10 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
     );
   }
 
-  Widget _buildProjectCard(BuildContext context, Project project, int index) {
+// Alternative compact version keeping more info
+  Widget _buildProjectCard(BuildContext context, DeveloperProject project, int index) {
     final developerNames = ['Alex Johnson', 'Sam Wilson', 'Taylor Smith'];
     final developerName = developerNames[index % developerNames.length];
-
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
@@ -65,7 +87,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
             // Developer Name
             Row(
               children: [
-                Icon(Icons.code,
+                Icon(Icons.person_outline,
                     color: Colors.greenAccent.withOpacity(0.7),
                     size: 16),
                 const SizedBox(width: 6),
@@ -88,7 +110,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                   child: Text(
                     project.title,
                     style: GoogleFonts.orbitron(
-                      fontSize: 16,
+                      fontSize: 16,  // Reduced from 18 to prevent overflow
                       fontWeight: FontWeight.w600,
                       color: Colors.greenAccent,
                     ),
@@ -125,17 +147,17 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                 color: Colors.greenAccent.withOpacity(0.7),
                 fontSize: 14,
               ),
-              maxLines: 2,
+              maxLines: 2,  // Reduced from 3 to prevent overflow
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
 
-            // Requirements Chips
+            // Requirements Chips (limited to 3)
             Wrap(
               spacing: 6,
               runSpacing: 6,
               children: project.requirements
-                  .take(3)
+                  .take(3)  // Limit to 3 requirements to prevent overflow
                   .map((req) => _buildRequirementChip(req))
                   .toList(),
             ),
@@ -189,83 +211,84 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
             ),
             const SizedBox(height: 16),
 
-            // Action Buttons
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide(color: Colors.red.withOpacity(0.5)),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                  ),
-                  child: Text(
-                    "Reject",
-                    style: GoogleFonts.orbitron(
-                      fontWeight: FontWeight.w500,
-                      color: Colors.red,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      project.status = ProjectStatus.rejected;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          "Project rejected",
-                          style: GoogleFonts.orbitron(),
-                        ),
-                        backgroundColor: Colors.red,
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+            // Action Buttons (only show if pending)
+            if (project.status == ProjectStatus.pending)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(color: Colors.red.withOpacity(0.5)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
                       ),
-                    );
-                  },
-                ),
-                const SizedBox(width: 8),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.greenAccent,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
-                  ),
-                  child: Text(
-                    "Approve",
-                    style: GoogleFonts.orbitron(
-                      color: const Color(0xFF011B10),
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      project.status = ProjectStatus.ongoing;
-                    });
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text(
-                          "Project approved",
-                          style: GoogleFonts.orbitron(),
-                        ),
-                        backgroundColor: Colors.greenAccent,
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
+                    child: Text(
+                      "Reject",
+                      style: GoogleFonts.orbitron(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.red,
                       ),
-                    );
-                  },
-                ),
-              ],
-            ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        pendingProjects[index].status = ProjectStatus.rejected;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Project rejected",
+                            style: GoogleFonts.orbitron(),
+                          ),
+                          backgroundColor: Colors.red,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.greenAccent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 12),
+                    ),
+                    child: Text(
+                      "Approve",
+                      style: GoogleFonts.orbitron(
+                        color: const Color(0xFF011B10),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        pendingProjects[index].status = ProjectStatus.notStarted;
+                      });
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            "Project approved",
+                            style: GoogleFonts.orbitron(),
+                          ),
+                          backgroundColor: Colors.greenAccent,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ],
+              ),
           ],
         ),
       ),
