@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DeveloperPage extends StatelessWidget {
-  final List<Map<String, dynamic>> developers = [
+class DeveloperPage extends StatefulWidget {
+  @override
+  _DeveloperPageState createState() => _DeveloperPageState();
+}
+
+class _DeveloperPageState extends State<DeveloperPage> {
+  final List<Map<String, dynamic>> _allDevelopers = [
     {
       'name': 'John Smith',
       'title': 'Mobile Developer',
@@ -26,6 +31,43 @@ class DeveloperPage extends StatelessWidget {
     },
   ];
 
+  List<Map<String, dynamic>> _filteredDevelopers = [];
+  TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    _filteredDevelopers = _allDevelopers;
+    _searchController.addListener(_filterDevelopers);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterDevelopers() {
+    String query = _searchController.text.toLowerCase();
+    setState(() {
+      _filteredDevelopers = _allDevelopers.where((dev) {
+        final name = dev['name'].toLowerCase();
+        final title = dev['title'].toLowerCase();
+        final skills = dev['skills'].join(' ').toLowerCase();
+        return name.contains(query) ||
+            title.contains(query) ||
+            skills.contains(query);
+      }).toList();
+    });
+  }
+
+  void _toggleBlockStatus(int index) {
+    setState(() {
+      _allDevelopers[index]['isBlocked'] = !_allDevelopers[index]['isBlocked'];
+      _filterDevelopers(); // Refresh the filtered list
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,56 +88,57 @@ class DeveloperPage extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: Column(
-          children: [
-      Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color(0xFF0A261A),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.greenAccent.withOpacity(0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+            child: Container(
+              decoration: BoxDecoration(
+                color: const Color(0xFF0A261A),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.greenAccent.withOpacity(0.1),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: TextField(
+                controller: _searchController,
+                style: GoogleFonts.roboto(
+                  color: Colors.greenAccent[200],
+                  fontSize: 14,
+                ),
+                decoration: InputDecoration(
+                  hintText: 'Search developers...',
+                  hintStyle: GoogleFonts.roboto(
+                    color: Colors.greenAccent[200]!.withOpacity(0.7),
+                  ),
+                  prefixIcon: Icon(Icons.search, color: Colors.greenAccent[400]),
+                  filled: true,
+                  fillColor: Colors.transparent,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                ),
+              ),
             ),
-          ],
-        ),
-        child: TextField(
-          style: GoogleFonts.roboto(
-            color: Colors.greenAccent[200],
-            fontSize: 14,
           ),
-          decoration: InputDecoration(
-            hintText: 'Search developers...',
-            hintStyle: GoogleFonts.roboto(
-              color: Colors.greenAccent[200]!.withOpacity(0.7),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+              itemCount: _filteredDevelopers.length,
+              itemBuilder: (context, index) => Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: _buildDeveloperCard(_filteredDevelopers[index], index),
+              ),
             ),
-            prefixIcon: Icon(Icons.search, color: Colors.greenAccent[400]),
-            filled: true,
-            fillColor: Colors.transparent,
-            border: InputBorder.none,
-            contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
           ),
-          ),
-        ),
+        ],
       ),
-      Expanded(
-        child: ListView.builder(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          itemCount: developers.length,
-          itemBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: _buildDeveloperCard(developers[index]),
-          ),
-        ),
-      ),
-      ],
-    ),
     );
   }
 
-  Widget _buildDeveloperCard(Map<String, dynamic> dev) {
+  Widget _buildDeveloperCard(Map<String, dynamic> dev, int index) {
     return Container(
       decoration: BoxDecoration(
         color: const Color(0xFF0A261A),
@@ -256,7 +299,7 @@ class DeveloperPage extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
-                    onPressed: () {},
+                    onPressed: () => _toggleBlockStatus(index),
                     child: Text(
                       dev['isBlocked'] ? 'UNBLOCK' : 'BLOCK',
                       style: GoogleFonts.orbitron(
