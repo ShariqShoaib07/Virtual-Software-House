@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'client_requests_page.dart';
-import 'client_requests_page.dart' as client;
 import 'developer_requests_page.dart';
 import 'ongoing_projects_page.dart';
 import 'completed_projects_page.dart';
@@ -10,208 +9,185 @@ import 'project_data.dart';
 class ProjectsPage extends StatelessWidget {
   final List<Map<String, dynamic>> projectSections = [
     {
-      'title': 'Client Project Requests',
-      'icon': Icons.person_outline,
+      'title': 'Client Requests',
+      'icon': Icons.groups_outlined,
       'page': ClientRequestsPage(),
+      'count': ProjectData.pendingProjects.length,
+      'color': Colors.orangeAccent,
+      'gradientColor': const Color(0xFF0F3D2C),
     },
     {
-      'title': 'Developer Project Requests',
+      'title': 'Developer Requests',
       'icon': Icons.engineering,
       'page': DeveloperRequestsPage(),
+      'count': ProjectData.developerRequestedProjects.length,
+      'color': Colors.blueAccent,
+      'gradientColor': const Color(0xFF0F3D2C),
     },
     {
       'title': 'Ongoing Projects',
-      'icon': Icons.sync,
+      'icon': Icons.autorenew,
       'page': OngoingProjectsPage(),
+      'count': ProjectData.ongoingProjects.length,
+      'color': Colors.yellowAccent,
+      'gradientColor': const Color(0xFF0F3D2C),
     },
     {
       'title': 'Completed Projects',
-      'icon': Icons.check_circle_outline,
+      'icon': Icons.verified_outlined,
       'page': CompletedProjectsPage(),
+      'count': ProjectData.completedProjects.length,
+      'color': Colors.greenAccent,
+      'gradientColor': const Color(0xFF0F3D2C),
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFF011B10),
-      body: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Text(
-                  'PROJECTS',
-                  style: GoogleFonts.orbitron(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.greenAccent,
-                    letterSpacing: 2,
+      backgroundColor: const Color(0xFF011B10),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 100,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.greenAccent.withOpacity(0.1),
+                      Colors.transparent,
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: 32),
-              ...projectSections.map((section) => _buildProjectCard(context, section)).toList(),
-            ],
+            ),
+            pinned: true,
+            backgroundColor: const Color(0xFF011B10),
+            automaticallyImplyLeading: false,
+            title: Text(
+              'PROJECT DASHBOARD',
+              style: GoogleFonts.orbitron(
+                color: Colors.greenAccent,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.5,
+              ),
+            ),
+            centerTitle: true,
           ),
-        ),
+          SliverPadding(
+            padding: const EdgeInsets.all(16),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) => Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: _buildProjectCard(context, projectSections[index]),
+                ),
+                childCount: projectSections.length,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildProjectCard(BuildContext context, Map<String, dynamic> section) {
+    final Color accentColor = section['color'] ?? Colors.greenAccent;
+    final Color baseColor = section['gradientColor'] ?? const Color(0xFF0F3D2C);
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => section['page']),
+          PageRouteBuilder(
+            pageBuilder: (_, __, ___) => section['page'],
+            transitionsBuilder: (_, animation, __, child) {
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+          ),
         );
       },
       child: Container(
-        margin: EdgeInsets.only(bottom: 20),
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+        height: 100, // Fixed height for rectangular cards
         decoration: BoxDecoration(
-          color: Color(0xFF0F3D2C),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              baseColor,
+              accentColor.withOpacity(0.2),
+            ],
+          ),
           boxShadow: [
             BoxShadow(
-              color: Colors.greenAccent.withOpacity(0.4),
-              blurRadius: 12,
-              offset: Offset(0, 6),
+              color: accentColor.withOpacity(0.3),
+              blurRadius: 8,
+              spreadRadius: 1,
+              offset: const Offset(0, 4),
             ),
           ],
         ),
-        child: Row(
-          children: [
-            Icon(section['icon'], color: Colors.greenAccent, size: 30),
-            SizedBox(width: 16),
-            Text(
-              section['title'],
-              style: GoogleFonts.orbitron(
-                fontSize: 16,
-                color: Colors.greenAccent,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            Spacer(),
-            Icon(Icons.arrow_forward_ios, color: Colors.greenAccent, size: 16),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DeveloperRequestsPage extends StatefulWidget {
-  @override
-  _DeveloperRequestsPageState createState() => _DeveloperRequestsPageState();
-}
-
-class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Color(0xFF011B10),
-      body: Center(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Developer Requests',
-                style: GoogleFonts.orbitron(
-                    color: Colors.greenAccent,
-                    fontSize: 18
+        child: Padding(
+          padding: const EdgeInsets.all(16),
+          child: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: accentColor.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: accentColor.withOpacity(0.3),
+                    width: 2,
+                  ),
+                ),
+                child: Icon(
+                  section['icon'] ?? Icons.help_outline,
+                  color: accentColor,
+                  size: 28,
                 ),
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: ProjectData.developerRequestedProjects.length,
-                itemBuilder: (context, index) {
-                  final project = ProjectData.developerRequestedProjects[index];
-                  return Card(
-                    color: Color(0xFF0F3D2C),
-                    margin: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    child: Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            project.title,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            project.details,
-                            style: TextStyle(color: Colors.white70),
-                            maxLines: 2,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(height: 12),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                '\$${project.acceptedPrice.toStringAsFixed(2)}',
-                                style: TextStyle(color: Colors.greenAccent),
-                              ),
-                              Text(
-                                project.deliveryTime,
-                                style: TextStyle(color: Colors.white70),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                icon: Icon(Icons.close, color: Colors.red),
-                                onPressed: () {
-                                  setState(() {
-                                    project.status = ProjectStatus.rejected;
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Project rejected'),
-                                        backgroundColor: Colors.red,
-                                      ),
-                                    );
-                                  });
-                                },
-                              ),
-                              SizedBox(width: 8),
-                              IconButton(
-                                icon: Icon(Icons.check, color: Colors.green),
-                                onPressed: () {
-                                  setState(() {
-                                    project.status = ProjectStatus.ongoing;
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text('Project approved'),
-                                        backgroundColor: Colors.green,
-                                      ),
-                                    );
-                                  });
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
+              const SizedBox(width: 16),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      section['title'] ?? 'Projects',
+                      style: GoogleFonts.orbitron(
+                        color: Colors.greenAccent,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '${section['count'] ?? 0} Projects',
+                      style: GoogleFonts.orbitron(
+                        color: Colors.greenAccent.withOpacity(0.7),
+                        fontSize: 12,
                       ),
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
-            ),
-          ],
+              Icon(
+                Icons.arrow_forward_ios,
+                color: accentColor.withOpacity(0.7),
+                size: 16,
+              ),
+            ],
+          ),
         ),
       ),
     );

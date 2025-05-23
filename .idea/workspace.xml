@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="added Completed Project Page. final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Admin Settings Page got Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/settings_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings_page_a.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/projects_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_a.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,7 +220,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747961787185</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Admin Settings Page got Update">
+      <option name="closed" value="true" />
+      <created>1747962648662</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1747962648662</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -243,6 +251,7 @@
     <MESSAGE value="Ongoing Project Page on Admin Side got Updates. At the moment there is // In OngoingProjectsPage, change:&#10;                                                                       final ongoingProjects = ProjectData.allProjects; // Instead of ProjectData.ongoingProjects." />
     <MESSAGE value="Tried Fixing Developer Project Page again" />
     <MESSAGE value="added Completed Project Page. final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data" />
-    <option name="LAST_COMMIT_MESSAGE" value="added Completed Project Page. final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data" />
+    <MESSAGE value="Admin Settings Page got Update" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Settings Page got Update" />
   </component>
 </project>
