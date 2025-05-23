@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Admin Project Page got beautification">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Admin Developers Page got beautification">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/developer_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/clients_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/clients_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -236,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747963378268</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Admin Developers Page got beautification">
+      <option name="closed" value="true" />
+      <created>1747965961424</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1747965961424</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -261,6 +270,7 @@
     <MESSAGE value="added Completed Project Page. final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data" />
     <MESSAGE value="Admin Settings Page got Update" />
     <MESSAGE value="Admin Project Page got beautification" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Project Page got beautification" />
+    <MESSAGE value="Admin Developers Page got beautification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Developers Page got beautification" />
   </component>
 </project>
