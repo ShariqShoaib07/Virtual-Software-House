@@ -1,330 +1,296 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
-Future<void> downloadCV(String url, String fileName, BuildContext context) async {
-  final status = await Permission.storage.request();
-
-  if (status.isGranted) {
-    final dir = await getExternalStorageDirectory();
-    final filePath = "${dir!.path}/$fileName.pdf";
-
-    try {
-      await Dio().download(url, filePath);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("CV downloaded to $filePath")),
-      );
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Download failed: $e")),
-      );
-    }
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text("Storage permission denied")),
-    );
-  }
-}
-
-class DeveloperPage extends StatefulWidget {
-  @override
-  State<DeveloperPage> createState() => _DeveloperPageState();
-}
-
-class _DeveloperPageState extends State<DeveloperPage> {
-  final TextEditingController _searchController = TextEditingController();
-
-  List<Map<String, dynamic>> developers = [
+class DeveloperPage extends StatelessWidget {
+  final List<Map<String, dynamic>> developers = [
     {
-      'firstName': 'John',
-      'middleName': 'D',
-      'lastName': 'Smith',
+      'name': 'John Smith',
+      'title': 'Mobile Developer',
       'phone': '+1 555 1234567',
-      'address': '123 Developer Street',
-      'city': 'San Francisco',
-      'country': 'USA',
-      'image': '',
-      'skills': ['Flutter', 'Dart', 'Firebase', 'UI/UX Design'],
-      'experience': '5 years of mobile development experience',
-      'github': 'https://github.com/johnsmith',
-      'cvAvailable': true,
+      'email': 'john@example.com',
+      'skills': ['Flutter', 'Dart', 'Firebase', 'UI/UX'],
+      'github': 'github.com/johnsmith',
+      'experience': '5 years experience',
       'isBlocked': false,
     },
     {
-      'firstName': 'Sarah',
-      'middleName': 'M',
-      'lastName': 'Johnson',
+      'name': 'Sarah Johnson',
+      'title': 'Android Developer',
       'phone': '+1 555 7654321',
-      'address': '456 Code Avenue',
-      'city': 'New York',
-      'country': 'USA',
-      'image': '',
-      'skills': ['Android', 'Kotlin', 'Java', 'REST APIs'],
-      'experience': '3 years of Android development',
-      'github': 'https://github.com/sarahjohnson',
-      'cvAvailable': false,
+      'email': 'sarah@example.com',
+      'skills': ['Android', 'Kotlin', 'Java'],
+      'github': 'github.com/sarahj',
+      'experience': '3 years experience',
       'isBlocked': true,
     },
   ];
 
-  String searchText = "";
-
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filtered = developers
-        .where((dev) =>
-        '${dev['firstName']} ${dev['middleName']} ${dev['lastName']}'
-            .toLowerCase()
-            .contains(searchText.toLowerCase()))
-        .toList();
-
     return Scaffold(
-      backgroundColor: Color(0xFF011B10),
+      backgroundColor: const Color(0xFF011B10),
       appBar: AppBar(
         title: Text(
           'DEVELOPERS',
           style: GoogleFonts.orbitron(
-              color: Colors.greenAccent,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.5),
+            color: Colors.greenAccent[400],
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.5,
+            fontSize: 22,
+          ),
         ),
+        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        centerTitle: true,
         automaticallyImplyLeading: false,
       ),
       body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (val) => setState(() => searchText = val),
-              style: TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                hintText: '🔍 Search Developers',
-                hintStyle: TextStyle(color: Colors.greenAccent.shade100),
-                prefixIcon: Icon(Icons.search, color: Colors.greenAccent),
-                filled: true,
-                fillColor: Color(0xFF0F3D2C),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: BorderSide.none,
-                ),
-              ),
+          children: [
+      Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color(0xFF0A261A),
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.greenAccent.withOpacity(0.1),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
             ),
+          ],
+        ),
+        child: TextField(
+          style: GoogleFonts.roboto(
+            color: Colors.greenAccent[200],
+            fontSize: 14,
           ),
-          Expanded(
-            child: ListView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: filtered.length,
-              itemBuilder: (context, index) =>
-                  _buildDeveloperCard(filtered[index]),
+          decoration: InputDecoration(
+            hintText: 'Search developers...',
+            hintStyle: GoogleFonts.roboto(
+              color: Colors.greenAccent[200]!.withOpacity(0.7),
             ),
+            prefixIcon: Icon(Icons.search, color: Colors.greenAccent[400]),
+            filled: true,
+            fillColor: Colors.transparent,
+            border: InputBorder.none,
+            contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
           ),
-        ],
+          ),
+        ),
       ),
+      Expanded(
+        child: ListView.builder(
+          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+          itemCount: developers.length,
+          itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: _buildDeveloperCard(developers[index]),
+          ),
+        ),
+      ),
+      ],
+    ),
     );
   }
 
   Widget _buildDeveloperCard(Map<String, dynamic> dev) {
-    return AnimatedContainer(
-      duration: Duration(milliseconds: 400),
-      margin: EdgeInsets.only(bottom: 20),
-      padding: EdgeInsets.all(16),
+    return Container(
       decoration: BoxDecoration(
-        color: Color(0xFF0F3D2C),
-        borderRadius: BorderRadius.circular(20),
+        color: const Color(0xFF0A261A),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFF38E54D).withOpacity(0.4),
+            color: Colors.greenAccent.withOpacity(0.15),
             blurRadius: 12,
-            offset: Offset(0, 6),
+            offset: const Offset(0, 6),
           ),
         ],
+        border: Border.all(
+          color: dev['isBlocked']
+              ? Colors.red.withOpacity(0.4)
+              : Colors.greenAccent.withOpacity(0.3),
+          width: 1.5,
+        ),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.black,
-                child: Icon(Icons.android, color: Colors.greenAccent, size: 32),
-              ),
-              SizedBox(width: 16),
-              Expanded(
-                child: Text(
-                  "${dev['firstName']} ${dev['middleName']} ${dev['lastName']}",
-                  style: GoogleFonts.orbitron(
-                    color: Colors.greenAccent,
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 12),
-          _buildInfo("📞 Phone", dev['phone']),
-          _buildInfo("📍 Address", dev['address']),
-          Row(
-            children: [
-              Expanded(child: _buildInfo("🌆 City", dev['city'])),
-              SizedBox(width: 12),
-              Expanded(child: _buildInfo("🌍 Country", dev['country'])),
-            ],
-          ),
-          SizedBox(height: 10),
-          _buildInfo("💼 Experience", dev['experience']),
-          SizedBox(height: 12),
-          Text(
-            "🧠 Skills",
-            style: GoogleFonts.vt323(color: Colors.greenAccent, fontSize: 18),
-          ),
-          SizedBox(height: 6),
-          Wrap(
-            spacing: 8,
-            runSpacing: 6,
-            children: (dev['skills'] as List<String>).map((skill) {
-              return Chip(
-                backgroundColor: Color(0xFF011B10),
-                label: Text(skill,
-                    style: TextStyle(color: Colors.greenAccent, fontSize: 14)),
-                shape: StadiumBorder(
-                    side: BorderSide(color: Colors.greenAccent, width: 0.5)),
-              );
-            }).toList(),
-          ),
-          SizedBox(height: 12),
-          _buildInfo("🔗 GitHub", dev['github'], isLink: true),
-          SizedBox(height: 10),
-          Row(
-            children: [
-              SizedBox(width: 8),
-              dev['cvAvailable']
-                  ? ElevatedButton.icon(
-                onPressed: () {
-                  final url = dev['cvUrl'];
-                  final name = "${dev['firstName']}_${dev['lastName']}_CV";
-                  downloadCV(url, name, context);
-                },
-                icon: Icon(Icons.download, color: Colors.black),
-                label: Text(
-                  'Download CV',
-                  style: GoogleFonts.orbitron(color: Colors.black, fontWeight: FontWeight.bold),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.greenAccent,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                ),
-              )
-                  : Row(
-                children: [
-                  Icon(Icons.cancel, color: Colors.red),
-                  SizedBox(width: 8),
-                  Text("CV Not Available",
-                      style: GoogleFonts.vt323(color: Colors.white70, fontSize: 18)),
-                ],
-              )
-            ],
-          ),
-          SizedBox(height: 14),
-          Row(
-            children: [
-              Expanded(
-                child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor:
-                    dev['isBlocked'] ? Colors.redAccent : Color(0xFF38E54D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14),
+      child: Padding(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  width: 56,
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.3),
                     ),
-                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                   ),
-                  icon: Icon(dev['isBlocked'] ? Icons.lock : Icons.lock_open,
-                      color: Colors.black),
-                  label: Text(
-                    dev['isBlocked'] ? 'UNBLOCK DEVELOPER' : 'BLOCK DEVELOPER',
-                    style: GoogleFonts.orbitron(
-                        fontWeight: FontWeight.bold, color: Colors.black),
+                  child: Center(
+                    child: Text(
+                      dev['name'].substring(0, 1),
+                      style: GoogleFonts.orbitron(
+                        color: Colors.greenAccent[400],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24,
+                      ),
+                    ),
                   ),
-                  onPressed: () {
-                    setState(() {
-                      dev['isBlocked'] = !dev['isBlocked'];
-                    });
-                  },
                 ),
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
-  Widget _buildInfo(String title, String? value, {bool isLink = false}) {
-    return InkWell(
-      onTap: () async {
-        if (isLink && value != null && await canLaunch(value)) {
-          await launch(value);
-        } else {
-          showDialog(
-            context: context,
-            builder: (context) => AlertDialog(
-              backgroundColor: Color(0xFF0F3D2C),
-              title: Text(
-                title,
-                style: GoogleFonts.orbitron(color: Colors.greenAccent),
-              ),
-              content: SelectableText(
-                value ?? 'N/A',
-                style: GoogleFonts.vt323(
-                  color: Colors.white,
-                  fontSize: 18,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        dev['name'],
+                        style: GoogleFonts.roboto(
+                          color: Colors.greenAccent[200],
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        dev['title'],
+                        style: GoogleFonts.roboto(
+                          color: Colors.greenAccent[400],
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        dev['experience'],
+                        style: GoogleFonts.roboto(
+                          color: Colors.greenAccent[200]!.withOpacity(0.8),
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              actions: [
-                TextButton(
-                  child: Text('CLOSE', style: TextStyle(color: Colors.greenAccent)),
-                  onPressed: () => Navigator.pop(context),
-                )
+                if (dev['isBlocked'])
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: Colors.red.withOpacity(0.6)),
+                    ),
+                    child: Text(
+                      'BLOCKED',
+                      style: GoogleFonts.roboto(
+                        color: Colors.redAccent[200],
+                        fontSize: 11,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
               ],
             ),
-          );
-        }
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 10),
-        padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-        decoration: BoxDecoration(
-          color: Color(0xFF011B10),
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: Colors.greenAccent, width: 0.7),
-        ),
-        child: Row(
-          children: [
+            const SizedBox(height: 20),
+
+            // Contact Info
+            _buildInfoRow(Icons.phone_outlined, dev['phone']),
+            _buildInfoRow(Icons.email_outlined, dev['email']),
+            _buildInfoRow(Icons.code_outlined, dev['github'], isLink: true),
+
+            const SizedBox(height: 16),
+
+            // Skills
             Text(
-              "$title: ",
-              style: GoogleFonts.vt323(
-                color: Colors.white70,
-                fontSize: 18,
+              'SKILLS',
+              style: GoogleFonts.orbitron(
+                color: Colors.greenAccent[400]!.withOpacity(0.9),
+                fontSize: 13,
+                letterSpacing: 1.2,
               ),
             ),
-            Expanded(
-              child: SelectableText(
-                value ?? '',
-                style: GoogleFonts.vt323(
-                  color: Colors.white,
-                  fontSize: 18,
+            const SizedBox(height: 8),
+            Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: (dev['skills'] as List<String>).map((skill) => Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.greenAccent.withOpacity(0.08),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.4)),
                 ),
-                onTap: () {}, // prevents text overflow from being ignored
-              ),
+                child: Text(
+                  skill,
+                  style: GoogleFonts.roboto(
+                    color: Colors.greenAccent[200],
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              )).toList(),
+            ),
+
+            const SizedBox(height: 20),
+
+            // Action Buttons
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: dev['isBlocked']
+                          ? Colors.greenAccent[400]
+                          : Colors.red.withOpacity(0.7),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      dev['isBlocked'] ? 'UNBLOCK' : 'BLOCK',
+                      style: GoogleFonts.orbitron(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: BorderSide(
+                          color: Colors.greenAccent[400]!,
+                          width: 1.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
+                    onPressed: () {},
+                    child: Text(
+                      'VIEW CV',
+                      style: GoogleFonts.orbitron(
+                        color: Colors.greenAccent[400],
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -332,12 +298,30 @@ class _DeveloperPageState extends State<DeveloperPage> {
     );
   }
 
-  Future<void> _launchURL(String url) async {
-    final uri = Uri.parse(url);
-    if (await canLaunchUrl(uri)) {
-      await launchUrl(uri, mode: LaunchMode.externalApplication);
-    } else {
-      throw 'Could not launch $url';
-    }
+  Widget _buildInfoRow(IconData icon, String text, {bool isLink = false}) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: Row(
+        children: [
+          Icon(icon,
+              size: 20,
+              color: Colors.greenAccent[400]!.withOpacity(0.9)),
+          const SizedBox(width: 12),
+          GestureDetector(
+            onTap: isLink ? () => launchUrl(Uri.parse('https://$text')) : null,
+            child: Text(
+              text,
+              style: GoogleFonts.roboto(
+                color: isLink
+                    ? Colors.greenAccent[400]
+                    : Colors.greenAccent[200],
+                fontSize: 14,
+                decoration: isLink ? TextDecoration.underline : null,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
