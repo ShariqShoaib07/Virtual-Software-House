@@ -4,10 +4,19 @@ import 'client_requests_page.dart';
 import 'developer_requests_page.dart';
 import 'ongoing_projects_page.dart';
 import 'completed_projects_page.dart';
+import 'available_projects_page.dart';
 import 'project_data.dart';
 
 class ProjectsPage extends StatelessWidget {
   final List<Map<String, dynamic>> projectSections = [
+    {
+      'title': 'Available Projects',
+      'icon': Icons.work_outline,
+      'page': AvailableProjectsPage(),
+      'count': ProjectData.notStartedProjects.length,
+      'color': Colors.tealAccent,
+      'gradientColor': const Color(0xFF0F3D2C),
+    },
     {
       'title': 'Client Requests',
       'icon': Icons.groups_outlined,
