@@ -10,9 +10,9 @@ class SettingsPage extends StatelessWidget {
       backgroundColor: const Color(0xFF011B10),
       body: CustomScrollView(
         slivers: [
-          // Profile Header
+          // Profile Header with Gradient
           SliverAppBar(
-            expandedHeight: 200,
+            expandedHeight: 220,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: BoxDecoration(
@@ -20,7 +20,7 @@ class SettingsPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.greenAccent.withOpacity(0.1),
+                      Colors.greenAccent.withOpacity(0.2),
                       Colors.transparent,
                     ],
                   ),
@@ -30,32 +30,47 @@ class SettingsPage extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () => _changeProfilePicture(context),
-                      child: CircleAvatar(
-                        radius: 40,
-                        backgroundColor: Colors.greenAccent.withOpacity(0.2),
+                      child: Container(
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          gradient: LinearGradient(
+                            colors: [
+                              Colors.greenAccent.withOpacity(0.3),
+                              Colors.blueAccent.withOpacity(0.3),
+                            ],
+                          ),
+                          border: Border.all(
+                            color: Colors.greenAccent.withOpacity(0.6),
+                            width: 2,
+                          ),
+                        ),
                         child: Stack(
                           children: [
-                            Icon(
-                              Icons.person,
-                              size: 40,
-                              color: Colors.greenAccent,
+                            Center(
+                              child: Icon(
+                                Icons.person,
+                                size: 48,
+                                color: Colors.greenAccent[400],
+                              ),
                             ),
                             Positioned(
-                              bottom: 0,
-                              right: 0,
+                              bottom: 6,
+                              right: 6,
                               child: Container(
-                                padding: const EdgeInsets.all(4),
+                                padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
                                   color: const Color(0xFF0F3D2C),
                                   shape: BoxShape.circle,
                                   border: Border.all(
                                     color: Colors.greenAccent,
-                                    width: 1,
+                                    width: 1.5,
                                   ),
                                 ),
                                 child: Icon(
                                   Icons.camera_alt,
-                                  size: 16,
+                                  size: 18,
                                   color: Colors.greenAccent,
                                 ),
                               ),
@@ -64,24 +79,24 @@ class SettingsPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 16),
                     Text(
                       'Admin User',
                       style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent,
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
+                        color: Colors.greenAccent[400],
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
                       ),
                     ),
                     Text(
                       'admin@softwaresuite.com',
                       style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent.withOpacity(0.7),
-                        fontSize: 12,
+                        color: Colors.greenAccent[400]!.withOpacity(0.8),
+                        fontSize: 14,
                       ),
                     ),
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
@@ -90,52 +105,91 @@ class SettingsPage extends StatelessWidget {
             automaticallyImplyLeading: false,
           ),
 
-          // Settings Content
+          // Settings Content with Colorful Sections
           SliverList(
             delegate: SliverChildListDelegate([
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    // App Info Section
-                    _buildSectionHeader('APP INFORMATION'),
+                    // App Info Section with Gradient
+                    _buildSectionHeader(
+                      'APP INFORMATION',
+                      icon: Icons.apps,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.blueAccent.withOpacity(0.3),
+                          Colors.greenAccent.withOpacity(0.3),
+                        ],
+                      ),
+                    ),
                     _buildSettingCard(
                       icon: Icons.info_outline,
                       title: 'App Version',
                       value: 'v1.0.0',
+                      iconColor: Colors.blueAccent,
                       hasArrow: false,
                     ),
                     _buildSettingCard(
                       icon: Icons.update,
                       title: 'Check for Updates',
                       value: 'You are up to date',
+                      iconColor: Colors.tealAccent,
                       hasArrow: false,
                     ),
 
-                    // Support Section
-                    _buildSectionHeader('SUPPORT & LEGAL'),
+                    // Support Section with Gradient
+                    _buildSectionHeader(
+                      'SUPPORT & LEGAL',
+                      icon: Icons.support,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.purpleAccent.withOpacity(0.3),
+                          Colors.blueAccent.withOpacity(0.3),
+                        ],
+                      ),
+                    ),
                     _buildSettingCard(
                       icon: Icons.email_outlined,
                       title: 'Contact Support',
+                      iconColor: Colors.purpleAccent,
                     ),
                     _buildSettingCard(
                       icon: Icons.description_outlined,
                       title: 'Terms & Conditions',
+                      iconColor: Colors.indigoAccent,
                     ),
                     _buildSettingCard(
                       icon: Icons.privacy_tip_outlined,
                       title: 'Privacy Policy',
+                      iconColor: Colors.blueAccent,
                     ),
 
-                    // Account Section
-                    _buildSectionHeader('ACCOUNT SETTINGS'),
+                    // Account Section with Gradient
+                    _buildSectionHeader(
+                      'ACCOUNT SETTINGS',
+                      icon: Icons.settings,
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.greenAccent.withOpacity(0.3),
+                          Colors.tealAccent.withOpacity(0.3),
+                        ],
+                      ),
+                    ),
                     _buildSettingCard(
                       icon: Icons.lock_outline,
                       title: 'Change Password',
+                      iconColor: Colors.greenAccent,
                     ),
                     _buildSettingCard(
                       icon: Icons.notifications_active_outlined,
                       title: 'Notification Settings',
+                      iconColor: Colors.tealAccent,
+                    ),
+                    _buildSettingCard(
+                      icon: Icons.palette_outlined,
+                      title: 'Theme Customization',
+                      iconColor: Colors.amberAccent,
                     ),
 
                     // Log Out Button
@@ -152,59 +206,43 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _changeProfilePicture(BuildContext context) {
-    // Implement image picker functionality
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF0F3D2C),
-        title: Text(
-          'Change Profile Picture',
-          style: GoogleFonts.orbitron(color: Colors.greenAccent),
+  Widget _buildSectionHeader(String title, {IconData? icon, Gradient? gradient}) {
+    return Container(
+      margin: const EdgeInsets.only(top: 20, bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        gradient: gradient ?? LinearGradient(
+          colors: [
+            Colors.greenAccent.withOpacity(0.2),
+            Colors.transparent,
+          ],
         ),
-        content: Text(
-          'Select image source:',
-          style: GoogleFonts.orbitron(color: Colors.greenAccent.withOpacity(0.8)),
+        border: Border.all(
+          color: Colors.greenAccent.withOpacity(0.3),
+          width: 1,
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              // Implement camera functionality
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Camera',
-              style: GoogleFonts.orbitron(color: Colors.greenAccent),
+      ),
+      child: Row(
+        children: [
+          if (icon != null) ...[
+            Icon(
+              icon,
+              size: 20,
+              color: Colors.greenAccent[400],
             ),
-          ),
-          TextButton(
-            onPressed: () {
-              // Implement gallery functionality
-              Navigator.pop(context);
-            },
-            child: Text(
-              'Gallery',
-              style: GoogleFonts.orbitron(color: Colors.greenAccent),
+            const SizedBox(width: 10),
+          ],
+          Text(
+            title,
+            style: GoogleFonts.orbitron(
+              color: Colors.greenAccent[400],
+              fontSize: 14,
+              letterSpacing: 1.5,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildSectionHeader(String title) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20, bottom: 10),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          title,
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent.withOpacity(0.5),
-            fontSize: 12,
-            letterSpacing: 2,
-          ),
-        ),
       ),
     );
   }
@@ -213,43 +251,69 @@ class SettingsPage extends StatelessWidget {
     required IconData icon,
     required String title,
     String? value,
+    Color? iconColor,
     bool hasArrow = true,
   }) {
     return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      color: const Color(0xFF0F3D2C),
+      margin: const EdgeInsets.only(bottom: 12),
+      color: const Color(0xFF0A261A),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: Colors.greenAccent.withOpacity(0.1),
+          color: Colors.greenAccent.withOpacity(0.15),
           width: 1,
         ),
       ),
       child: ListTile(
-        leading: Icon(
-          icon,
-          color: Colors.greenAccent.withOpacity(0.8),
+        leading: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(10),
+            gradient: LinearGradient(
+              colors: [
+                (iconColor ?? Colors.greenAccent).withOpacity(0.2),
+                Colors.transparent,
+              ],
+            ),
+          ),
+          child: Icon(
+            icon,
+            color: iconColor ?? Colors.greenAccent[400],
+          ),
         ),
         title: Text(
           title,
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent,
-            fontSize: 14,
+          style: GoogleFonts.roboto(
+            color: Colors.white,
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
           ),
         ),
         trailing: value != null
-            ? Text(
-          value,
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent.withOpacity(0.7),
-            fontSize: 12,
+            ? Container(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.2),
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              color: Colors.greenAccent.withOpacity(0.3),
+            ),
+          ),
+          child: Text(
+            value,
+            style: GoogleFonts.orbitron(
+              color: Colors.greenAccent[400]!.withOpacity(0.8),
+              fontSize: 12,
+            ),
           ),
         )
             : hasArrow
             ? Icon(
           Icons.arrow_forward_ios,
           size: 16,
-          color: Colors.greenAccent.withOpacity(0.5),
+          color: Colors.greenAccent.withOpacity(0.6),
         )
             : null,
         onTap: () {
@@ -265,26 +329,47 @@ class SettingsPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         gradient: LinearGradient(
           colors: [
-            Colors.red.withOpacity(0.3),
-            Colors.red.withOpacity(0.1),
+            Colors.red.withOpacity(0.4),
+            Colors.orange.withOpacity(0.2),
           ],
         ),
         border: Border.all(
-          color: Colors.red.withOpacity(0.5),
-          width: 0.5,
+          color: Colors.red.withOpacity(0.6),
+          width: 1,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.red.withOpacity(0.2),
+            blurRadius: 8,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: ListTile(
-        leading: Icon(
-          Icons.logout,
-          color: Colors.redAccent,
+        leading: Container(
+          width: 36,
+          height: 36,
+          decoration: BoxDecoration(
+            color: Colors.red.withOpacity(0.3),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            Icons.logout,
+            color: Colors.redAccent[200],
+          ),
         ),
         title: Text(
           'Log Out',
           style: GoogleFonts.orbitron(
-            color: Colors.redAccent,
-            fontWeight: FontWeight.w600,
+            color: Colors.redAccent[200],
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
           ),
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios,
+          size: 16,
+          color: Colors.redAccent.withOpacity(0.6),
         ),
         onTap: () {
           _showLogoutConfirmation(context);
@@ -293,39 +378,168 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _showLogoutConfirmation(BuildContext context) {
+  void _changeProfilePicture(BuildContext context) {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         backgroundColor: const Color(0xFF0F3D2C),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: Colors.greenAccent.withOpacity(0.3),
+            width: 1,
+          ),
+        ),
         title: Text(
-          'Confirm Logout',
-          style: GoogleFonts.orbitron(color: Colors.greenAccent),
+          'Change Profile Picture',
+          style: GoogleFonts.orbitron(
+            color: Colors.greenAccent[400],
+            fontWeight: FontWeight.bold,
+          ),
         ),
         content: Text(
-          'Are you sure you want to log out?',
-          style: GoogleFonts.orbitron(color: Colors.greenAccent.withOpacity(0.8)),
+          'Select image source:',
+          style: GoogleFonts.roboto(
+            color: Colors.white.withOpacity(0.8),
+          ),
         ),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.blueAccent.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(
+                  color: Colors.blueAccent.withOpacity(0.5),
+                ),
+              ),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Text(
-              'Cancel',
-              style: GoogleFonts.orbitron(color: Colors.greenAccent),
+              'Camera',
+              style: GoogleFonts.orbitron(
+                color: Colors.blueAccent[200],
+              ),
             ),
           ),
           TextButton(
+            style: TextButton.styleFrom(
+              backgroundColor: Colors.purpleAccent.withOpacity(0.2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                side: BorderSide(
+                  color: Colors.purpleAccent.withOpacity(0.5),
+                ),
+              ),
+            ),
             onPressed: () {
-              // Implement logout functionality
               Navigator.pop(context);
-              Navigator.pop(context); // Close settings page too
             },
             child: Text(
-              'Log Out',
-              style: GoogleFonts.orbitron(color: Colors.redAccent),
+              'Gallery',
+              style: GoogleFonts.orbitron(
+                color: Colors.purpleAccent[200],
+              ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showLogoutConfirmation(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        backgroundColor: const Color(0xFF0F3D2C),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+          side: BorderSide(
+            color: Colors.red.withOpacity(0.5),
+            width: 1,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.warning_amber_rounded,
+                color: Colors.orangeAccent,
+                size: 48,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                'Confirm Logout',
+                style: GoogleFonts.orbitron(
+                  color: Colors.redAccent[200],
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                'Are you sure you want to log out?',
+                style: GoogleFonts.roboto(
+                  color: Colors.white.withOpacity(0.8),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        side: BorderSide(
+                          color: Colors.greenAccent.withOpacity(0.5),
+                        ),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        'Cancel',
+                        style: GoogleFonts.orbitron(
+                          color: Colors.greenAccent[400],
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red.withOpacity(0.3),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          side: BorderSide(
+                            color: Colors.red.withOpacity(0.6),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                        'Log Out',
+                        style: GoogleFonts.orbitron(
+                          color: Colors.redAccent[200],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
