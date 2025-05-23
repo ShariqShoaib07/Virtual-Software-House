@@ -128,17 +128,18 @@ class DeveloperProject {
   final String details;
   final List<String> requirements;
   final String deliveryTime;
+  final double developerCost; // Add this field
   ProjectStatus status;
   String jobType;
 
-
   DeveloperProject({
-  required this.title,
-  required this.details,
-  required this.requirements,
-  required this.deliveryTime,
-  required this.jobType,
-  this.status = ProjectStatus.pending,
+    required this.title,
+    required this.details,
+    required this.requirements,
+    required this.deliveryTime,
+    required this.jobType,
+    required this.developerCost, // Add this to constructor
+    this.status = ProjectStatus.pending,
   });
 }
 

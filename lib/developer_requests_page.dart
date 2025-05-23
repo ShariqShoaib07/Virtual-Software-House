@@ -15,6 +15,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["Flutter", "Firebase", "Stripe API", "UI/UX"],
       deliveryTime: "6 weeks",
       jobType: "Remote",
+      developerCost: 2500.00, // Add cost
     ),
     DeveloperProject(
       title: "Company Website Redesign",
@@ -22,6 +23,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["React", "Tailwind CSS", "Figma"],
       deliveryTime: "4 weeks",
       jobType: "In-person",
+      developerCost: 1800.00, // Add cost
     ),
     DeveloperProject(
       title: "Inventory Management System",
@@ -29,6 +31,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["Java", "MySQL", "Barcode API"],
       deliveryTime: "8 weeks",
       jobType: "Hybrid",
+      developerCost: 3200.00, // Add cost
     ),
   ];
 
@@ -39,7 +42,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       appBar: AppBar(
         title: Text(
           "Developer Project Requests",
-          style: GoogleFonts.orbitron(
+          style: GoogleFonts.roboto(
             color: Colors.greenAccent,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -84,18 +87,42 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Developer Name
+            // Developer Name and Cost
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(Icons.person_outline,
-                    color: Colors.greenAccent.withOpacity(0.7),
-                    size: 16),
-                const SizedBox(width: 6),
-                Text(
-                  developerName,
-                  style: GoogleFonts.orbitron(
-                    fontSize: 14,
-                    color: Colors.greenAccent.withOpacity(0.8),
+                Row(
+                  children: [
+                    Icon(Icons.person_outline,
+                        color: Colors.greenAccent.withOpacity(0.7),
+                        size: 16),
+                    const SizedBox(width: 6),
+                    Text(
+                      developerName,
+                      style: GoogleFonts.roboto(  // Changed to roboto for consistency
+                        fontSize: 14,
+                        color: Colors.greenAccent.withOpacity(0.8),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.greenAccent.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Colors.greenAccent.withOpacity(0.3),
+                    ),
+                  ),
+                  child: Text(
+                    '\$${project.developerCost.toStringAsFixed(2)}',
+                    style: GoogleFonts.roboto(
+                      fontSize: 14,
+                      color: Colors.greenAccent,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],
@@ -109,8 +136,8 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                 Flexible(
                   child: Text(
                     project.title,
-                    style: GoogleFonts.orbitron(
-                      fontSize: 16,  // Reduced from 18 to prevent overflow
+                    style: GoogleFonts.roboto(
+                      fontSize: 16,
                       fontWeight: FontWeight.w600,
                       color: Colors.greenAccent,
                     ),
@@ -129,7 +156,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                   ),
                   child: Text(
                     _getStatusText(project.status),
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: _getStatusColor(project.status),
@@ -143,7 +170,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
             // Project Details
             Text(
               project.details,
-              style: GoogleFonts.orbitron(
+              style: GoogleFonts.roboto(
                 color: Colors.greenAccent.withOpacity(0.7),
                 fontSize: 14,
               ),
@@ -172,14 +199,14 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                   children: [
                     Text(
                       "Job Type",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 12,
                         color: Colors.greenAccent.withOpacity(0.7),
                       ),
                     ),
                     Text(
                       project.jobType, // Make sure jobType exists in your Project model
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.greenAccent,
@@ -192,14 +219,14 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                   children: [
                     Text(
                       "Delivery Time",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 12,
                         color: Colors.greenAccent.withOpacity(0.7),
                       ),
                     ),
                     Text(
                       project.deliveryTime,
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.greenAccent,
@@ -227,7 +254,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                     ),
                     child: Text(
                       "Reject",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w500,
                         color: Colors.red,
                       ),
@@ -240,7 +267,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                         SnackBar(
                           content: Text(
                             "Project rejected",
-                            style: GoogleFonts.orbitron(),
+                            style: GoogleFonts.roboto(),
                           ),
                           backgroundColor: Colors.red,
                           behavior: SnackBarBehavior.floating,
@@ -263,7 +290,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                     ),
                     child: Text(
                       "Approve",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         color: const Color(0xFF011B10),
                         fontWeight: FontWeight.w500,
                       ),
@@ -276,7 +303,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                         SnackBar(
                           content: Text(
                             "Project approved",
-                            style: GoogleFonts.orbitron(),
+                            style: GoogleFonts.roboto(),
                           ),
                           backgroundColor: Colors.greenAccent,
                           behavior: SnackBarBehavior.floating,
@@ -307,7 +334,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       ),
       child: Text(
         text,
-        style: GoogleFonts.orbitron(
+        style: GoogleFonts.roboto(
           color: Colors.greenAccent,
           fontSize: 12,
         ),

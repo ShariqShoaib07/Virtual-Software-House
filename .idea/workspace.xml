@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Admin Settings Page got some new files interaction">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Admin Developer Page got some fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/developer_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/client_requests_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/client_requests_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/developer_requests_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_requests_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/project_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/project_data.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -278,11 +280,18 @@
       <option name="project" value="LOCAL" />
       <updated>1748041766835</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Admin Developer Page got some fixes">
+      <option name="closed" value="true" />
+      <created>1748042077387</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1748042077387</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Initial commit of all project files" />
     <MESSAGE value="modified project_data.dart to include project status" />
     <MESSAGE value="Update the Project class in projects_page.dart" />
     <MESSAGE value="For the admin's available_projects_page.dart, modify to show only not started projects" />
@@ -307,6 +316,7 @@
     <MESSAGE value="Admin Client Page got beautification" />
     <MESSAGE value="Admin Settings Page got beautification" />
     <MESSAGE value="Admin Settings Page got some new files interaction" />
-    <option name="LAST_COMMIT_MESSAGE" value="Admin Settings Page got some new files interaction" />
+    <MESSAGE value="Admin Developer Page got some fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Admin Developer Page got some fixes" />
   </component>
 </project>

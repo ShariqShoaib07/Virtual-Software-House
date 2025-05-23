@@ -39,7 +39,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
       appBar: AppBar(
         title: Text(
           "Client Project Requests",
-          style: GoogleFonts.orbitron(
+          style: GoogleFonts.roboto(
             color: Colors.greenAccent,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -93,7 +93,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                 const SizedBox(width: 6),
                 Text(
                   clientName,
-                  style: GoogleFonts.orbitron(
+                  style: GoogleFonts.roboto(
                     fontSize: 14,
                     color: Colors.greenAccent.withOpacity(0.8),
                   ),
@@ -109,7 +109,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                 Flexible(
                   child: Text(
                     project.title,
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 16,  // Reduced from 18 to prevent overflow
                       fontWeight: FontWeight.w600,
                       color: Colors.greenAccent,
@@ -129,7 +129,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                   ),
                   child: Text(
                     _getStatusText(project.status),
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: _getStatusColor(project.status),
@@ -143,7 +143,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
             // Project Details
             Text(
               project.details,
-              style: GoogleFonts.orbitron(
+              style: GoogleFonts.roboto(
                 color: Colors.greenAccent.withOpacity(0.7),
                 fontSize: 14,
               ),
@@ -172,14 +172,14 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                   children: [
                     Text(
                       "Budget",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 12,
                         color: Colors.greenAccent.withOpacity(0.7),
                       ),
                     ),
                     Text(
                       "\$${project.acceptedPrice.toStringAsFixed(2)}",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                         color: Colors.greenAccent,
@@ -192,14 +192,14 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                   children: [
                     Text(
                       "Delivery Time",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 12,
                         color: Colors.greenAccent.withOpacity(0.7),
                       ),
                     ),
                     Text(
                       project.deliveryTime,
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
                         color: Colors.greenAccent,
@@ -227,7 +227,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                     ),
                     child: Text(
                       "Reject",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         fontWeight: FontWeight.w500,
                         color: Colors.red,
                       ),
@@ -240,7 +240,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                         SnackBar(
                           content: Text(
                             "Project rejected",
-                            style: GoogleFonts.orbitron(),
+                            style: GoogleFonts.roboto(),
                           ),
                           backgroundColor: Colors.red,
                           behavior: SnackBarBehavior.floating,
@@ -263,7 +263,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                     ),
                     child: Text(
                       "Approve",
-                      style: GoogleFonts.orbitron(
+                      style: GoogleFonts.roboto(
                         color: const Color(0xFF011B10),
                         fontWeight: FontWeight.w500,
                       ),
@@ -276,7 +276,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                         SnackBar(
                           content: Text(
                             "Project approved",
-                            style: GoogleFonts.orbitron(),
+                            style: GoogleFonts.roboto(),
                           ),
                           backgroundColor: Colors.greenAccent,
                           behavior: SnackBarBehavior.floating,
@@ -307,7 +307,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
       ),
       child: Text(
         text,
-        style: GoogleFonts.orbitron(
+        style: GoogleFonts.roboto(
           color: Colors.greenAccent,
           fontSize: 12,
         ),
