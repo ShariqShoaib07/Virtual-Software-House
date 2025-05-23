@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:image_picker/image_picker.dart';
+import 'contact_support_page.dart';
+import 'terms_conditions_page.dart';
+import 'privacy_policy_page.dart';
+import 'change_password_page.dart';
+import 'notification_settings_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
@@ -153,16 +159,30 @@ class SettingsPage extends StatelessWidget {
                       icon: Icons.email_outlined,
                       title: 'Contact Support',
                       iconColor: Colors.purpleAccent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ContactSupportPage()),
+                      ),
                     ),
+
                     _buildSettingCard(
                       icon: Icons.description_outlined,
                       title: 'Terms & Conditions',
                       iconColor: Colors.indigoAccent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const TermsConditionsPage()),
+                      ),
                     ),
+
                     _buildSettingCard(
                       icon: Icons.privacy_tip_outlined,
                       title: 'Privacy Policy',
                       iconColor: Colors.blueAccent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
+                      ),
                     ),
 
                     // Account Section with Gradient
@@ -180,16 +200,20 @@ class SettingsPage extends StatelessWidget {
                       icon: Icons.lock_outline,
                       title: 'Change Password',
                       iconColor: Colors.greenAccent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ChangePasswordPage()),
+                      ),
                     ),
+
                     _buildSettingCard(
                       icon: Icons.notifications_active_outlined,
                       title: 'Notification Settings',
                       iconColor: Colors.tealAccent,
-                    ),
-                    _buildSettingCard(
-                      icon: Icons.palette_outlined,
-                      title: 'Theme Customization',
-                      iconColor: Colors.amberAccent,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const NotificationSettingsPage()),
+                      ),
                     ),
 
                     // Log Out Button
@@ -253,6 +277,7 @@ class SettingsPage extends StatelessWidget {
     String? value,
     Color? iconColor,
     bool hasArrow = true,
+    VoidCallback? onTap,  // Add this parameter
   }) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
@@ -316,9 +341,7 @@ class SettingsPage extends StatelessWidget {
           color: Colors.greenAccent.withOpacity(0.6),
         )
             : null,
-        onTap: () {
-          // Add navigation/functionality
-        },
+        onTap: onTap,  // Use the onTap parameter here
       ),
     );
   }
@@ -378,7 +401,9 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _changeProfilePicture(BuildContext context) {
+  void _changeProfilePicture(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -414,8 +439,18 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
+              final XFile? image = await picker.pickImage(source: ImageSource.camera);
+              if (image != null) {
+                // Handle the captured image
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Profile picture updated from camera'),
+                    backgroundColor: Colors.greenAccent[400],
+                  ),
+                );
+              }
             },
             child: Text(
               'Camera',
@@ -434,8 +469,18 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
             ),
-            onPressed: () {
+            onPressed: () async {
               Navigator.pop(context);
+              final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+              if (image != null) {
+                // Handle the selected image
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Profile picture updated from gallery'),
+                    backgroundColor: Colors.greenAccent[400],
+                  ),
+                );
+              }
             },
             child: Text(
               'Gallery',
