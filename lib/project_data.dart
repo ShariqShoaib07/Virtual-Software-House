@@ -5,6 +5,7 @@ enum ProjectStatus {
   notStarted,
   developerRequested,
   ongoing,
+  inProgress,
   completed,
   rejected
 }

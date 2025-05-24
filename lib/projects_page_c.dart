@@ -92,6 +92,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
   Widget _buildProjectCard(Project project) {
     return Card(
       elevation: 2,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
@@ -182,6 +183,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
         return StatefulBuilder(
           builder: (context, setState) {
             return Dialog(
+              backgroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16),
               ),

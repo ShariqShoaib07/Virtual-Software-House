@@ -198,6 +198,7 @@ class _ProfilePageCState extends State<ProfilePageC> {
                         'SAVE PROFILE',
                         style: TextStyle(
                           fontSize: 16,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
