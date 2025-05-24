@@ -24,6 +24,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       acceptedPrice: 1500.00,
       startDate: DateTime.now(),
       endDate: DateTime.now().add(const Duration(days: 30)),
+      srsFile: "assets/srs/sample_srs.pdf",
       status: ProjectStatus.notStarted,
     ),
     Project(
@@ -35,6 +36,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
       acceptedPrice: 800.00,
       startDate: DateTime.now(),
       endDate: DateTime.now().add(const Duration(days: 14)),
+      srsFile: "assets/srs/sample_srs.pdf",
       status: ProjectStatus.notStarted,
     ),
     Project(
@@ -46,11 +48,52 @@ class _ProjectsPageState extends State<ProjectsPage> {
       acceptedPrice: 2500.00,
       startDate: DateTime.now(),
       endDate: DateTime.now().add(const Duration(days: 90)),
+      srsFile: "assets/srs/sample_srs.pdf",
       status: ProjectStatus.notStarted,
     ),
   ];
   List<Project> filteredProjects = [];
   String _filterJobType = "all";
+  bool _isDownloading = false;
+
+  Future<void> _downloadSRS(BuildContext context, Project project) async {
+    if (project.srsFile == null) return;
+
+    setState(() {
+      _isDownloading = true;
+    });
+
+    try {
+      // Get the application documents directory
+      final directory = await getApplicationDocumentsDirectory();
+      final file = File('${directory.path}/${project.title.replaceAll(' ', '_')}_SRS.pdf');
+
+      // Copy from assets to local storage
+      final data = await rootBundle.load(project.srsFile!);
+      await file.writeAsBytes(data.buffer.asUint8List());
+
+      // Open the downloaded file
+      await OpenFile.open(file.path);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("SRS document downloaded successfully!"),
+          backgroundColor: Colors.green,
+        ),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Failed to download SRS: ${e.toString()}"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    } finally {
+      setState(() {
+        _isDownloading = false;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -78,9 +121,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
     });
   }
 
-  void _applyForProject(int index) {
+  void _applyForProject(int index, double developerCost) {
     setState(() {
       notStartedProjects[index].status = ProjectStatus.developerRequested;
+      notStartedProjects[index].acceptedPrice = developerCost; // Update with developer's cost
       filteredProjects = List<Project>.from(notStartedProjects)
           .where((project) => project.status == ProjectStatus.notStarted)
           .toList();
@@ -108,19 +152,21 @@ class _ProjectsPageState extends State<ProjectsPage> {
   @override
   Widget build(BuildContext context) {
     final bottomPadding = MediaQuery.of(context).padding.bottom; // Get system bottom padding
-
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Colors.white, // Changed to white
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Available Projects",
           style: TextStyle(
             fontWeight: FontWeight.bold,
+            color: Colors.black87, // Darker text for better contrast
           ),
         ),
         centerTitle: true,
         elevation: 0,
+        backgroundColor: Colors.white, // White app bar
         automaticallyImplyLeading: false,
+        iconTheme: const IconThemeData(color: Colors.black87),
       ),
       body: SafeArea(
         child: Column(
@@ -198,7 +244,12 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   Widget _buildFilterChip(String label, bool selected) {
     return FilterChip(
-      label: Text(label),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: selected ? Colors.white : Colors.grey[700],
+        ),
+      ),
       selected: selected,
       onSelected: (isSelected) {
         setState(() {
@@ -208,32 +259,34 @@ class _ProjectsPageState extends State<ProjectsPage> {
       },
       backgroundColor: Colors.white,
       selectedColor: const Color(0xFF38E54D),
-      labelStyle: TextStyle(
-        color: selected ? Colors.white : Colors.grey[700],
-      ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8),
+        side: BorderSide(
+          color: selected ? Colors.transparent : Colors.grey[300]!,
+        ),
       ),
-      elevation: selected ? 2 : 0,
+      elevation: 0,
+      showCheckmark: false,
     );
   }
 
   Widget _buildProjectCard(Project project, int index) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 1,
-      color: Colors.white,
+      elevation: 0,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.grey.withOpacity(0.1), width: 1),
       ),
+      color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Project Type Badge
+            // Job Type Badge
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
                 color: _getJobTypeColor(project.jobType).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
@@ -247,7 +300,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             // Project Title
             Text(
@@ -255,6 +308,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 8),
@@ -265,68 +319,95 @@ class _ProjectsPageState extends State<ProjectsPage> {
               style: TextStyle(
                 color: Colors.grey[600],
                 fontSize: 14,
+                height: 1.4,
               ),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 12),
+            const SizedBox(height: 16),
 
             // Requirements
             Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: 8,
+              runSpacing: 8,
               children: project.requirements
                   .take(3)
                   .map((req) => _buildRequirementChip(req))
                   .toList(),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
-            // Footer with Price, Delivery Time and Apply Button
+            // Action Buttons Row
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "\$${project.acceptedPrice.toStringAsFixed(2)}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF38E54D),
+                // Download SRS Button
+                if (project.srsFile != null)
+                  Expanded(
+                    child: OutlinedButton.icon(
+                      icon: const Icon(Icons.download, size: 18),
+                      label: const Text(
+                        "Download SRS",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () => _downloadSRS(context, project),
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: const Color(0xFF38E54D),
+                        side: BorderSide(color: Color(0xFF38E54D)!),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12),
                       ),
                     ),
-                    Text(
-                      "Delivery: ${project.deliveryTime}",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
+                  ),
+                if (project.srsFile != null) const SizedBox(width: 12),
+                // Apply Button
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF38E54D),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 12),
+                      elevation: 0,
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 24, vertical: 12),
-                  ),
-                  child: const Text(
-                    "Apply",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
+                    child: const Text(
+                      "Apply",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  onPressed: () => _applyForProject(
-                    notStartedProjects.indexWhere((p) => p.title == project.title),
+                    onPressed: () => _showProposalDialog(context, index),
                   ),
                 ),
               ],
+            ),
+            const SizedBox(height: 12),
+
+            // Delivery Time
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: Colors.grey[50],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
+                  const SizedBox(width: 8),
+                  Text(
+                    "Delivery: ${project.deliveryTime}",
+                    style: TextStyle(
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -334,12 +415,144 @@ class _ProjectsPageState extends State<ProjectsPage> {
     );
   }
 
+  void _showProposalDialog(BuildContext context, int index) {
+    final project = notStartedProjects[index];
+    final priceController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (context) => Dialog(
+        insetPadding: const EdgeInsets.all(20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Container(
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                "Submit Proposal",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                project.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                ),
+              ),
+              const SizedBox(height: 24),
+              Form(
+                key: formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: priceController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: "Your Proposed Cost (\$)",
+                        labelStyle: TextStyle(color: Colors.grey[600]),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 14,
+                        ),
+                      ),
+                      style: const TextStyle(color: Colors.black87),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your proposed cost';
+                        }
+                        if (double.tryParse(value) == null) {
+                          return 'Please enter a valid number';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 24),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                          ),
+                          child: const Text(
+                            "Cancel",
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              Navigator.pop(context);
+                              _applyForProject(
+                                index,
+                                double.parse(priceController.text),
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF38E54D),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 24,
+                              vertical: 12,
+                            ),
+                            elevation: 0,
+                          ),
+                          child: const Text(
+                            "Submit",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildRequirementChip(String text) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: Colors.grey[100],
+        color: Colors.grey[50],
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey.withOpacity(0.2)),
       ),
       child: Text(
         text,
@@ -378,9 +591,10 @@ class Project {
   final String details;
   final String deliveryTime;
   final List<String> requirements;
-  final double acceptedPrice;
+  double acceptedPrice;
   final DateTime startDate;
   final DateTime endDate;
+  final String? srsFile;
   ProjectStatus status;
 
   Project({
@@ -392,6 +606,7 @@ class Project {
     required this.acceptedPrice,
     required this.startDate,
     required this.endDate,
+    this.srsFile,
     this.status = ProjectStatus.notStarted,
   });
 }

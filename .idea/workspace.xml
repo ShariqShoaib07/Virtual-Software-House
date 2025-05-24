@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Settings page got new colors">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Adjusted the bottom padding of both Home and Projects page of Developer side">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/home_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/profile_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile_page.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/projects_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/tools_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/tools_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -341,11 +338,18 @@
       <option name="project" value="LOCAL" />
       <updated>1748058160696</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Adjusted the bottom padding of both Home and Projects page of Developer side">
+      <option name="closed" value="true" />
+      <created>1748059770008</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1748059770008</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fixed all errors" />
     <MESSAGE value="Added action button in projects_page" />
     <MESSAGE value="transfering of project from client to admin" />
     <MESSAGE value="replaced ProjectPageCState class for add project beautification" />
@@ -370,6 +374,7 @@
     <MESSAGE value="removed that completeness bar on ongoing project page" />
     <MESSAGE value="Clients project page got new colors" />
     <MESSAGE value="Settings page got new colors" />
-    <option name="LAST_COMMIT_MESSAGE" value="Settings page got new colors" />
+    <MESSAGE value="Adjusted the bottom padding of both Home and Projects page of Developer side" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adjusted the bottom padding of both Home and Projects page of Developer side" />
   </component>
 </project>
