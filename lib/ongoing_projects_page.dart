@@ -13,7 +13,7 @@ class OngoingProjectsPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Ongoing Projects",
-          style: GoogleFonts.orbitron(
+          style: GoogleFonts.roboto(
             color: Colors.greenAccent,
             fontSize: 18,
             fontWeight: FontWeight.w600,
@@ -68,7 +68,7 @@ class OngoingProjectsPage extends StatelessWidget {
                 Flexible(
                   child: Text(
                     project.title,
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
                       color: Colors.greenAccent,
@@ -86,7 +86,7 @@ class OngoingProjectsPage extends StatelessWidget {
                   ),
                   child: Text(
                     "Ongoing",
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                       color: Colors.yellow,
@@ -100,7 +100,7 @@ class OngoingProjectsPage extends StatelessWidget {
             // Project Details
             Text(
               project.details,
-              style: GoogleFonts.orbitron(
+              style: GoogleFonts.roboto(
                 color: Colors.greenAccent.withOpacity(0.8),
                 fontSize: 14,
               ),
@@ -149,34 +149,8 @@ class OngoingProjectsPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Progress Bar (static for now)
-            LinearProgressIndicator(
-              value: 0.3, // Example 30% progress
-              backgroundColor: Colors.greenAccent.withOpacity(0.1),
-              color: Colors.greenAccent,
-              minHeight: 6,
-              borderRadius: BorderRadius.circular(3),
-            ),
-            const SizedBox(height: 8),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "30% Completed",
-                  style: GoogleFonts.orbitron(
-                    fontSize: 12,
-                    color: Colors.greenAccent.withOpacity(0.7),
-                  ),
-                ),
-                Text(
-                  "Due in 4 weeks",
-                  style: GoogleFonts.orbitron(
-                    fontSize: 12,
-                    color: Colors.greenAccent.withOpacity(0.7),
-                  ),
-                ),
-              ],
-            ),
+
+
           ],
         ),
       ),
@@ -202,7 +176,7 @@ class OngoingProjectsPage extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               title,
-              style: GoogleFonts.orbitron(
+              style: GoogleFonts.roboto(
                 fontSize: 12,
                 color: Colors.greenAccent.withOpacity(0.7),
               ),
@@ -212,7 +186,7 @@ class OngoingProjectsPage extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: GoogleFonts.orbitron(
+          style: GoogleFonts.roboto(
             fontSize: isMoney ? 16 : 14,
             fontWeight: isMoney ? FontWeight.w600 : FontWeight.w500,
             color: Colors.greenAccent,
