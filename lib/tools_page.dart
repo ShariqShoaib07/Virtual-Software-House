@@ -114,6 +114,7 @@ class _ToolsPageState extends State<ToolsPage> {
                     child: Text(
                       'GENERATE SRS DOCUMENT',
                       style: TextStyle(
+                        color: Colors.white,
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),

@@ -5,8 +5,6 @@ import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 class ProjectsPage extends StatefulWidget {
   const ProjectsPage({Key? key}) : super(key: key);
 
@@ -109,81 +107,91 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).padding.bottom; // Get system bottom padding
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(
           "Available Projects",
           style: TextStyle(
-          fontWeight: FontWeight.bold, // Makes the text bold
+            fontWeight: FontWeight.bold,
+          ),
         ),
-      ),
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
       ),
-      body: Column(
-        children: [
-          // Search and Filter Section
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              children: [
-                // Search Bar
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 10,
-                        offset: const Offset(0, 4),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Search and Filter Section
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  // Search Bar
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
+                        hintText: "Search projects...",
+                        prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.symmetric(vertical: 16),
                       ),
-                    ],
-                  ),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: "Search projects...",
-                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                   ),
-                ),
-                const SizedBox(height: 16),
-                // Filter Chips
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: [
-                      _buildFilterChip("All", _filterJobType == "all"),
-                      const SizedBox(width: 8),
-                      _buildFilterChip("In-person", _filterJobType == "in-person"),
-                      const SizedBox(width: 8),
-                      _buildFilterChip("Remote", _filterJobType == "remote"),
-                      const SizedBox(width: 8),
-                      _buildFilterChip("Hybrid", _filterJobType == "hybrid"),
-                    ],
+                  const SizedBox(height: 16),
+                  // Filter Chips
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        _buildFilterChip("All", _filterJobType == "all"),
+                        const SizedBox(width: 8),
+                        _buildFilterChip("In-person", _filterJobType == "in-person"),
+                        const SizedBox(width: 8),
+                        _buildFilterChip("Remote", _filterJobType == "remote"),
+                        const SizedBox(width: 8),
+                        _buildFilterChip("Hybrid", _filterJobType == "hybrid"),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
 
-          // Projects List
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: filteredProjects.length,
-              itemBuilder: (context, index) {
-                final project = filteredProjects[index];
-                return _buildProjectCard(project, index);
-              },
+            // Projects List
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: 8, // Add system padding + extra space
+                ),
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  itemCount: filteredProjects.length,
+                  itemBuilder: (context, index) {
+                    final project = filteredProjects[index];
+                    return _buildProjectCard(project, index);
+                  },
+                ),
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -214,6 +222,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
       elevation: 1,
+      color: Colors.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),

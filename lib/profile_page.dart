@@ -259,6 +259,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(
                         'SAVE PROFILE',
                         style: TextStyle(
+                          color: Colors.white,
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
