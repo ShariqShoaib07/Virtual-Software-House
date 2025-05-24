@@ -11,7 +11,9 @@ class SettingsPage extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(title: Text("Billing History")),
-          body: ListView(
+      body: Container(
+        color: Colors.white, // Add this line
+        child: ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.all(16),
             children: [
@@ -51,6 +53,7 @@ class SettingsPage extends StatelessWidget {
               ),
             ],
           ),
+        ),
         ),
       ),
     );
@@ -327,6 +330,7 @@ class SettingsPage extends StatelessWidget {
 
   void _showProfileSettings(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -410,6 +414,7 @@ class SettingsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         title: const Text("Change Password", style: TextStyle(fontWeight: FontWeight.bold)),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -491,7 +496,9 @@ class SettingsPage extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(title: Text("Payment Methods")),
-          body: ListView(
+      body: Container(
+        color: Colors.white, // Add this line
+        child: ListView(
             physics: const AlwaysScrollableScrollPhysics(),
             padding: EdgeInsets.all(16),
             children: [
@@ -531,6 +538,7 @@ class SettingsPage extends StatelessWidget {
                 onTap: () => _showAddPaymentMethod(context),
               ),
             ],
+        ),
           ),
         ),
       ),
@@ -577,6 +585,7 @@ class SettingsPage extends StatelessWidget {
 
   void _showAddPaymentMethod(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -681,7 +690,9 @@ class SettingsPage extends StatelessWidget {
       MaterialPageRoute(
         builder: (context) => Scaffold(
           appBar: AppBar(title: Text("Subscription")),
-          body: Padding(
+      body: Container(
+        color: Colors.white, // Add this line
+        child: Padding(
             padding: EdgeInsets.all(16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -769,6 +780,7 @@ class SettingsPage extends StatelessWidget {
             ),
           ),
         ),
+        ),
       ),
     );
   }
@@ -785,6 +797,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(
             "Email Preferences",
             style: TextStyle(
@@ -839,6 +852,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(
             "Notification Settings",
             style: TextStyle(
@@ -893,6 +907,7 @@ class SettingsPage extends StatelessWidget {
       context: context,
       builder: (context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text(
             "Privacy & Security",
             style: TextStyle(
@@ -937,6 +952,7 @@ class SettingsPage extends StatelessWidget {
 
   void _showFeedbackForm(BuildContext context) {
     showModalBottomSheet(
+      backgroundColor: Colors.white,
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
@@ -1013,15 +1029,23 @@ class SettingsPage extends StatelessWidget {
   }
 
   void _showAboutApp(BuildContext context) {
-    showAboutDialog(
+    showDialog(
       context: context,
-      applicationName: "Your App Name",
-      applicationVersion: "Version 1.0.0",
-      applicationLegalese: "© 2023 Your Company",
-      children: [
-        SizedBox(height: 20),
-        Text("A beautiful app for managing your projects and tools"),
-      ],
+      builder: (context) => Theme(
+        data: Theme.of(context).copyWith(
+          dialogBackgroundColor: Colors.white, // This sets the background color
+        ),
+        child: AboutDialog(
+          applicationName: "Your App Name",
+          applicationVersion: "Version 1.0.0",
+          applicationLegalese: "© 2023 Your Company",
+          applicationIcon: Icon(Icons.apps, color: Color(0xFF38E54D)),
+          children: <Widget>[
+            SizedBox(height: 20),
+            Text("A beautiful app for managing your projects and tools"),
+          ],
+        ),
+      ),
     );
   }
 
@@ -1029,6 +1053,7 @@ class SettingsPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
         title: Text("Log Out"),
         content: Text("Are you sure you want to log out?"),
         actions: [

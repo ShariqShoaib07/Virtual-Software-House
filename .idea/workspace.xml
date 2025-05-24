@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="removed that completeness bar on ongoing project page">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Clients project page got new colors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/profile_page_c.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/profile_page_c.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/project_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/project_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/projects_page_c.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_c.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/settings_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -324,11 +322,18 @@
       <option name="project" value="LOCAL" />
       <updated>1748055088874</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Clients project page got new colors">
+      <option name="closed" value="true" />
+      <created>1748057312512</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1748057312512</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="For the developer's modified ProjectsPage and Project Classes in projects_page.dart" />
     <MESSAGE value="modified the whole class" />
     <MESSAGE value="fixed all errors" />
     <MESSAGE value="Added action button in projects_page" />
@@ -353,6 +358,7 @@
     <MESSAGE value="Admin Developer and Client request Pages got some fixes" />
     <MESSAGE value="Added some extra features in Admin Dashbord" />
     <MESSAGE value="removed that completeness bar on ongoing project page" />
-    <option name="LAST_COMMIT_MESSAGE" value="removed that completeness bar on ongoing project page" />
+    <MESSAGE value="Clients project page got new colors" />
+    <option name="LAST_COMMIT_MESSAGE" value="Clients project page got new colors" />
   </component>
 </project>
