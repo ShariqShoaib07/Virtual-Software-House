@@ -77,6 +77,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         ),
         centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF011B10),
         iconTheme: const IconThemeData(color: Colors.greenAccent),
       ),

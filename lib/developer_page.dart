@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/services.dart';
 
 class DeveloperPage extends StatefulWidget {
   @override
@@ -342,6 +343,8 @@ class _DeveloperPageState extends State<DeveloperPage> {
   }
 
   Widget _buildInfoRow(IconData icon, String text, {bool isLink = false}) {
+    bool isEmail = !isLink && text.contains('@'); // Detect if it's an email
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: Row(
@@ -352,14 +355,25 @@ class _DeveloperPageState extends State<DeveloperPage> {
           const SizedBox(width: 12),
           GestureDetector(
             onTap: isLink ? () => launchUrl(Uri.parse('https://$text')) : null,
+            onLongPress: isEmail
+                ? () {
+              Clipboard.setData(ClipboardData(text: text));
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Copied email to clipboard'),
+                  backgroundColor: Colors.greenAccent[400],
+                ),
+              );
+            }
+                : null,
             child: Text(
               text,
               style: GoogleFonts.roboto(
-                color: isLink
+                color: isLink || isEmail
                     ? Colors.greenAccent[400]
                     : Colors.greenAccent[200],
                 fontSize: 14,
-                decoration: isLink ? TextDecoration.underline : null,
+                decoration: isLink || isEmail ? TextDecoration.underline : null,
               ),
             ),
           ),

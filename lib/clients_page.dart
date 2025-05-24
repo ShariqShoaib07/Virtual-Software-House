@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/services.dart';
 
 class ClientsPage extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _ClientsPageState extends State<ClientsPage> {
       'middleName': 'Q',
       'lastName': 'Robotics',
       'phone': '+92 300 1234567',
+      'email': 'alice@robotics.com', // Make sure email exists
       'address': 'Sector G-9',
       'city': 'Islamabad',
       'country': 'Pakistan',
@@ -27,6 +29,7 @@ class _ClientsPageState extends State<ClientsPage> {
       'middleName': 'Cyber',
       'lastName': 'Space',
       'phone': '+92 333 7654321',
+      'email': 'bob@cyberspace.com', // Make sure email exists
       'address': 'Shahrah-e-Faisal',
       'city': 'Karachi',
       'country': 'Pakistan',
@@ -209,6 +212,7 @@ class _ClientsPageState extends State<ClientsPage> {
               _buildInfoRow(Icons.location_on_outlined,
                   "${client['address']}, ${client['city']}, ${client['country']}"),
               _buildInfoRow(Icons.phone_outlined, client['phone']),
+              _buildInfoRow(Icons.email_outlined, client['email'], isEmail: true),
 
               const SizedBox(height: 20),
 
@@ -256,7 +260,9 @@ class _ClientsPageState extends State<ClientsPage> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text) {
+  Widget _buildInfoRow(IconData icon, String? text, {bool isEmail = false}) {
+    if (text == null || text.isEmpty) return SizedBox(); // Return empty widget if text is null
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
       child: Row(
@@ -267,11 +273,27 @@ class _ClientsPageState extends State<ClientsPage> {
               color: Colors.greenAccent[400]!.withOpacity(0.9)),
           const SizedBox(width: 12),
           Expanded(
-            child: Text(
-              text,
-              style: GoogleFonts.roboto(
-                color: Colors.greenAccent[200],
-                fontSize: 14,
+            child: GestureDetector(
+              onLongPress: isEmail
+                  ? () {
+                Clipboard.setData(ClipboardData(text: text));
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Copied email to clipboard'),
+                    backgroundColor: Colors.greenAccent[400],
+                  ),
+                );
+              }
+                  : null,
+              child: Text(
+                text,
+                style: GoogleFonts.roboto(
+                  color: isEmail
+                      ? Colors.greenAccent[400]
+                      : Colors.greenAccent[200],
+                  fontSize: 14,
+                  decoration: isEmail ? TextDecoration.underline : null,
+                ),
               ),
             ),
           ),

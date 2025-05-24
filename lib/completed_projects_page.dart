@@ -22,6 +22,7 @@ class CompletedProjectsPage extends StatelessWidget {
         ),
         centerTitle: true,
         elevation: 0,
+        automaticallyImplyLeading: false,
         backgroundColor: const Color(0xFF011B10),
       ),
       body: completedProjects.isEmpty
