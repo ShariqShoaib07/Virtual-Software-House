@@ -38,7 +38,6 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         status: ProjectStatus.notStarted,
         jobType: "Hybrid",
       ),
-      // Add more sample projects as needed
       ...ProjectData.notStartedProjects,
     ];
     _filteredProjects = _allProjects;
@@ -65,12 +64,12 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Available Projects",
           style: GoogleFonts.roboto(
-            color: Colors.greenAccent,
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -78,42 +77,41 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF011B10),
-        iconTheme: const IconThemeData(color: Colors.greenAccent),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Column(
         children: [
-          // Search Bar
           Padding(
             padding: const EdgeInsets.all(16),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF0A261A),
+                color: Colors.grey[100],
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.greenAccent.withOpacity(0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     blurRadius: 8,
-                    offset: const Offset(0, 4),
+                    offset: Offset(0, 4),
                   ),
                 ],
               ),
               child: TextField(
                 controller: _searchController,
                 style: GoogleFonts.roboto(
-                  color: Colors.greenAccent[200],
+                  color: Colors.black,
                   fontSize: 14,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Search projects...',
                   hintStyle: GoogleFonts.roboto(
-                    color: Colors.greenAccent[200]!.withOpacity(0.7),
+                    color: Colors.grey[600],
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.greenAccent[400]),
+                  prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
                   filled: true,
                   fillColor: Colors.transparent,
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  contentPadding: EdgeInsets.symmetric(vertical: 14, horizontal: 16),
                 ),
               ),
             ),
@@ -126,12 +124,12 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                 });
               },
               child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.symmetric(horizontal: 16),
                 itemCount: _filteredProjects.length,
                 itemBuilder: (context, index) {
                   final project = _filteredProjects[index];
                   return Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
+                    padding: EdgeInsets.only(bottom: 16),
                     child: _buildProjectCard(project),
                   );
                 },
@@ -146,26 +144,25 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
   Widget _buildProjectCard(Project project) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3D2C),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.15),
+            color: Colors.grey.withOpacity(0.1),
             blurRadius: 12,
-            offset: const Offset(0, 6),
+            offset: Offset(0, 6),
           ),
         ],
         border: Border.all(
-          color: Colors.greenAccent.withOpacity(0.3),
+          color: Colors.grey[300]!,
           width: 1.5,
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Project Title and Status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -173,7 +170,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                   child: Text(
                     project.title,
                     style: GoogleFonts.roboto(
-                      color: Colors.greenAccent,
+                      color: Colors.black,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
@@ -182,18 +179,18 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.greenAccent.withOpacity(0.1),
+                    color: Color(0xFF4CAF50).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                     border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
+                      color: Color(0xFF4CAF50).withOpacity(0.3),
                     ),
                   ),
                   child: Text(
                     project.jobType,
                     style: GoogleFonts.roboto(
-                      color: Colors.greenAccent,
+                      color: Color(0xFF4CAF50),
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
                     ),
@@ -201,39 +198,35 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                 ),
               ],
             ),
-            const SizedBox(height: 8),
-
-            // Project Details
+            SizedBox(height: 8),
             Text(
               project.details,
               style: GoogleFonts.roboto(
-                color: Colors.greenAccent.withOpacity(0.8),
+                color: Colors.grey[700],
                 fontSize: 14,
               ),
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
-            const SizedBox(height: 12),
-
-            // Requirements
+            SizedBox(height: 12),
             Wrap(
               spacing: 8,
               runSpacing: 8,
               children: project.requirements
                   .take(3)
                   .map((req) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent.withOpacity(0.1),
+                  color: Color(0xFF4CAF50).withOpacity(0.1),
                   borderRadius: BorderRadius.circular(8),
                   border: Border.all(
-                    color: Colors.greenAccent.withOpacity(0.3),
+                    color: Color(0xFF4CAF50).withOpacity(0.3),
                   ),
                 ),
                 child: Text(
                   req,
                   style: GoogleFonts.roboto(
-                    color: Colors.greenAccent,
+                    color: Color(0xFF4CAF50),
                     fontSize: 12,
                     fontWeight: FontWeight.w500,
                   ),
@@ -241,9 +234,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
               ))
                   .toList(),
             ),
-            const SizedBox(height: 16),
-
-            // Budget and Timeline
+            SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -254,14 +245,14 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                       "Budget",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
                       '\$${project.acceptedPrice.toStringAsFixed(2)}',
                       style: GoogleFonts.roboto(
                         fontSize: 16,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -274,14 +265,14 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                       "Timeline",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
                       project.deliveryTime,
                       style: GoogleFonts.roboto(
                         fontSize: 16,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -294,14 +285,14 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                       "Start Date",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
                       "${project.startDate.day}/${project.startDate.month}/${project.startDate.year}",
                       style: GoogleFonts.roboto(
                         fontSize: 14,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                         fontWeight: FontWeight.w500,
                       ),
                     ),

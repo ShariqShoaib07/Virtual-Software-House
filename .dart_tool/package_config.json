@@ -117,7 +117,7 @@
     },
     {
       "name": "fl_chart",
-      "rootUri": "file:///C:/Users/xtrea/AppData/Local/Pub/Cache/hosted/pub.dev/fl_chart-0.63.0",
+      "rootUri": "file:///C:/Users/xtrea/AppData/Local/Pub/Cache/hosted/pub.dev/fl_chart-0.65.0",
       "packageUri": "lib/",
       "languageVersion": "3.0"
     },
@@ -578,7 +578,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-05-24T02:06:27.316814Z",
+  "generated": "2025-06-01T23:00:14.271484Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///C:/Users/xtrea/Downloads/flutter_windows_3.29.3-stable/flutter",
