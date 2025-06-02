@@ -14,51 +14,51 @@ class ProjectsPage extends StatelessWidget {
       'icon': Icons.work_outline,
       'page': AvailableProjectsPage(),
       'count': ProjectData.notStartedProjects.length,
-      'color': Colors.tealAccent,
-      'gradientColor': const Color(0xFF0F3D2C),
+      'color': const Color(0xFF38E54D), // Green
+      'iconColor': const Color(0xFF38E54D),
     },
     {
       'title': 'Client Requests',
       'icon': Icons.groups_outlined,
       'page': ClientRequestsPage(),
       'count': ProjectData.pendingProjects.length,
-      'color': Colors.orangeAccent,
-      'gradientColor': const Color(0xFF0F3D2C),
+      'color': const Color(0xFF38E54D), // Green
+      'iconColor': const Color(0xFF38E54D),
     },
     {
       'title': 'Developer Requests',
       'icon': Icons.engineering,
       'page': DeveloperRequestsPage(),
       'count': ProjectData.developerRequestedProjects.length,
-      'color': Colors.blueAccent,
-      'gradientColor': const Color(0xFF0F3D2C),
+      'color': const Color(0xFF38E54D), // Green
+      'iconColor': const Color(0xFF38E54D),
     },
     {
       'title': 'Ongoing Projects',
       'icon': Icons.autorenew,
       'page': OngoingProjectsPage(),
       'count': ProjectData.ongoingProjects.length,
-      'color': Colors.yellowAccent,
-      'gradientColor': const Color(0xFF0F3D2C),
+      'color': const Color(0xFF38E54D), // Green
+      'iconColor': const Color(0xFF38E54D),
     },
     {
       'title': 'Completed Projects',
       'icon': Icons.verified_outlined,
       'page': CompletedProjectsPage(),
       'count': ProjectData.completedProjects.length,
-      'color': Colors.greenAccent,
-      'gradientColor': const Color(0xFF0F3D2C),
+      'color': const Color(0xFF38E54D), // Green
+      'iconColor': const Color(0xFF38E54D),
     },
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: 100,
+            expandedHeight: 120,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 decoration: BoxDecoration(
@@ -66,7 +66,7 @@ class ProjectsPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.greenAccent.withOpacity(0.1),
+                      const Color(0xFF38E54D).withOpacity(0.1),
                       Colors.transparent,
                     ],
                   ),
@@ -74,18 +74,19 @@ class ProjectsPage extends StatelessWidget {
               ),
             ),
             pinned: true,
-            backgroundColor: const Color(0xFF011B10),
+            backgroundColor: Colors.white,
             automaticallyImplyLeading: false,
             title: Text(
               'PROJECT DASHBOARD',
-              style: GoogleFonts.orbitron(
-                color: Colors.greenAccent,
+              style: GoogleFonts.roboto(
+                color: Colors.black,
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
-                letterSpacing: 1.5,
+                letterSpacing: 1.0,
               ),
             ),
             centerTitle: true,
+            iconTheme: const IconThemeData(color: Color(0xFF38E54D)),
           ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
@@ -105,44 +106,32 @@ class ProjectsPage extends StatelessWidget {
   }
 
   Widget _buildProjectCard(BuildContext context, Map<String, dynamic> section) {
-    final Color accentColor = section['color'] ?? Colors.greenAccent;
-    final Color baseColor = section['gradientColor'] ?? const Color(0xFF0F3D2C);
+    final Color cardColor = section['color'] ?? const Color(0xFF38E54D);
+    final Color iconColor = section['iconColor'] ?? const Color(0xFF38E54D);
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
-          PageRouteBuilder(
-            pageBuilder: (_, __, ___) => section['page'],
-            transitionsBuilder: (_, animation, __, child) {
-              return FadeTransition(
-                opacity: animation,
-                child: child,
-              );
-            },
-          ),
+          MaterialPageRoute(builder: (context) => section['page']),
         );
       },
       child: Container(
-        height: 100, // Fixed height for rectangular cards
+        height: 100,
         decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: BorderRadius.circular(12),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              baseColor,
-              accentColor.withOpacity(0.2),
-            ],
-          ),
           boxShadow: [
             BoxShadow(
-              color: accentColor.withOpacity(0.3),
+              color: Colors.grey.withOpacity(0.1),
               blurRadius: 8,
-              spreadRadius: 1,
               offset: const Offset(0, 4),
             ),
           ],
+          border: Border.all(
+            color: cardColor.withOpacity(0.3),
+            width: 1.5,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -151,16 +140,16 @@ class ProjectsPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: accentColor.withOpacity(0.1),
+                  color: cardColor.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: accentColor.withOpacity(0.3),
+                    color: cardColor.withOpacity(0.3),
                     width: 2,
                   ),
                 ),
                 child: Icon(
                   section['icon'] ?? Icons.help_outline,
-                  color: accentColor,
+                  color: iconColor,
                   size: 28,
                 ),
               ),
@@ -172,8 +161,8 @@ class ProjectsPage extends StatelessWidget {
                   children: [
                     Text(
                       section['title'] ?? 'Projects',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent,
+                      style: GoogleFonts.roboto(
+                        color: Colors.black,
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
@@ -182,8 +171,8 @@ class ProjectsPage extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       '${section['count'] ?? 0} Projects',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent.withOpacity(0.7),
+                      style: GoogleFonts.roboto(
+                        color: Colors.grey[600],
                         fontSize: 12,
                       ),
                     ),
@@ -192,7 +181,7 @@ class ProjectsPage extends StatelessWidget {
               ),
               Icon(
                 Icons.arrow_forward_ios,
-                color: accentColor.withOpacity(0.7),
+                color: cardColor.withOpacity(0.7),
                 size: 16,
               ),
             ],

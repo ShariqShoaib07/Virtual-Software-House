@@ -11,6 +11,10 @@ class DeveloperHomePage extends StatefulWidget {
 class _DeveloperHomePageState extends State<DeveloperHomePage> {
   int profits = 0;
   int completedProjects = 0;
+  final primaryGreen = Colors.lightGreenAccent[700]!;
+  final backgroundColor = Colors.white;
+  final cardColor = Colors.grey[50]!;
+  final textColor = Colors.grey[900]!;
 
   @override
   void initState() {
@@ -33,19 +37,23 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
       padding: EdgeInsets.all(16),
       margin: EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: Color(0xFF0F3D2C),
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.5),
+            color: primaryGreen!.withOpacity(0.1),
             blurRadius: 14,
             offset: Offset(0, 6),
           ),
         ],
+        border: Border.all(
+          color: primaryGreen.withOpacity(0.2),
+          width: 1,
+        ),
       ),
       child: Row(
         children: [
-          Icon(icon, color: Colors.greenAccent, size: 40),
+          Icon(icon, color: primaryGreen, size: 40),
           SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,9 +65,9 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
                 builder: (context, value, child) {
                   return Text(
                     value.toInt().toString(),
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 28,
-                      color: Colors.greenAccent,
+                      color: primaryGreen,
                       fontWeight: FontWeight.bold,
                     ),
                   );
@@ -67,7 +75,9 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
               ),
               Text(
                 label,
-                style: TextStyle(color: Colors.white70),
+                style: GoogleFonts.roboto(
+                  color: textColor.withOpacity(0.7),
+                ),
               ),
             ],
           ),
@@ -81,7 +91,7 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
       value: value,
       color: color,
       radius: 42,
-      title: '', // no label
+      title: '',
       titlePositionPercentageOffset: 0.0,
     );
   }
@@ -92,10 +102,10 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
         sectionsSpace: 3,
         centerSpaceRadius: 40,
         sections: [
-          _section(25, Colors.blueAccent),
-          _section(48, Colors.greenAccent),
-          _section(10, Colors.orangeAccent),
-          _section(5, Colors.redAccent),
+          _section(25, Colors.blue[700]!),
+          _section(48, primaryGreen!),
+          _section(10, Colors.orange[700]!),
+          _section(5, Colors.red[700]!),
         ],
       ),
     );
@@ -106,7 +116,13 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
       children: [
         Container(width: 14, height: 14, color: color),
         SizedBox(width: 6),
-        Text(label, style: TextStyle(color: Colors.white70, fontSize: 14)),
+        Text(
+            label,
+            style: GoogleFonts.roboto(
+                color: textColor,
+                fontSize: 14
+            )
+        ),
       ],
     );
   }
@@ -128,8 +144,8 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
                       fit: BoxFit.scaleDown,
                       child: Text(
                         labels[value.toInt()],
-                        style: TextStyle(
-                          color: Colors.greenAccent,
+                        style: GoogleFonts.roboto(
+                          color: primaryGreen,
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
                         ),
@@ -158,7 +174,7 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
             BarChartRodData(
               toY: values[i],
               width: 10,
-              color: Colors.greenAccent,
+              color: primaryGreen!,
               borderRadius: BorderRadius.circular(4),
             )
           ]);
@@ -174,7 +190,7 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
     final months = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 
     return Scaffold(
-      backgroundColor: Color(0xFF011B10),
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(16),
@@ -184,11 +200,11 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
               Center(
                 child: Text(
                   'DASHBOARD',
-                  style: GoogleFonts.orbitron(
+                  style: GoogleFonts.roboto(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
-                    color: Colors.greenAccent,
-                    letterSpacing: 2,
+                    color: primaryGreen,
+                    letterSpacing: 1.5,
                   ),
                 ),
               ),
@@ -198,22 +214,31 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
               SizedBox(height: 28),
 
               // Pie Chart Section
-              Text("📊 Project Status",
-                  style: GoogleFonts.orbitron(
-                      fontSize: 18, color: Colors.greenAccent)),
+              Text(
+                "Project Status",
+                style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    color: primaryGreen,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
               SizedBox(height: 12),
               Container(
                 padding: EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: Color(0xFF0F3D2C),
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.greenAccent.withOpacity(0.3),
+                      color: primaryGreen!.withOpacity(0.1),
                       blurRadius: 10,
                       offset: Offset(0, 6),
                     )
                   ],
+                  border: Border.all(
+                    color: primaryGreen.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
                 child: Column(
                   children: [
@@ -224,13 +249,13 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          _buildLegend("Received", Colors.blueAccent),
+                          _buildLegend("Received", Colors.blue[700]!),
                           SizedBox(width: 16),
-                          _buildLegend("Completed", Colors.greenAccent),
+                          _buildLegend("Completed", primaryGreen!),
                           SizedBox(width: 16),
-                          _buildLegend("Ongoing", Colors.orangeAccent),
+                          _buildLegend("Ongoing", Colors.orange[700]!),
                           SizedBox(width: 16),
-                          _buildLegend("Failed", Colors.redAccent),
+                          _buildLegend("Failed", Colors.red[700]!),
                         ],
                       ),
                     ),
@@ -239,47 +264,65 @@ class _DeveloperHomePageState extends State<DeveloperHomePage> {
               ),
 
               SizedBox(height: 28),
-              Text("💹 Monthly Profits",
-                  style: GoogleFonts.orbitron(
-                      fontSize: 18, color: Colors.greenAccent)),
+              Text(
+                "Monthly Profits",
+                style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    color: primaryGreen,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
               SizedBox(height: 10),
               Container(
                 height: 220,
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color(0xFF0F3D2C),
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.greenAccent.withOpacity(0.3),
+                      color: primaryGreen!.withOpacity(0.1),
                       blurRadius: 10,
                       offset: Offset(0, 6),
                     )
                   ],
+                  border: Border.all(
+                    color: primaryGreen.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
                 child: _buildBarChart(profitsData, months),
               ),
 
               SizedBox(height: 28),
-              Text("📈 Projects per Month",
-                  style: GoogleFonts.orbitron(
-                      fontSize: 18, color: Colors.greenAccent)),
+              Text(
+                "Projects per Month",
+                style: GoogleFonts.roboto(
+                    fontSize: 18,
+                    color: primaryGreen,
+                    fontWeight: FontWeight.bold
+                ),
+              ),
               SizedBox(height: 10),
               Container(
                 height: 220,
                 padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color(0xFF0F3D2C),
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(18),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.greenAccent.withOpacity(0.3),
+                      color: primaryGreen!.withOpacity(0.1),
                       blurRadius: 10,
                       offset: Offset(0, 6),
                     )
                   ],
+                  border: Border.all(
+                    color: primaryGreen.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
-                child: _buildBarChart(profitsData, months),
+                child: _buildBarChart(projectsData, months),
               ),
 
               SizedBox(height: 24),

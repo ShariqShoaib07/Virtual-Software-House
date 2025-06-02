@@ -12,11 +12,18 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryGreen = Colors.lightGreenAccent[700];
+    final accentGreen = Colors.greenAccent[400];
+    final backgroundColor = Colors.white;
+    final cardColor = Colors.grey[50]!;
+    final textColor = Colors.grey[900]!;
+    final subtitleColor = Colors.grey[600];
+
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: backgroundColor,
       body: CustomScrollView(
         slivers: [
-          // Profile Header with Gradient
+          // Profile Header
           SliverAppBar(
             expandedHeight: 220,
             flexibleSpace: FlexibleSpaceBar(
@@ -26,7 +33,7 @@ class SettingsPage extends StatelessWidget {
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      Colors.greenAccent.withOpacity(0.2),
+                      primaryGreen!.withOpacity(0.1),
                       Colors.transparent,
                     ],
                   ),
@@ -41,14 +48,9 @@ class SettingsPage extends StatelessWidget {
                         height: 100,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          gradient: LinearGradient(
-                            colors: [
-                              Colors.greenAccent.withOpacity(0.3),
-                              Colors.blueAccent.withOpacity(0.3),
-                            ],
-                          ),
+                          color: accentGreen!.withOpacity(0.1),
                           border: Border.all(
-                            color: Colors.greenAccent.withOpacity(0.6),
+                            color: primaryGreen.withOpacity(0.6),
                             width: 2,
                           ),
                         ),
@@ -58,7 +60,7 @@ class SettingsPage extends StatelessWidget {
                               child: Icon(
                                 Icons.person,
                                 size: 48,
-                                color: Colors.greenAccent[400],
+                                color: primaryGreen,
                               ),
                             ),
                             Positioned(
@@ -67,17 +69,17 @@ class SettingsPage extends StatelessWidget {
                               child: Container(
                                 padding: const EdgeInsets.all(6),
                                 decoration: BoxDecoration(
-                                  color: const Color(0xFF0F3D2C),
+                                  color: backgroundColor,
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: Colors.greenAccent,
+                                    color: primaryGreen,
                                     width: 1.5,
                                   ),
                                 ),
                                 child: Icon(
                                   Icons.camera_alt,
                                   size: 18,
-                                  color: Colors.greenAccent,
+                                  color: primaryGreen,
                                 ),
                               ),
                             ),
@@ -88,18 +90,17 @@ class SettingsPage extends StatelessWidget {
                     const SizedBox(height: 16),
                     Text(
                       'Admin User',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent[400],
+                      style: GoogleFonts.roboto(
+                        color: textColor,
                         fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2,
                       ),
                     ),
                     Text(
                       'admin@softwaresuite.com',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent[400]!.withOpacity(0.8),
-                        fontSize: 14,
+                      style: GoogleFonts.roboto(
+                        color: subtitleColor,
+                        fontSize: 16,
                       ),
                     ),
                     const SizedBox(height: 24),
@@ -109,56 +110,57 @@ class SettingsPage extends StatelessWidget {
             ),
             pinned: true,
             automaticallyImplyLeading: false,
+            backgroundColor: backgroundColor,
+            elevation: 0,
           ),
 
-          // Settings Content with Colorful Sections
+          // Settings Content
           SliverList(
             delegate: SliverChildListDelegate([
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Column(
                   children: [
-                    // App Info Section with Gradient
+                    // App Info Section
                     _buildSectionHeader(
                       'APP INFORMATION',
                       icon: Icons.apps,
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.blueAccent.withOpacity(0.3),
-                          Colors.greenAccent.withOpacity(0.3),
-                        ],
-                      ),
+                      primaryGreen: primaryGreen,
                     ),
                     _buildSettingCard(
                       icon: Icons.info_outline,
                       title: 'App Version',
                       value: 'v1.0.0',
-                      iconColor: Colors.blueAccent,
+                      iconColor: Colors.blue[700],
                       hasArrow: false,
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                     ),
                     _buildSettingCard(
                       icon: Icons.update,
                       title: 'Check for Updates',
                       value: 'You are up to date',
-                      iconColor: Colors.tealAccent,
+                      iconColor: Colors.teal[700],
                       hasArrow: false,
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                     ),
 
-                    // Support Section with Gradient
+                    // Support Section
                     _buildSectionHeader(
                       'SUPPORT & LEGAL',
                       icon: Icons.support,
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.purpleAccent.withOpacity(0.3),
-                          Colors.blueAccent.withOpacity(0.3),
-                        ],
-                      ),
+                      primaryGreen: primaryGreen,
                     ),
                     _buildSettingCard(
                       icon: Icons.email_outlined,
                       title: 'Contact Support',
-                      iconColor: Colors.purpleAccent,
+                      iconColor: Colors.purple[700],
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const ContactSupportPage()),
@@ -168,7 +170,10 @@ class SettingsPage extends StatelessWidget {
                     _buildSettingCard(
                       icon: Icons.description_outlined,
                       title: 'Terms & Conditions',
-                      iconColor: Colors.indigoAccent,
+                      iconColor: Colors.indigo[700],
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const TermsConditionsPage()),
@@ -178,28 +183,29 @@ class SettingsPage extends StatelessWidget {
                     _buildSettingCard(
                       icon: Icons.privacy_tip_outlined,
                       title: 'Privacy Policy',
-                      iconColor: Colors.blueAccent,
+                      iconColor: Colors.blue[700],
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const PrivacyPolicyPage()),
                       ),
                     ),
 
-                    // Account Section with Gradient
+                    // Account Section
                     _buildSectionHeader(
                       'ACCOUNT SETTINGS',
                       icon: Icons.settings,
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.greenAccent.withOpacity(0.3),
-                          Colors.tealAccent.withOpacity(0.3),
-                        ],
-                      ),
+                      primaryGreen: primaryGreen,
                     ),
                     _buildSettingCard(
                       icon: Icons.lock_outline,
                       title: 'Change Password',
-                      iconColor: Colors.greenAccent,
+                      iconColor: primaryGreen,
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const ChangePasswordPage()),
@@ -209,7 +215,10 @@ class SettingsPage extends StatelessWidget {
                     _buildSettingCard(
                       icon: Icons.notifications_active_outlined,
                       title: 'Notification Settings',
-                      iconColor: Colors.tealAccent,
+                      iconColor: Colors.teal[700],
+                      primaryGreen: primaryGreen,
+                      cardColor: cardColor,
+                      textColor: textColor,
                       onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => const NotificationSettingsPage()),
@@ -218,7 +227,7 @@ class SettingsPage extends StatelessWidget {
 
                     // Log Out Button
                     const SizedBox(height: 30),
-                    _buildLogoutButton(context),
+                    _buildLogoutButton(context, primaryGreen, backgroundColor, textColor),
                     const SizedBox(height: 40),
                   ],
                 ),
@@ -230,20 +239,15 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSectionHeader(String title, {IconData? icon, Gradient? gradient}) {
+  Widget _buildSectionHeader(String title, {IconData? icon, required Color primaryGreen}) {
     return Container(
       margin: const EdgeInsets.only(top: 20, bottom: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        gradient: gradient ?? LinearGradient(
-          colors: [
-            Colors.greenAccent.withOpacity(0.2),
-            Colors.transparent,
-          ],
-        ),
+        color: primaryGreen.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Colors.greenAccent.withOpacity(0.3),
+          color: primaryGreen.withOpacity(0.3),
           width: 1,
         ),
       ),
@@ -253,16 +257,15 @@ class SettingsPage extends StatelessWidget {
             Icon(
               icon,
               size: 20,
-              color: Colors.greenAccent[400],
+              color: primaryGreen,
             ),
             const SizedBox(width: 10),
           ],
           Text(
             title,
-            style: GoogleFonts.orbitron(
-              color: Colors.greenAccent[400],
-              fontSize: 14,
-              letterSpacing: 1.5,
+            style: GoogleFonts.roboto(
+              color: primaryGreen,
+              fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -277,125 +280,103 @@ class SettingsPage extends StatelessWidget {
     String? value,
     Color? iconColor,
     bool hasArrow = true,
-    VoidCallback? onTap,  // Add this parameter
+    VoidCallback? onTap,
+    required Color primaryGreen,
+    required Color cardColor,
+    required Color textColor,
   }) {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
-      color: const Color(0xFF0A261A),
+      color: cardColor,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: Colors.greenAccent.withOpacity(0.15),
+          color: primaryGreen.withOpacity(0.1),
           width: 1,
         ),
       ),
+      elevation: 0,
       child: ListTile(
         leading: Container(
-          width: 36,
-          height: 36,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.3),
+            color: (iconColor ?? primaryGreen).withOpacity(0.1),
             borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-              colors: [
-                (iconColor ?? Colors.greenAccent).withOpacity(0.2),
-                Colors.transparent,
-              ],
-            ),
           ),
           child: Icon(
             icon,
-            color: iconColor ?? Colors.greenAccent[400],
+            color: iconColor ?? primaryGreen,
           ),
         ),
         title: Text(
           title,
           style: GoogleFonts.roboto(
-            color: Colors.white,
-            fontSize: 15,
+            color: textColor,
+            fontSize: 16,
             fontWeight: FontWeight.w500,
           ),
         ),
         trailing: value != null
-            ? Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-          decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.greenAccent.withOpacity(0.3),
-            ),
-          ),
-          child: Text(
-            value,
-            style: GoogleFonts.orbitron(
-              color: Colors.greenAccent[400]!.withOpacity(0.8),
-              fontSize: 12,
-            ),
+            ? Text(
+          value,
+          style: GoogleFonts.roboto(
+            color: textColor.withOpacity(0.7),
+            fontSize: 14,
           ),
         )
             : hasArrow
             ? Icon(
           Icons.arrow_forward_ios,
           size: 16,
-          color: Colors.greenAccent.withOpacity(0.6),
+          color: primaryGreen.withOpacity(0.6),
         )
             : null,
-        onTap: onTap,  // Use the onTap parameter here
+        onTap: onTap,
       ),
     );
   }
 
-  Widget _buildLogoutButton(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
+  Widget _buildLogoutButton(BuildContext context, Color primaryGreen, Color backgroundColor, Color textColor) {
+    return Card(
+      margin: EdgeInsets.zero,
+      color: Colors.red[50],
+      shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
-        gradient: LinearGradient(
-          colors: [
-            Colors.red.withOpacity(0.4),
-            Colors.orange.withOpacity(0.2),
-          ],
-        ),
-        border: Border.all(
-          color: Colors.red.withOpacity(0.6),
+        side: BorderSide(
+          color: Colors.red.withOpacity(0.3),
           width: 1,
         ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.red.withOpacity(0.2),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
-          ),
-        ],
       ),
+      elevation: 0,
       child: ListTile(
         leading: Container(
-          width: 36,
-          height: 36,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
-            color: Colors.red.withOpacity(0.3),
-            shape: BoxShape.circle,
+            color: Colors.red.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: Icon(
             Icons.logout,
-            color: Colors.redAccent[200],
+            color: Colors.red[700],
           ),
         ),
         title: Text(
           'Log Out',
-          style: GoogleFonts.orbitron(
-            color: Colors.redAccent[200],
+          style: GoogleFonts.roboto(
+            color: Colors.red[700],
             fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+            fontSize: 16,
           ),
         ),
         trailing: Icon(
           Icons.arrow_forward_ios,
           size: 16,
-          color: Colors.redAccent.withOpacity(0.6),
+          color: Colors.red.withOpacity(0.6),
         ),
         onTap: () {
-          _showLogoutConfirmation(context);
+          _showLogoutConfirmation(context, primaryGreen, backgroundColor, textColor);
         },
       ),
     );
@@ -403,39 +384,40 @@ class SettingsPage extends StatelessWidget {
 
   void _changeProfilePicture(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
+    final primaryGreen = Colors.green[700];
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        backgroundColor: const Color(0xFF0F3D2C),
+        backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
-            color: Colors.greenAccent.withOpacity(0.3),
+            color: primaryGreen!.withOpacity(0.3),
             width: 1,
           ),
         ),
         title: Text(
           'Change Profile Picture',
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent[400],
+          style: GoogleFonts.roboto(
+            color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
         ),
         content: Text(
           'Select image source:',
           style: GoogleFonts.roboto(
-            color: Colors.white.withOpacity(0.8),
+            color: Colors.grey[700],
           ),
         ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.blueAccent.withOpacity(0.2),
+              backgroundColor: Colors.blue[50],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
-                  color: Colors.blueAccent.withOpacity(0.5),
+                  color: Colors.blue.withOpacity(0.5),
                 ),
               ),
             ),
@@ -443,29 +425,28 @@ class SettingsPage extends StatelessWidget {
               Navigator.pop(context);
               final XFile? image = await picker.pickImage(source: ImageSource.camera);
               if (image != null) {
-                // Handle the captured image
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Profile picture updated from camera'),
-                    backgroundColor: Colors.greenAccent[400],
+                    backgroundColor: primaryGreen,
                   ),
                 );
               }
             },
             child: Text(
               'Camera',
-              style: GoogleFonts.orbitron(
-                color: Colors.blueAccent[200],
+              style: GoogleFonts.roboto(
+                color: Colors.blue[700],
               ),
             ),
           ),
           TextButton(
             style: TextButton.styleFrom(
-              backgroundColor: Colors.purpleAccent.withOpacity(0.2),
+              backgroundColor: Colors.purple[50],
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
                 side: BorderSide(
-                  color: Colors.purpleAccent.withOpacity(0.5),
+                  color: Colors.purple.withOpacity(0.5),
                 ),
               ),
             ),
@@ -473,19 +454,18 @@ class SettingsPage extends StatelessWidget {
               Navigator.pop(context);
               final XFile? image = await picker.pickImage(source: ImageSource.gallery);
               if (image != null) {
-                // Handle the selected image
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Profile picture updated from gallery'),
-                    backgroundColor: Colors.greenAccent[400],
+                    backgroundColor: primaryGreen,
                   ),
                 );
               }
             },
             child: Text(
               'Gallery',
-              style: GoogleFonts.orbitron(
-                color: Colors.purpleAccent[200],
+              style: GoogleFonts.roboto(
+                color: Colors.purple[700],
               ),
             ),
           ),
@@ -494,11 +474,11 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  void _showLogoutConfirmation(BuildContext context) {
+  void _showLogoutConfirmation(BuildContext context, Color primaryGreen, Color backgroundColor, Color textColor) {
     showDialog(
       context: context,
       builder: (context) => Dialog(
-        backgroundColor: const Color(0xFF0F3D2C),
+        backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(
@@ -513,14 +493,14 @@ class SettingsPage extends StatelessWidget {
             children: [
               Icon(
                 Icons.warning_amber_rounded,
-                color: Colors.orangeAccent,
+                color: Colors.orange[700],
                 size: 48,
               ),
               const SizedBox(height: 16),
               Text(
                 'Confirm Logout',
-                style: GoogleFonts.orbitron(
-                  color: Colors.redAccent[200],
+                style: GoogleFonts.roboto(
+                  color: Colors.red[700],
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
@@ -529,7 +509,7 @@ class SettingsPage extends StatelessWidget {
               Text(
                 'Are you sure you want to log out?',
                 style: GoogleFonts.roboto(
-                  color: Colors.white.withOpacity(0.8),
+                  color: textColor.withOpacity(0.8),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -542,14 +522,14 @@ class SettingsPage extends StatelessWidget {
                       style: OutlinedButton.styleFrom(
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         side: BorderSide(
-                          color: Colors.greenAccent.withOpacity(0.5),
+                          color: primaryGreen.withOpacity(0.5),
                         ),
                       ),
                       onPressed: () => Navigator.pop(context),
                       child: Text(
                         'Cancel',
-                        style: GoogleFonts.orbitron(
-                          color: Colors.greenAccent[400],
+                        style: GoogleFonts.roboto(
+                          color: primaryGreen,
                         ),
                       ),
                     ),
@@ -558,7 +538,7 @@ class SettingsPage extends StatelessWidget {
                   Expanded(
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red.withOpacity(0.3),
+                        backgroundColor: Colors.red[50],
                         padding: const EdgeInsets.symmetric(vertical: 12),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
@@ -573,8 +553,8 @@ class SettingsPage extends StatelessWidget {
                       },
                       child: Text(
                         'Log Out',
-                        style: GoogleFonts.orbitron(
-                          color: Colors.redAccent[200],
+                        style: GoogleFonts.roboto(
+                          color: Colors.red[700],
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -65,28 +65,36 @@ class _DeveloperPageState extends State<DeveloperPage> {
   void _toggleBlockStatus(int index) {
     setState(() {
       _allDevelopers[index]['isBlocked'] = !_allDevelopers[index]['isBlocked'];
-      _filterDevelopers(); // Refresh the filtered list
+      _filterDevelopers();
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final primaryGreen = Colors.green;
+    final accentGreen = Colors.greenAccent[400];
+    final backgroundColor = Colors.white;
+    final cardColor = Colors.grey[50];
+    final textColor = Colors.grey[900];
+    final subtitleColor = Colors.grey[600];
+
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           'DEVELOPERS',
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent[400],
+          style: GoogleFonts.roboto(
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
-            fontSize: 22,
+            fontSize: 24,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: primaryGreen),
       ),
       body: Column(
         children: [
@@ -94,32 +102,36 @@ class _DeveloperPageState extends State<DeveloperPage> {
             padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0xFF0A261A),
+                color: cardColor,
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.greenAccent.withOpacity(0.1),
+                    color: Colors.grey.withOpacity(0.1),
                     blurRadius: 8,
-                    offset: const Offset(0, 4),
+                    offset: const Offset(0, 2),
                   ),
                 ],
+                border: Border.all(
+                  color: primaryGreen!.withOpacity(0.2),
+                  width: 1,
+                ),
               ),
               child: TextField(
                 controller: _searchController,
                 style: GoogleFonts.roboto(
-                  color: Colors.greenAccent[200],
-                  fontSize: 14,
+                  color: textColor,
+                  fontSize: 16,
                 ),
                 decoration: InputDecoration(
                   hintText: 'Search developers...',
                   hintStyle: GoogleFonts.roboto(
-                    color: Colors.greenAccent[200]!.withOpacity(0.7),
+                    color: subtitleColor,
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.greenAccent[400]),
+                  prefixIcon: Icon(Icons.search, color: primaryGreen),
                   filled: true,
                   fillColor: Colors.transparent,
                   border: InputBorder.none,
-                  contentPadding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+                  contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
                 ),
               ),
             ),
@@ -129,8 +141,8 @@ class _DeveloperPageState extends State<DeveloperPage> {
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               itemCount: _filteredDevelopers.length,
               itemBuilder: (context, index) => Padding(
-                padding: const EdgeInsets.only(bottom: 16),
-                child: _buildDeveloperCard(_filteredDevelopers[index], index),
+                padding: const EdgeInsets.only(bottom: 20),
+                child: _buildDeveloperCard(_filteredDevelopers[index], index, primaryGreen!, accentGreen!, cardColor!, textColor!, subtitleColor!),
               ),
             ),
           ),
@@ -139,22 +151,22 @@ class _DeveloperPageState extends State<DeveloperPage> {
     );
   }
 
-  Widget _buildDeveloperCard(Map<String, dynamic> dev, int index) {
+  Widget _buildDeveloperCard(Map<String, dynamic> dev, int index, Color primaryGreen, Color accentGreen, Color cardColor, Color textColor, Color subtitleColor) {
     return Container(
       decoration: BoxDecoration(
-        color: const Color(0xFF0A261A),
+        color: cardColor,
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.15),
+            color: Colors.grey.withOpacity(0.1),
             blurRadius: 12,
-            offset: const Offset(0, 6),
+            offset: const Offset(0, 4),
           ),
         ],
         border: Border.all(
           color: dev['isBlocked']
               ? Colors.red.withOpacity(0.4)
-              : Colors.greenAccent.withOpacity(0.3),
+              : primaryGreen.withOpacity(0.3),
           width: 1.5,
         ),
       ),
@@ -167,22 +179,22 @@ class _DeveloperPageState extends State<DeveloperPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  width: 56,
-                  height: 56,
+                  width: 60,
+                  height: 60,
                   decoration: BoxDecoration(
-                    color: Colors.greenAccent.withOpacity(0.1),
+                    color: accentGreen.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
+                      color: accentGreen.withOpacity(0.4),
                     ),
                   ),
                   child: Center(
                     child: Text(
                       dev['name'].substring(0, 1),
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent[400],
+                      style: GoogleFonts.roboto(
+                        color: primaryGreen,
                         fontWeight: FontWeight.bold,
-                        fontSize: 24,
+                        fontSize: 28,
                       ),
                     ),
                   ),
@@ -195,8 +207,8 @@ class _DeveloperPageState extends State<DeveloperPage> {
                       Text(
                         dev['name'],
                         style: GoogleFonts.roboto(
-                          color: Colors.greenAccent[200],
-                          fontSize: 18,
+                          color: textColor,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -204,16 +216,17 @@ class _DeveloperPageState extends State<DeveloperPage> {
                       Text(
                         dev['title'],
                         style: GoogleFonts.roboto(
-                          color: Colors.greenAccent[400],
-                          fontSize: 14,
+                          color: primaryGreen,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                       const SizedBox(height: 8),
                       Text(
                         dev['experience'],
                         style: GoogleFonts.roboto(
-                          color: Colors.greenAccent[200]!.withOpacity(0.8),
-                          fontSize: 12,
+                          color: subtitleColor,
+                          fontSize: 14,
                           fontStyle: FontStyle.italic,
                         ),
                       ),
@@ -222,19 +235,17 @@ class _DeveloperPageState extends State<DeveloperPage> {
                 ),
                 if (dev['isBlocked'])
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 10, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.15),
+                      color: Colors.red.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
-                      border: Border.all(
-                          color: Colors.red.withOpacity(0.6)),
+                      border: Border.all(color: Colors.red.withOpacity(0.6)),
                     ),
                     child: Text(
                       'BLOCKED',
                       style: GoogleFonts.roboto(
-                        color: Colors.redAccent[200],
-                        fontSize: 11,
+                        color: Colors.red[800],
+                        fontSize: 12,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 0.5,
                       ),
@@ -245,46 +256,44 @@ class _DeveloperPageState extends State<DeveloperPage> {
             const SizedBox(height: 20),
 
             // Contact Info
-            _buildInfoRow(Icons.phone_outlined, dev['phone']),
-            _buildInfoRow(Icons.email_outlined, dev['email']),
-            _buildInfoRow(Icons.code_outlined, dev['github'], isLink: true),
+            _buildInfoRow(Icons.phone_outlined, dev['phone'], primaryGreen, textColor),
+            _buildInfoRow(Icons.email_outlined, dev['email'], primaryGreen, textColor),
+            _buildInfoRow(Icons.code_outlined, dev['github'], primaryGreen, textColor, isLink: true),
 
-            const SizedBox(height: 16),
+            const SizedBox(height: 20),
 
             // Skills
             Text(
               'SKILLS',
-              style: GoogleFonts.orbitron(
-                color: Colors.greenAccent[400]!.withOpacity(0.9),
-                fontSize: 13,
+              style: GoogleFonts.roboto(
+                color: primaryGreen.withOpacity(0.9),
+                fontSize: 14,
                 letterSpacing: 1.2,
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
             Wrap(
-              spacing: 8,
-              runSpacing: 8,
+              spacing: 10,
+              runSpacing: 10,
               children: (dev['skills'] as List<String>).map((skill) => Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.greenAccent.withOpacity(0.08),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.4)),
+                  color: accentGreen.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: accentGreen.withOpacity(0.5)),
                 ),
                 child: Text(
                   skill,
                   style: GoogleFonts.roboto(
-                    color: Colors.greenAccent[200],
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
+                    color: textColor,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               )).toList(),
             ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
 
             // Action Buttons
             Row(
@@ -292,44 +301,42 @@ class _DeveloperPageState extends State<DeveloperPage> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: dev['isBlocked']
-                          ? Colors.greenAccent[400]
-                          : Colors.red.withOpacity(0.7),
+                      backgroundColor: dev['isBlocked'] ? accentGreen : Colors.red[400],
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                     onPressed: () => _toggleBlockStatus(index),
                     child: Text(
                       dev['isBlocked'] ? 'UNBLOCK' : 'BLOCK',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.black,
+                      style: GoogleFonts.roboto(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
+                        fontSize: 14,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                const SizedBox(width: 16),
                 Expanded(
                   child: OutlinedButton(
                     style: OutlinedButton.styleFrom(
-                      side: BorderSide(
-                          color: Colors.greenAccent[400]!,
-                          width: 1.5),
+                      side: BorderSide(color: primaryGreen, width: 2),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      padding: const EdgeInsets.symmetric(vertical: 16),
                     ),
                     onPressed: () {},
                     child: Text(
                       'VIEW CV',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.greenAccent[400],
+                      style: GoogleFonts.roboto(
+                        color: primaryGreen,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
+                        fontSize: 14,
                       ),
                     ),
                   ),
@@ -342,37 +349,32 @@ class _DeveloperPageState extends State<DeveloperPage> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String text, {bool isLink = false}) {
-    bool isEmail = !isLink && text.contains('@'); // Detect if it's an email
+  Widget _buildInfoRow(IconData icon, String text, Color primaryGreen, Color textColor, {bool isLink = false}) {
+    bool isEmail = !isLink && text.contains('@');
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+      padding: const EdgeInsets.only(bottom: 12),
       child: Row(
         children: [
-          Icon(icon,
-              size: 20,
-              color: Colors.greenAccent[400]!.withOpacity(0.9)),
+          Icon(icon, size: 22, color: primaryGreen.withOpacity(0.8)),
           const SizedBox(width: 12),
           GestureDetector(
             onTap: isLink ? () => launchUrl(Uri.parse('https://$text')) : null,
-            onLongPress: isEmail
-                ? () {
+            onLongPress: isEmail ? () {
               Clipboard.setData(ClipboardData(text: text));
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('Copied email to clipboard'),
-                  backgroundColor: Colors.greenAccent[400],
+                  backgroundColor: primaryGreen,
                 ),
               );
-            }
-                : null,
+            } : null,
             child: Text(
               text,
               style: GoogleFonts.roboto(
-                color: isLink || isEmail
-                    ? Colors.greenAccent[400]
-                    : Colors.greenAccent[200],
-                fontSize: 14,
+                color: isLink || isEmail ? primaryGreen : textColor,
+                fontSize: 16,
+                fontWeight: isLink || isEmail ? FontWeight.w600 : FontWeight.w500,
                 decoration: isLink || isEmail ? TextDecoration.underline : null,
               ),
             ),

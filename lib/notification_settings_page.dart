@@ -1,4 +1,3 @@
-// notification_settings_page.dart
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -7,64 +6,76 @@ class NotificationSettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final primaryGreen = Colors.lightGreenAccent[700]!;
+    final backgroundColor = Colors.white;
+    final cardColor = Colors.grey[50]!;
+    final textColor = Colors.grey[900]!;
+
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
+        backgroundColor: backgroundColor,
+        elevation: 0,
         title: Text(
           'Notification Settings',
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent[400],
+          style: GoogleFonts.roboto(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.greenAccent[400]),
+          icon: Icon(Icons.arrow_back, color: primaryGreen),
           onPressed: () => Navigator.pop(context),
         ),
       ),
-      body: SingleChildScrollView(  // Wrap the content in SingleChildScrollView
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             _buildNotificationSection(
               title: 'General Notifications',
               icon: Icons.notifications_none,
+              primaryGreen: primaryGreen,
+              cardColor: cardColor,
+              textColor: textColor,
               switches: [
-                _buildSwitchItem('App Updates', true),
-                _buildSwitchItem('Maintenance Alerts', true),
-                _buildSwitchItem('Promotional Offers', false),
+                _buildSwitchItem('App Updates', true, primaryGreen),
+                _buildSwitchItem('Maintenance Alerts', true, primaryGreen),
+                _buildSwitchItem('Promotional Offers', false, primaryGreen),
               ],
             ),
             const SizedBox(height: 25),
             _buildNotificationSection(
               title: 'Email Notifications',
               icon: Icons.email_outlined,
+              primaryGreen: primaryGreen,
+              cardColor: cardColor,
+              textColor: textColor,
               switches: [
-                _buildSwitchItem('Weekly Digest', true),
-                _buildSwitchItem('Account Activity', true),
-                _buildSwitchItem('Product News', false),
+                _buildSwitchItem('Weekly Digest', true, primaryGreen),
+                _buildSwitchItem('Account Activity', true, primaryGreen),
+                _buildSwitchItem('Product News', false, primaryGreen),
               ],
             ),
             const SizedBox(height: 25),
             _buildNotificationSection(
               title: 'Sound & Vibration',
               icon: Icons.volume_up,
+              primaryGreen: primaryGreen,
+              cardColor: cardColor,
+              textColor: textColor,
               switches: [
-                _buildSwitchItem('Notification Sound', true),
-                _buildSwitchItem('Vibration', false),
+                _buildSwitchItem('Notification Sound', true, primaryGreen),
+                _buildSwitchItem('Vibration', false, primaryGreen),
               ],
             ),
-            const SizedBox(height: 30),  // Changed from Spacer to SizedBox
+            const SizedBox(height: 30),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.greenAccent.withOpacity(0.2),
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 40, vertical: 15),
+                backgroundColor: primaryGreen,
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
-                  side: BorderSide(
-                    color: Colors.greenAccent.withOpacity(0.6),
-                  ),
                 ),
               ),
               onPressed: () {
@@ -72,12 +83,13 @@ class NotificationSettingsPage extends StatelessWidget {
               },
               child: Text(
                 'Save Settings',
-                style: GoogleFonts.orbitron(
-                  color: Colors.greenAccent[400],
+                style: GoogleFonts.roboto(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            const SizedBox(height: 20),  // Added extra padding at bottom
+            const SizedBox(height: 20),
           ],
         ),
       ),
@@ -87,14 +99,18 @@ class NotificationSettingsPage extends StatelessWidget {
   Widget _buildNotificationSection({
     required String title,
     required IconData icon,
+    required Color primaryGreen,
+    required Color cardColor,
+    required Color textColor,
     required List<Widget> switches,
   }) {
     return Card(
-      color: const Color(0xFF0A261A),
+      color: cardColor,
+      elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
         side: BorderSide(
-          color: Colors.greenAccent.withOpacity(0.15),
+          color: primaryGreen.withOpacity(0.2),
           width: 1,
         ),
       ),
@@ -105,13 +121,14 @@ class NotificationSettingsPage extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(icon, color: Colors.greenAccent[400]),
+                Icon(icon, color: primaryGreen),
                 const SizedBox(width: 10),
                 Text(
                   title,
-                  style: GoogleFonts.orbitron(
-                    color: Colors.greenAccent[400],
+                  style: GoogleFonts.roboto(
+                    color: textColor,
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -128,7 +145,7 @@ class NotificationSettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildSwitchItem(String label, bool value) {
+  Widget _buildSwitchItem(String label, bool value, Color primaryGreen) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
@@ -137,7 +154,7 @@ class NotificationSettingsPage extends StatelessWidget {
           Text(
             label,
             style: GoogleFonts.roboto(
-              color: Colors.white,
+              color: Colors.grey[800],
               fontSize: 14,
             ),
           ),
@@ -146,8 +163,8 @@ class NotificationSettingsPage extends StatelessWidget {
             onChanged: (bool newValue) {
               // Switch logic
             },
-            activeColor: Colors.greenAccent,
-            activeTrackColor: Colors.greenAccent.withOpacity(0.3),
+            activeColor: primaryGreen,
+            activeTrackColor: primaryGreen.withOpacity(0.3),
           ),
         ],
       ),

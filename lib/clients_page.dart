@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClientsPage extends StatefulWidget {
   @override
@@ -17,7 +18,7 @@ class _ClientsPageState extends State<ClientsPage> {
       'middleName': 'Q',
       'lastName': 'Robotics',
       'phone': '+92 300 1234567',
-      'email': 'alice@robotics.com', // Make sure email exists
+      'email': 'alice@robotics.com',
       'address': 'Sector G-9',
       'city': 'Islamabad',
       'country': 'Pakistan',
@@ -29,7 +30,7 @@ class _ClientsPageState extends State<ClientsPage> {
       'middleName': 'Cyber',
       'lastName': 'Space',
       'phone': '+92 333 7654321',
-      'email': 'bob@cyberspace.com', // Make sure email exists
+      'email': 'bob@cyberspace.com',
       'address': 'Shahrah-e-Faisal',
       'city': 'Karachi',
       'country': 'Pakistan',
@@ -40,6 +41,13 @@ class _ClientsPageState extends State<ClientsPage> {
 
   @override
   Widget build(BuildContext context) {
+    final primaryGreen = Colors.green;
+    final accentGreen = Colors.greenAccent[400];
+    final backgroundColor = Colors.white;
+    final cardColor = Colors.grey[50];
+    final textColor = Colors.grey[900];
+    final subtitleColor = Colors.grey[600];
+
     List<Map<String, dynamic>> filteredClients = clients
         .where((client) =>
         ('${client['firstName']} ${client['lastName']} ${client['middleName']}')
@@ -48,21 +56,22 @@ class _ClientsPageState extends State<ClientsPage> {
         .toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text(
           'CLIENTS',
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent[400],
+          style: GoogleFonts.roboto(
+            color: Colors.black,
             fontWeight: FontWeight.bold,
             letterSpacing: 1.5,
-            fontSize: 22,
+            fontSize: 24,
           ),
         ),
         centerTitle: true,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         elevation: 0,
         automaticallyImplyLeading: false,
+        iconTheme: IconThemeData(color: primaryGreen),
       ),
       body: SafeArea(
         child: Column(
@@ -71,34 +80,38 @@ class _ClientsPageState extends State<ClientsPage> {
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
               child: Container(
                 decoration: BoxDecoration(
-                  color: const Color(0xFF0A261A),
+                  color: cardColor,
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.greenAccent.withOpacity(0.1),
+                      color: Colors.grey.withOpacity(0.1),
                       blurRadius: 8,
-                      offset: const Offset(0, 4),
+                      offset: const Offset(0, 2),
                     ),
                   ],
+                  border: Border.all(
+                    color: primaryGreen!.withOpacity(0.2),
+                    width: 1,
+                  ),
                 ),
                 child: TextField(
                   controller: _searchController,
                   onChanged: (val) => setState(() => searchText = val),
                   style: GoogleFonts.roboto(
-                    color: Colors.greenAccent[200],
-                    fontSize: 14,
+                    color: textColor,
+                    fontSize: 16,
                   ),
                   decoration: InputDecoration(
                     hintText: 'Search clients...',
                     hintStyle: GoogleFonts.roboto(
-                        color: Colors.greenAccent[200]!.withOpacity(0.7)),
-                    prefixIcon: Icon(Icons.search,
-                        color: Colors.greenAccent[400]),
+                      color: subtitleColor,
+                    ),
+                    prefixIcon: Icon(Icons.search, color: primaryGreen),
                     filled: true,
                     fillColor: Colors.transparent,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(
-                        vertical: 14, horizontal: 16),
+                        vertical: 16, horizontal: 20),
                   ),
                 ),
               ),
@@ -108,8 +121,9 @@ class _ClientsPageState extends State<ClientsPage> {
                 padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
                 itemCount: filteredClients.length,
                 itemBuilder: (context, index) => Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: _buildClientCard(filteredClients[index]),
+                  padding: const EdgeInsets.only(bottom: 20),
+                  child: _buildClientCard(
+                      filteredClients[index], primaryGreen!, accentGreen!, cardColor!, textColor!, subtitleColor!),
                 ),
               ),
             ),
@@ -119,25 +133,25 @@ class _ClientsPageState extends State<ClientsPage> {
     );
   }
 
-  Widget _buildClientCard(Map<String, dynamic> client) {
+  Widget _buildClientCard(Map<String, dynamic> client, Color primaryGreen, Color accentGreen, Color cardColor, Color textColor, Color subtitleColor) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 300),
         decoration: BoxDecoration(
-          color: const Color(0xFF0A261A),
+          color: cardColor,
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.greenAccent.withOpacity(client['isBlocked'] ? 0.1 : 0.3),
+              color: Colors.grey.withOpacity(0.1),
               blurRadius: 12,
-              offset: const Offset(0, 6),
+              offset: const Offset(0, 4),
             ),
           ],
           border: Border.all(
             color: client['isBlocked']
                 ? Colors.red.withOpacity(0.4)
-                : Colors.greenAccent.withOpacity(0.3),
+                : primaryGreen.withOpacity(0.3),
             width: 1.5,
           ),
         ),
@@ -150,20 +164,20 @@ class _ClientsPageState extends State<ClientsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
-                      color: Colors.greenAccent.withOpacity(0.1),
+                      color: accentGreen.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(12),
                       border: Border.all(
-                        color: Colors.greenAccent.withOpacity(0.3),
+                        color: accentGreen.withOpacity(0.4),
                       ),
                     ),
                     child: Center(
                       child: Icon(
                         Icons.person_outline,
-                        color: Colors.greenAccent[400],
-                        size: 28,
+                        color: primaryGreen,
+                        size: 32,
                       ),
                     ),
                   ),
@@ -175,8 +189,8 @@ class _ClientsPageState extends State<ClientsPage> {
                         Text(
                           "${client['firstName']} ${client['middleName']} ${client['lastName']}",
                           style: GoogleFonts.roboto(
-                            color: Colors.greenAccent[200],
-                            fontSize: 18,
+                            color: textColor,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -184,9 +198,9 @@ class _ClientsPageState extends State<ClientsPage> {
                         if (client['isBlocked'])
                           Container(
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 4),
+                                horizontal: 10, vertical: 6),
                             decoration: BoxDecoration(
-                              color: Colors.red.withOpacity(0.15),
+                              color: Colors.red.withOpacity(0.1),
                               borderRadius: BorderRadius.circular(12),
                               border: Border.all(
                                   color: Colors.red.withOpacity(0.6)),
@@ -194,8 +208,8 @@ class _ClientsPageState extends State<ClientsPage> {
                             child: Text(
                               'BLOCKED',
                               style: GoogleFonts.roboto(
-                                color: Colors.redAccent[200],
-                                fontSize: 11,
+                                color: Colors.red[800],
+                                fontSize: 12,
                                 fontWeight: FontWeight.bold,
                                 letterSpacing: 0.5,
                               ),
@@ -210,9 +224,10 @@ class _ClientsPageState extends State<ClientsPage> {
 
               // Contact Info
               _buildInfoRow(Icons.location_on_outlined,
-                  "${client['address']}, ${client['city']}, ${client['country']}"),
-              _buildInfoRow(Icons.phone_outlined, client['phone']),
-              _buildInfoRow(Icons.email_outlined, client['email'], isEmail: true),
+                  "${client['address']}, ${client['city']}, ${client['country']}",
+                  primaryGreen, textColor),
+              _buildInfoRow(Icons.phone_outlined, client['phone'], primaryGreen, textColor),
+              _buildInfoRow(Icons.email_outlined, client['email'], primaryGreen, textColor, isEmail: true),
 
               const SizedBox(height: 20),
 
@@ -220,12 +235,12 @@ class _ClientsPageState extends State<ClientsPage> {
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: client['isBlocked']
-                      ? Colors.greenAccent[400]
-                      : Colors.red.withOpacity(0.7),
+                      ? accentGreen
+                      : Colors.red[400],
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   minimumSize: const Size(double.infinity, 0),
                 ),
                 onPressed: () {
@@ -238,16 +253,17 @@ class _ClientsPageState extends State<ClientsPage> {
                   children: [
                     Icon(
                       client['isBlocked'] ? Icons.lock_open : Icons.lock_outline,
-                      color: Colors.black,
+                      color: Colors.white,
                       size: 20,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       client['isBlocked'] ? 'UNBLOCK CLIENT' : 'BLOCK CLIENT',
-                      style: GoogleFonts.orbitron(
-                        color: Colors.black,
+                      style: GoogleFonts.roboto(
+                        color: Colors.white,
                         fontWeight: FontWeight.bold,
                         letterSpacing: 1.2,
+                        fontSize: 14,
                       ),
                     ),
                   ],
@@ -260,8 +276,8 @@ class _ClientsPageState extends State<ClientsPage> {
     );
   }
 
-  Widget _buildInfoRow(IconData icon, String? text, {bool isEmail = false}) {
-    if (text == null || text.isEmpty) return SizedBox(); // Return empty widget if text is null
+  Widget _buildInfoRow(IconData icon, String? text, Color primaryGreen, Color textColor, {bool isEmail = false}) {
+    if (text == null || text.isEmpty) return SizedBox();
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 12),
@@ -269,8 +285,8 @@ class _ClientsPageState extends State<ClientsPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon,
-              size: 20,
-              color: Colors.greenAccent[400]!.withOpacity(0.9)),
+              size: 22,
+              color: primaryGreen.withOpacity(0.8)),
           const SizedBox(width: 12),
           Expanded(
             child: GestureDetector(
@@ -280,18 +296,20 @@ class _ClientsPageState extends State<ClientsPage> {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
                     content: Text('Copied email to clipboard'),
-                    backgroundColor: Colors.greenAccent[400],
+                    backgroundColor: primaryGreen,
                   ),
                 );
               }
                   : null,
+              onTap: isEmail ? () => launchUrl(Uri.parse('mailto:$text')) : null,
               child: Text(
                 text,
                 style: GoogleFonts.roboto(
                   color: isEmail
-                      ? Colors.greenAccent[400]
-                      : Colors.greenAccent[200],
-                  fontSize: 14,
+                      ? primaryGreen
+                      : textColor,
+                  fontSize: 16,
+                  fontWeight: isEmail ? FontWeight.w600 : FontWeight.w500,
                   decoration: isEmail ? TextDecoration.underline : null,
                 ),
               ),
