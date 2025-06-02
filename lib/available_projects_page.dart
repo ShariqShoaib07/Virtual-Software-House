@@ -69,7 +69,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         title: Text(
           "Available Projects",
           style: GoogleFonts.roboto(
-            color: Colors.black,
+            color: Colors.black, // Green title
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -78,7 +78,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         elevation: 0,
         automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Color(0xFF38E54D)), // Green icons
       ),
       body: Column(
         children: [
@@ -90,7 +90,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
+                    color: Color(0xFF38E54D).withOpacity(0.1), // Green tinted shadow
                     blurRadius: 8,
                     offset: Offset(0, 4),
                   ),
@@ -107,7 +107,7 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
                   hintStyle: GoogleFonts.roboto(
                     color: Colors.grey[600],
                   ),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey[600]),
+                  prefixIcon: Icon(Icons.search, color: Color(0xFF38E54D)), // Green icon
                   filled: true,
                   fillColor: Colors.transparent,
                   border: InputBorder.none,
@@ -142,19 +142,25 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
   }
 
   Widget _buildProjectCard(Project project) {
+    // Sample client and developer data - replace with your actual data source
+    final clientNames = ['TechSolutions Inc.', 'Digital Ventures', 'CodeCraft LLC'];
+    final developerNames = ['Alex Johnson', 'Sam Wilson', 'Taylor Smith'];
+    final clientName = clientNames[_filteredProjects.indexOf(project) % clientNames.length];
+    final developerName = developerNames[_filteredProjects.indexOf(project) % developerNames.length];
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Color(0xFF38E54D).withOpacity(0.1), // Green tinted shadow
             blurRadius: 12,
             offset: Offset(0, 6),
           ),
         ],
         border: Border.all(
-          color: Colors.grey[300]!,
+          color: Color(0xFF38E54D).withOpacity(0.2), // Light green border
           width: 1.5,
         ),
       ),
@@ -163,146 +169,148 @@ class _AvailableProjectsPageState extends State<AvailableProjectsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: Text(
-                    project.title,
-                    style: GoogleFonts.roboto(
-                      color: Colors.black,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF4CAF50).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Color(0xFF4CAF50).withOpacity(0.3),
-                    ),
-                  ),
-                  child: Text(
-                    project.jobType,
-                    style: GoogleFonts.roboto(
-                      color: Color(0xFF4CAF50),
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-              ],
+            // Project Title
+            Text(
+              project.title,
+              style: GoogleFonts.roboto(
+                color: Color(0xFF38E54D), // Green title
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 8),
+
+            // Project Description
             Text(
               project.details,
               style: GoogleFonts.roboto(
                 color: Colors.grey[700],
                 fontSize: 14,
               ),
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
-            ),
-            SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: project.requirements
-                  .take(3)
-                  .map((req) => Container(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Color(0xFF4CAF50).withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: Color(0xFF4CAF50).withOpacity(0.3),
-                  ),
-                ),
-                child: Text(
-                  req,
-                  style: GoogleFonts.roboto(
-                    color: Color(0xFF4CAF50),
-                    fontSize: 12,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ))
-                  .toList(),
             ),
             SizedBox(height: 16),
+
+            // Client and Developer Row
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Budget",
-                      style: GoogleFonts.roboto(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Text(
-                      '\$${project.acceptedPrice.toStringAsFixed(2)}',
-                      style: GoogleFonts.roboto(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
+                _buildInfoTile(
+                  icon: Icons.business,
+                  title: "Client",
+                  value: clientName,
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Timeline",
-                      style: GoogleFonts.roboto(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Text(
-                      project.deliveryTime,
-                      style: GoogleFonts.roboto(
-                        fontSize: 16,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Start Date",
-                      style: GoogleFonts.roboto(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                    Text(
-                      "${project.startDate.day}/${project.startDate.month}/${project.startDate.year}",
-                      style: GoogleFonts.roboto(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                _buildInfoTile(
+                  icon: Icons.code,
+                  title: "Developer",
+                  value: developerName,
                 ),
               ],
             ),
+            SizedBox(height: 16),
+
+            // Project Metrics Row
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                _buildInfoTile(
+                  icon: Icons.attach_money,
+                  title: "Budget",
+                  value: "\$${project.acceptedPrice.toStringAsFixed(2)}",
+                  isMoney: true,
+                ),
+                _buildInfoTile(
+                  icon: Icons.schedule,
+                  title: "Timeline",
+                  value: project.deliveryTime,
+                ),
+                _buildInfoTile(
+                  icon: Icons.work,
+                  title: "Type",
+                  value: project.jobType,
+                ),
+              ],
+            ),
+            SizedBox(height: 8),
+
+            // Requirements Chips
+            if (project.requirements.isNotEmpty) ...[
+              SizedBox(height: 12),
+              Text(
+                "Requirements:",
+                style: GoogleFonts.roboto(
+                  fontSize: 12,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 8),
+              Wrap(
+                spacing: 8,
+                runSpacing: 8,
+                children: project.requirements
+                    .take(3)
+                    .map((req) => Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Color(0xFF38E54D).withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(
+                      color: Color(0xFF38E54D).withOpacity(0.3),
+                    ),
+                  ),
+                  child: Text(
+                    req,
+                    style: GoogleFonts.roboto(
+                      color: Color(0xFF38E54D),
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ))
+                    .toList(),
+              ),
+            ],
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildInfoTile({
+    required IconData icon,
+    required String title,
+    required String value,
+    bool isMoney = false,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(
+              icon,
+              size: 16,
+              color: Color(0xFF38E54D), // Green icon
+            ),
+            SizedBox(width: 4),
+            Text(
+              title,
+              style: GoogleFonts.roboto(
+                fontSize: 12,
+                color: Colors.grey[600],
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 4),
+        Text(
+          value,
+          style: GoogleFonts.roboto(
+            fontSize: isMoney ? 16 : 14,
+            fontWeight: isMoney ? FontWeight.w600 : FontWeight.w500,
+            color: isMoney ? Color(0xFF38E54D) : Colors.black, // Green for money
+          ),
+        ),
+      ],
     );
   }
 }

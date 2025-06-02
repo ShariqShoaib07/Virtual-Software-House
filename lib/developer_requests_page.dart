@@ -15,7 +15,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["Flutter", "Firebase", "Stripe API", "UI/UX"],
       deliveryTime: "6 weeks",
       jobType: "Remote",
-      developerCost: 2500.00, // Add cost
+      developerCost: 2500.00,
     ),
     DeveloperProject(
       title: "Company Website Redesign",
@@ -23,7 +23,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["React", "Tailwind CSS", "Figma"],
       deliveryTime: "4 weeks",
       jobType: "In-person",
-      developerCost: 1800.00, // Add cost
+      developerCost: 1800.00,
     ),
     DeveloperProject(
       title: "Inventory Management System",
@@ -31,19 +31,19 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       requirements: ["Java", "MySQL", "Barcode API"],
       deliveryTime: "8 weeks",
       jobType: "Hybrid",
-      developerCost: 3200.00, // Add cost
+      developerCost: 3200.00,
     ),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white, // White background
       appBar: AppBar(
         title: Text(
           "Developer Project Requests",
           style: GoogleFonts.roboto(
-            color: Colors.greenAccent,
+            color: Colors.black, // Green text
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -51,8 +51,8 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF011B10),
-        iconTheme: const IconThemeData(color: Colors.greenAccent),
+        backgroundColor: Colors.white, // White app bar
+        iconTheme: IconThemeData(color: Color(0xFF38E54D)), // Green icons
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -65,126 +65,129 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
     );
   }
 
-// Alternative compact version keeping more info
   Widget _buildProjectCard(BuildContext context, DeveloperProject project, int index) {
     final developerNames = ['Alex Johnson', 'Sam Wilson', 'Taylor Smith'];
     final developerName = developerNames[index % developerNames.length];
+
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3D2C),
+        color: Colors.white, // White background
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.2),
+            color: Colors.grey.withOpacity(0.1), // Subtle grey shadow
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: Color(0xFF38E54D).withOpacity(0.2), // Light green border
+          width: 1.5,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Developer Name and Cost
+          // Developer Name and Cost
+          Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.person_outline,
-                        color: Colors.greenAccent.withOpacity(0.7),
-                        size: 16),
-                    const SizedBox(width: 6),
-                    Text(
-                      developerName,
-                      style: GoogleFonts.roboto(  // Changed to roboto for consistency
-                        fontSize: 14,
-                        color: Colors.greenAccent.withOpacity(0.8),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.greenAccent.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(
-                      color: Colors.greenAccent.withOpacity(0.3),
-                    ),
-                  ),
-                  child: Text(
-                    '\$${project.developerCost.toStringAsFixed(2)}',
-                    style: GoogleFonts.roboto(
-                      fontSize: 14,
-                      color: Colors.greenAccent,
-                      fontWeight: FontWeight.w500,
-                    ),
+                Icon(Icons.person_outline,
+                    color: Color(0xFF38E54D), // Green icon
+                    size: 16),
+                const SizedBox(width: 6),
+                Text(
+                  developerName,
+                  style: GoogleFonts.roboto(
+                    fontSize: 14,
+                    color: Colors.grey[700], // Dark grey text
+                    fontWeight: FontWeight.w500,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+              decoration: BoxDecoration(
+                color: Color(0xFF38E54D).withOpacity(0.1), // Light green background
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: Color(0xFF38E54D).withOpacity(0.3), // Green border
+                ),
+              ),
+              child: Text(
+                '\$${project.developerCost.toStringAsFixed(2)}',
+                style: GoogleFonts.roboto(
+                  fontSize: 14,
+                  color: Color(0xFF38E54D), // Green text
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 8),
 
-            // Project Title and Status
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Flexible(
-                  child: Text(
-                    project.title,
-                    style: GoogleFonts.roboto(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.greenAccent,
-                    ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
+        // Project Title and Status
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Flexible(
+              child: Text(
+                project.title,
+                style: GoogleFonts.roboto(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black, // Black text
                 ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: _getStatusColor(project.status).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: _getStatusColor(project.status).withOpacity(0.3),
-                    ),
-                  ),
-                  child: Text(
-                    _getStatusText(project.status),
-                    style: GoogleFonts.roboto(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w500,
-                      color: _getStatusColor(project.status),
-                    ),
-                  ),
-                ),
-              ],
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            const SizedBox(height: 12),
+      Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: _getStatusColor(project.status).withOpacity(0.1),
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(
+            color: _getStatusColor(project.status).withOpacity(0.3),
+          ),
+        ),
+        child: Text( // ✅ Move 'child' here
+          _getStatusText(project.status),
+          style: GoogleFonts.roboto(
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            color: _getStatusColor(project.status),
+          ),
+        ),
+      ),
+    ]),
+    const SizedBox(height: 12),
 
             // Project Details
             Text(
               project.details,
               style: GoogleFonts.roboto(
-                color: Colors.greenAccent.withOpacity(0.7),
+                color: Colors.grey[600], // Grey text
                 fontSize: 14,
               ),
-              maxLines: 2,  // Reduced from 3 to prevent overflow
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
 
-            // Requirements Chips (limited to 3)
+            // Requirements Chips
             Wrap(
               spacing: 6,
               runSpacing: 6,
               children: project.requirements
-                  .take(3)  // Limit to 3 requirements to prevent overflow
+                  .take(3)
                   .map((req) => _buildRequirementChip(req))
                   .toList(),
             ),
@@ -201,15 +204,15 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                       "Job Type",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
-                      project.jobType, // Make sure jobType exists in your Project model
+                      project.jobType,
                       style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -221,7 +224,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                       "Delivery Time",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
@@ -229,7 +232,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                       style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -281,7 +284,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                   const SizedBox(width: 8),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.greenAccent,
+                      backgroundColor: Color(0xFF38E54D), // Green button
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
                       ),
@@ -291,7 +294,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                     child: Text(
                       "Approve",
                       style: GoogleFonts.roboto(
-                        color: const Color(0xFF011B10),
+                        color: Colors.white,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -305,7 +308,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
                             "Project approved",
                             style: GoogleFonts.roboto(),
                           ),
-                          backgroundColor: Colors.greenAccent,
+                          backgroundColor: Color(0xFF38E54D),
                           behavior: SnackBarBehavior.floating,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8),
@@ -326,16 +329,16 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
-        color: Colors.greenAccent.withOpacity(0.1),
+        color: Color(0xFF38E54D).withOpacity(0.1), // Light green background
         borderRadius: BorderRadius.circular(8),
         border: Border.all(
-          color: Colors.greenAccent.withOpacity(0.3),
+          color: Color(0xFF38E54D).withOpacity(0.3), // Green border
         ),
       ),
       child: Text(
         text,
         style: GoogleFonts.roboto(
-          color: Colors.greenAccent,
+          color: Color(0xFF38E54D), // Green text
           fontSize: 12,
         ),
       ),
@@ -347,15 +350,15 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       case ProjectStatus.pending:
         return Colors.orange;
       case ProjectStatus.notStarted:
-        return Colors.blue;
+        return Color(0xFF38E54D); // Green for approved projects
       case ProjectStatus.ongoing:
-        return Colors.yellow;
+        return Colors.blue;
       case ProjectStatus.completed:
         return Colors.green;
       case ProjectStatus.rejected:
         return Colors.red;
       default:
-        return Colors.greenAccent;
+        return Color(0xFF38E54D);
     }
   }
 
@@ -364,7 +367,7 @@ class _DeveloperRequestsPageState extends State<DeveloperRequestsPage> {
       case ProjectStatus.pending:
         return "Pending";
       case ProjectStatus.notStarted:
-        return "Not Started";
+        return "Approved";
       case ProjectStatus.ongoing:
         return "Ongoing";
       case ProjectStatus.completed:

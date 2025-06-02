@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
                   _buildDetailChip(
                     Icons.access_time,
                     project.deliveryTime,
-                    Colors.blue,
+                    Colors.white,
                   ),
                   Text(
                     "\$${project.acceptedPrice.toStringAsFixed(2)}",

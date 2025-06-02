@@ -7,15 +7,15 @@ class CompletedProjectsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data
+    final completedProjects = ProjectData.allProjects;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Completed Projects",
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent,
+          style: GoogleFonts.roboto(
+            color: Colors.black, // Green text
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -23,14 +23,15 @@ class CompletedProjectsPage extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF011B10),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color(0xFF38E54D)), // Green icons
       ),
       body: completedProjects.isEmpty
           ? Center(
         child: Text(
           "No completed projects yet",
-          style: GoogleFonts.orbitron(
-            color: Colors.greenAccent.withOpacity(0.5),
+          style: GoogleFonts.roboto(
+            color: Colors.grey[600],
           ),
         ),
       )
@@ -55,15 +56,19 @@ class CompletedProjectsPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3D2C),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.2),
+            color: const Color(0xFF38E54D).withOpacity(0.05), // Very subtle green shadow
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: const Color(0xFF38E54D).withOpacity(0.2), // Light green border
+          width: 1.5,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -77,28 +82,28 @@ class CompletedProjectsPage extends StatelessWidget {
                 Flexible(
                   child: Text(
                     project.title,
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.greenAccent,
+                      fontWeight: FontWeight.bold,
+                      color: const Color(0xFF38E54D),
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.green.withOpacity(0.1),
+                    color: const Color(0xFF38E54D).withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: Colors.green.withOpacity(0.3),
+                      color: const Color(0xFF38E54D).withOpacity(0.3),
                     ),
                   ),
                   child: Text(
                     "Completed",
-                    style: GoogleFonts.orbitron(
+                    style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: Colors.green,
+                      color: const Color(0xFF38E54D),
                     ),
                   ),
                 ),
@@ -127,8 +132,8 @@ class CompletedProjectsPage extends StatelessWidget {
             // Project Details
             Text(
               project.details,
-              style: GoogleFonts.orbitron(
-                color: Colors.greenAccent.withOpacity(0.8),
+              style: GoogleFonts.roboto(
+                color: Colors.grey[700],
                 fontSize: 14,
               ),
             ),
@@ -164,14 +169,14 @@ class CompletedProjectsPage extends StatelessWidget {
               children: [
                 Text(
                   "Completed on: ${_formatDate(project.endDate)}",
-                  style: GoogleFonts.orbitron(
+                  style: GoogleFonts.roboto(
                     fontSize: 12,
-                    color: Colors.greenAccent.withOpacity(0.7),
+                    color: Colors.grey[600],
                   ),
                 ),
                 Icon(
                   Icons.verified,
-                  color: Colors.greenAccent,
+                  color: const Color(0xFF38E54D), // Green icon
                   size: 20,
                 ),
               ],
@@ -196,14 +201,14 @@ class CompletedProjectsPage extends StatelessWidget {
             Icon(
               icon,
               size: 16,
-              color: Colors.greenAccent.withOpacity(0.7),
+              color: const Color(0xFF38E54D), // Green icon
             ),
             const SizedBox(width: 4),
             Text(
               title,
-              style: GoogleFonts.orbitron(
+              style: GoogleFonts.roboto(
                 fontSize: 12,
-                color: Colors.greenAccent.withOpacity(0.7),
+                color: Colors.grey[600],
               ),
             ),
           ],
@@ -211,10 +216,10 @@ class CompletedProjectsPage extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           value,
-          style: GoogleFonts.orbitron(
+          style: GoogleFonts.roboto(
             fontSize: isMoney ? 16 : 14,
             fontWeight: isMoney ? FontWeight.w600 : FontWeight.w500,
-            color: Colors.greenAccent,
+            color: isMoney ? const Color(0xFF38E54D) : Colors.black, // Green for money, black for others
           ),
         ),
       ],

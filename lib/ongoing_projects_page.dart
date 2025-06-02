@@ -9,12 +9,12 @@ class OngoingProjectsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final ongoingProjects = ProjectData.allProjects;
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Ongoing Projects",
           style: GoogleFonts.roboto(
-            color: Colors.greenAccent,
+            color: Colors.black, // Green text for title
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -22,7 +22,8 @@ class OngoingProjectsPage extends StatelessWidget {
         centerTitle: true,
         automaticallyImplyLeading: false,
         elevation: 0,
-        backgroundColor: const Color(0xFF011B10),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Color(0xFF38E54D)), // Green icons
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -36,7 +37,6 @@ class OngoingProjectsPage extends StatelessWidget {
   }
 
   Widget _buildProjectCard(Project project, int index) {
-    // Static data for demo - in real app you'd get this from your data model
     final clientNames = ['TechSolutions Inc.', 'Digital Ventures', 'CodeCraft LLC'];
     final developerNames = ['Alex Johnson', 'Sam Wilson', 'Taylor Smith'];
 
@@ -46,22 +46,25 @@ class OngoingProjectsPage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3D2C),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.2),
+            color: Color(0xFF38E54D).withOpacity(0.1), // Subtle green shadow
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: Color(0xFF38E54D).withOpacity(0.2), // Light green border
+          width: 1,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Project Title and Status
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -71,17 +74,17 @@ class OngoingProjectsPage extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
-                      color: Colors.greenAccent,
+                      color: Color(0xFF38E54D), // Green text for title
                     ),
                   ),
                 ),
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.yellow.withOpacity(0.1),
+                    color: Color(0xFF38E54D).withOpacity(0.1), // Light green background
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: Colors.yellow.withOpacity(0.3),
+                      color: Color(0xFF38E54D).withOpacity(0.3), // Green border
                     ),
                   ),
                   child: Text(
@@ -89,7 +92,7 @@ class OngoingProjectsPage extends StatelessWidget {
                     style: GoogleFonts.roboto(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: Colors.yellow,
+                      color: Color(0xFF38E54D), // Green text
                     ),
                   ),
                 ),
@@ -97,17 +100,15 @@ class OngoingProjectsPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Project Details
             Text(
               project.details,
               style: GoogleFonts.roboto(
-                color: Colors.greenAccent.withOpacity(0.8),
+                color: Colors.grey[700],
                 fontSize: 14,
               ),
             ),
             const SizedBox(height: 16),
 
-            // Client and Developer Info
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -125,7 +126,6 @@ class OngoingProjectsPage extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // Project Metrics
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -147,10 +147,6 @@ class OngoingProjectsPage extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-
-
-
           ],
         ),
       ),
@@ -171,14 +167,14 @@ class OngoingProjectsPage extends StatelessWidget {
             Icon(
               icon,
               size: 16,
-              color: Colors.greenAccent.withOpacity(0.7),
+              color: Color(0xFF38E54D), // Green icon
             ),
             const SizedBox(width: 4),
             Text(
               title,
               style: GoogleFonts.roboto(
                 fontSize: 12,
-                color: Colors.greenAccent.withOpacity(0.7),
+                color: Colors.grey[600],
               ),
             ),
           ],
@@ -189,7 +185,7 @@ class OngoingProjectsPage extends StatelessWidget {
           style: GoogleFonts.roboto(
             fontSize: isMoney ? 16 : 14,
             fontWeight: isMoney ? FontWeight.w600 : FontWeight.w500,
-            color: Colors.greenAccent,
+            color: isMoney ? Color(0xFF38E54D) : Colors.black, // Green for money, black for others
           ),
         ),
       ],

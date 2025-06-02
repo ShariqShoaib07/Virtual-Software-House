@@ -35,12 +35,12 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF011B10),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(
           "Client Project Requests",
           style: GoogleFonts.roboto(
-            color: Colors.greenAccent,
+            color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.w600,
           ),
@@ -48,8 +48,8 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
         centerTitle: true,
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: const Color(0xFF011B10),
-        iconTheme: const IconThemeData(color: Colors.greenAccent),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color(0xFF38E54D)),
       ),
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
@@ -69,15 +69,19 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF0F3D2C),
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.greenAccent.withOpacity(0.2),
+            color: Colors.grey.withOpacity(0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
         ],
+        border: Border.all(
+          color: const Color(0xFF38E54D).withOpacity(0.2),
+          width: 1.5,
+        ),
       ),
       child: Padding(
         padding: const EdgeInsets.all(16),
@@ -87,15 +91,15 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
             // Client Name
             Row(
               children: [
-                Icon(Icons.person_outline,
-                    color: Colors.greenAccent.withOpacity(0.7),
+                Icon(Icons.business,
+                    color: const Color(0xFF38E54D),
                     size: 16),
                 const SizedBox(width: 6),
                 Text(
                   clientName,
                   style: GoogleFonts.roboto(
                     fontSize: 14,
-                    color: Colors.greenAccent.withOpacity(0.8),
+                    color: Colors.grey[700],
                   ),
                 ),
               ],
@@ -110,9 +114,9 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                   child: Text(
                     project.title,
                     style: GoogleFonts.roboto(
-                      fontSize: 16,  // Reduced from 18 to prevent overflow
-                      fontWeight: FontWeight.w600,
-                      color: Colors.greenAccent,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -144,26 +148,43 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
             Text(
               project.details,
               style: GoogleFonts.roboto(
-                color: Colors.greenAccent.withOpacity(0.7),
+                color: Colors.grey[600],
                 fontSize: 14,
               ),
-              maxLines: 2,  // Reduced from 3 to prevent overflow
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 16),
 
-            // Requirements Chips (limited to 3)
+            // Requirements
             Wrap(
-              spacing: 6,
-              runSpacing: 6,
+              spacing: 8,
+              runSpacing: 8,
               children: project.requirements
-                  .take(3)  // Limit to 3 requirements to prevent overflow
-                  .map((req) => _buildRequirementChip(req))
+                  .take(3)
+                  .map((req) => Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF38E54D).withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: const Color(0xFF38E54D).withOpacity(0.3),
+                  ),
+                ),
+                child: Text(
+                  req,
+                  style: GoogleFonts.roboto(
+                    color: const Color(0xFF38E54D),
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ))
                   .toList(),
             ),
             const SizedBox(height: 16),
 
-            // Budget and Delivery Time
+            // Budget and Timeline
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -174,15 +195,15 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                       "Budget",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
-                      "\$${project.acceptedPrice.toStringAsFixed(2)}",
+                      '\$${project.acceptedPrice.toStringAsFixed(2)}',
                       style: GoogleFonts.roboto(
                         fontSize: 16,
+                        color: const Color(0xFF38E54D),
                         fontWeight: FontWeight.w600,
-                        color: Colors.greenAccent,
                       ),
                     ),
                   ],
@@ -194,7 +215,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                       "Delivery Time",
                       style: GoogleFonts.roboto(
                         fontSize: 12,
-                        color: Colors.greenAccent.withOpacity(0.7),
+                        color: Colors.grey[600],
                       ),
                     ),
                     Text(
@@ -202,7 +223,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
                       style: GoogleFonts.roboto(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        color: Colors.greenAccent,
+                        color: Colors.black,
                       ),
                     ),
                   ],
@@ -211,108 +232,32 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
             ),
             const SizedBox(height: 16),
 
-            // Action Buttons (only show if pending)
-            if (project.status == ProjectStatus.pending)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  OutlinedButton(
-                    style: OutlinedButton.styleFrom(
-                      side: BorderSide(color: Colors.red.withOpacity(0.5)),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                    ),
-                    child: Text(
-                      "Reject",
-                      style: GoogleFonts.roboto(
-                        fontWeight: FontWeight.w500,
-                        color: Colors.red,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        pendingProjects[index].status = ProjectStatus.rejected;
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Project rejected",
-                            style: GoogleFonts.roboto(),
-                          ),
-                          backgroundColor: Colors.red,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      );
-                    },
+            // Completion Details
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Requested on: ${_formatDate(DateTime.now())}",
+                  style: GoogleFonts.roboto(
+                    fontSize: 12,
+                    color: Colors.grey[600],
                   ),
-                  const SizedBox(width: 8),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.greenAccent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 12),
-                    ),
-                    child: Text(
-                      "Approve",
-                      style: GoogleFonts.roboto(
-                        color: const Color(0xFF011B10),
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        pendingProjects[index].status = ProjectStatus.notStarted;
-                      });
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Project approved",
-                            style: GoogleFonts.roboto(),
-                          ),
-                          backgroundColor: Colors.greenAccent,
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ],
-              ),
+                ),
+                Icon(
+                  Icons.pending_actions,
+                  color: const Color(0xFF38E54D),
+                  size: 20,
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildRequirementChip(String text) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: Colors.greenAccent.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: Colors.greenAccent.withOpacity(0.3),
-        ),
-      ),
-      child: Text(
-        text,
-        style: GoogleFonts.roboto(
-          color: Colors.greenAccent,
-          fontSize: 12,
-        ),
-      ),
-    );
+  String _formatDate(DateTime date) {
+    return "${date.day}/${date.month}/${date.year}";
   }
 
   Color _getStatusColor(ProjectStatus status) {
@@ -320,15 +265,15 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
       case ProjectStatus.pending:
         return Colors.orange;
       case ProjectStatus.notStarted:
-        return Colors.blue;
+        return const Color(0xFF38E54D);
       case ProjectStatus.ongoing:
-        return Colors.yellow;
+        return Colors.blue;
       case ProjectStatus.completed:
         return Colors.green;
       case ProjectStatus.rejected:
         return Colors.red;
       default:
-        return Colors.greenAccent;
+        return const Color(0xFF38E54D);
     }
   }
 
@@ -337,7 +282,7 @@ class _ClientRequestsPageState extends State<ClientRequestsPage> {
       case ProjectStatus.pending:
         return "Pending";
       case ProjectStatus.notStarted:
-        return "Not Started";
+        return "Approved";
       case ProjectStatus.ongoing:
         return "Ongoing";
       case ProjectStatus.completed:
