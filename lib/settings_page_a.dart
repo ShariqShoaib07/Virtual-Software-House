@@ -12,7 +12,7 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primaryGreen = Colors.lightGreenAccent[700];
+    final primaryGreen = Colors.greenAccent[700];
     final accentGreen = Colors.greenAccent[400];
     final backgroundColor = Colors.white;
     final cardColor = Colors.grey[50]!;

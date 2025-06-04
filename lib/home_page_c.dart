@@ -462,7 +462,6 @@ class _HomePageCState extends State<HomePageC> {
               barTouchData: BarTouchData(
                 enabled: true,
                 touchTooltipData: BarTouchTooltipData(
-                  tooltipBgColor: Colors.blueGrey,
                   getTooltipItem: (group, groupIndex, rod, rodIndex) {
                     return BarTooltipItem(
                       '\$${rod.toY.toStringAsFixed(0)}',

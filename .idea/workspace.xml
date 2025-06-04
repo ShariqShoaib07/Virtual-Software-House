@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Changed All the Pages from Project Dashbord of Admin Dashbord">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="Changed the theme of All the Pages of Admin Dashbord">
+      <change beforePath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/change_password_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/change_password_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/clients_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/clients_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/contact_support_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/contact_support_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/developer_home.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_home.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/developer_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/developer_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/notification_settings_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/notification_settings_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/privacy_policy_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/privacy_policy_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/projects_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/projects_page_a.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/home_page_c.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/home_page_c.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/settings_page_a.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/settings_page_a.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/terms_conditions_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/terms_conditions_page.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -387,11 +380,18 @@
       <option name="project" value="LOCAL" />
       <updated>1748824641624</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Changed the theme of All the Pages of Admin Dashbord">
+      <option name="closed" value="true" />
+      <created>1748830251676</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1748830251677</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="did some beautification in Clients Projects Page and Settings Page" />
     <MESSAGE value="Removed the arrow that was leading to login page and add FAB in Client Project page" />
     <MESSAGE value="removed teams implementation from developer side" />
     <MESSAGE value="Client Request Page on Admin Side got Updates" />
@@ -416,6 +416,7 @@
     <MESSAGE value="Changed Availible Project Page of Admin Dashbord" />
     <MESSAGE value="Changed Bottom Nav. Bar of Admin Dashbord" />
     <MESSAGE value="Changed All the Pages from Project Dashbord of Admin Dashbord" />
-    <option name="LAST_COMMIT_MESSAGE" value="Changed All the Pages from Project Dashbord of Admin Dashbord" />
+    <MESSAGE value="Changed the theme of All the Pages of Admin Dashbord" />
+    <option name="LAST_COMMIT_MESSAGE" value="Changed the theme of All the Pages of Admin Dashbord" />
   </component>
 </project>
