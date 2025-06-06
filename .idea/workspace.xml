@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="updated get started screen and login screen">
+    <list default="true" id="5dd52138-82fc-4830-a4dd-c2cc468787b4" name="Changes" comment="updated get started screen and login screen, Custom input">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/custom_input.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/custom_input.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/signup.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/signup.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -402,11 +402,18 @@
       <option name="project" value="LOCAL" />
       <updated>1749227894823</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="updated get started screen and login screen, Custom input">
+      <option name="closed" value="true" />
+      <created>1749228229231</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1749228229231</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Developer Request Page on Admin Side got Updates" />
     <MESSAGE value="Ongoing Project Page on Admin Side got Updates. At the moment there is // In OngoingProjectsPage, change:&#10;                                                                       final ongoingProjects = ProjectData.allProjects; // Instead of ProjectData.ongoingProjects." />
     <MESSAGE value="Tried Fixing Developer Project Page again" />
     <MESSAGE value="added Completed Project Page. final completedProjects = ProjectData.allProjects; //convert allProjects to completedProjects for real time data" />
@@ -431,6 +438,7 @@
     <MESSAGE value="Fixed error in app\build.gradle.kts" />
     <MESSAGE value="updated get started screen" />
     <MESSAGE value="updated get started screen and login screen" />
-    <option name="LAST_COMMIT_MESSAGE" value="updated get started screen and login screen" />
+    <MESSAGE value="updated get started screen and login screen, Custom input" />
+    <option name="LAST_COMMIT_MESSAGE" value="updated get started screen and login screen, Custom input" />
   </component>
 </project>
