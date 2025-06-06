@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'signup.dart';
 import 'login.dart';
 import 'package:flutter/animation.dart';
-import 'package:flutter/scheduler.dart' show timeDilation;
 
 class GetStartedPage extends StatefulWidget {
   @override
