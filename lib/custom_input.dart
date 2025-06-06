@@ -7,14 +7,18 @@ class CustomInput extends StatefulWidget {
   final bool obscureText;
   final Widget? suffixIcon;
   final TextInputType? keyboardType;
+  final Widget? prefixIcon;
 
   const CustomInput({
+    Key? key,
     required this.controller,
     required this.hintText,
-    this.obscureText = false,
-    this.suffixIcon,
     this.keyboardType,
-  });
+    this.obscureText = false,
+    this.prefixIcon,
+    this.suffixIcon,
+  }) : super(key: key);
+
 
   @override
   _CustomInputState createState() => _CustomInputState();
