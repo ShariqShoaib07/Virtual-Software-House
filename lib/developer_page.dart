@@ -72,7 +72,7 @@ class _DeveloperPageState extends State<DeveloperPage> {
   @override
   Widget build(BuildContext context) {
     final primaryGreen = Colors.green;
-    final accentGreen = Colors.greenAccent[400];
+    final accentGreen = Color(0xFF38E54D);
     final backgroundColor = Colors.white;
     final cardColor = Colors.grey[50];
     final textColor = Colors.grey[900];

@@ -64,7 +64,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
         padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 40),
         child: FloatingActionButton(
           onPressed: () => showAddProjectDialog(context),
-          backgroundColor: Colors.green,
+          backgroundColor: Color(0xFF38E54D),
           child: const Icon(Icons.add, color: Colors.white),
         ),
       ),
@@ -122,7 +122,7 @@ class _ProjectsPageCState extends State<ProjectsPageC> {
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green,
+                  color: Color(0xFF38E54D),
                 ),
               ),
               const SizedBox(height: 8),
